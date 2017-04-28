@@ -48,7 +48,7 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 						$event_lng 				= ctfw_event_data()['map_lng'];
 						$event_registration 	= ctfw_event_data()['registration_url'];
 			    ?>
-						<article id="post-<?php the_ID(); ?>" <?php post_class('large-4 medium-6 columns'); ?> role="article" data-equalizer-watch>
+						<article id="post-<?php the_ID(); ?>" <?php post_class('large-4 medium-6 columns'); ?> role="article">
 							<div class="thumb">
 								<a href="<?php the_permalink() ?>">
 									<span class="overlay">
@@ -64,7 +64,7 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 									?>
 								</a>
 							</div><!-- .thumb -->
-							<div class="card">
+							<div class="card" data-equalizer-watch>
 								<header class="article-header">
 									<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
 								</header> <!-- end article header -->

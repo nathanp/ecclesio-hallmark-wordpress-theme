@@ -61,15 +61,20 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 									
 				    <section class="entry-content" itemprop="articleBody">
 				    	<ul class="event-meta">
-				    		<li>
-				    			<span class="label">Date</span>
-				    			<span class="info"><?php echo $event_date; ?></span>
-				    		</li>
-				    		<li>
-				    			<span class="label">Time</span>
-				    			<span class="info"><?php echo $event_time_range; ?></span>
-				    		</li>
-				    		<?php /* hide category for now
+				    		<?php
+				    			if($event_date) { ?>
+						    		<li>
+						    			<span class="label">Date</span>
+						    			<span class="info"><?php echo $event_date; ?></span>
+						    		</li>
+					    	<?php }
+					    		if($event_time_range)  { ?>
+						    		<li>
+						    			<span class="label">Time</span>
+						    			<span class="info"><?php echo $event_time_range; ?></span>
+						    		</li>
+				    		<?php }
+				    		/* hide category for now
 				    		<li>
 				    			<span class="label">Category</span>
 				    			<span class="info">
