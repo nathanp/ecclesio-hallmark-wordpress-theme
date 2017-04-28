@@ -218,9 +218,4 @@ function get_video_thumbnail( $src, $res = null ) {
 
 }
 
-/**
- * Customize Admin for everyone except the Administrator
- */
-require_once(get_stylesheet_directory().'/inc/admin.php');
-
 ?>
