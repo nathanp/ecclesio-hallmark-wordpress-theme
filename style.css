@@ -1,0 +1,709 @@
+/*
+Theme Name: Eccles.io Hallmark Theme
+Theme URI: https://eccles.io
+Author: Nathan Parikh
+Author URI: https://ndzynes.com
+Template: eccles.io-base-theme
+Description: Eccles.io's flagship theme.
+Version: 1.0
+Text Domain: ecclesio
+*/
+
+/* Foundation Override */
+.top-bar, .top-bar ul {
+	background-color: transparent;
+}
+
+/************
+	FONTS
+*************/
+h1, h2, h3, h4, h5, h6,
+button, .button,
+#menu-main-menu-1 li,
+#menu-main-menu.vertical,
+#breadcrumbs,
+#sermon-latest .text-container .meta,
+.tabs-sermon .tabs-title,
+.tabs-sermon .link-title,
+#listing article .thumb .overlay,
+.event-meta,
+.footer-top {
+	font-family: 'Montserrat', Helvetica, Arial, sans-serif;
+}
+body,p,
+#purpose, #purpose .statement,
+#staff li h4 {
+	font-family: 'Lora', Georgia, serif;
+}
+p,
+#inner-content ul {
+	font-size: 1.15em;
+}
+
+/************
+	COLORS
+*************/
+a {
+	color: #358fcd;
+}
+
+/****************
+	FOUNDATION
+*****************/
+.button-group {
+    list-style: none;
+    margin: 0;
+    left: 0;
+}
+	.button-group > li {
+	    display: inline-block;
+	    margin: 0 -2px;
+	}
+
+/************
+	GENERAL
+*************/
+ul.inline-menu {
+	margin: 0;
+}
+	ul.inline-menu li {
+		list-style-type: none;
+		display: inline;
+	}
+
+.button.outline-white {
+	background: none;
+    border: 2px solid #fff;
+}
+	.button.outline-white:hover,
+	.button.outline-white:active,
+	.button.outline-white:focus {
+		background: #fff;
+		color: #358fcd;
+	}
+
+/************
+	HEADER
+*************/
+header.header {
+	z-index: 9999;
+	position: fixed;
+	width: 100%;
+	background: #fff;
+	top: 0;
+}
+	.admin-bar header.header {
+		margin-top: 32px;
+	}
+
+/* Logo Area */
+.top-bar-left .menu>li>a {
+	padding: 0;
+}
+#logo-primary {
+	width: 240px;
+	-webkit-transition: all 400ms ease-in-out;
+-moz-transition: all 400ms ease-in-out;
+-ms-transition: all 400ms ease-in-out;
+-o-transition: all 400ms ease-in-out;
+transition: all 400ms ease-in-out;
+
+}
+
+/* Menu Area */
+header .top-bar-right.show-for-medium {
+	position: absolute;
+    right: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+#menu-main-menu-1 li a,
+#menu-main-menu.vertical li a {
+	text-transform: uppercase;
+}
+#menu-main-menu-1 li a {
+	color: #4a4a4a;
+    font-weight: 600;
+}
+	#menu-main-menu-1 li.active>a,
+	#menu-main-menu-1 li a:hover {
+		color: #358fcd;
+	}
+	#menu-main-menu-1 li.active>a {
+		background: none;
+	}
+	#menu-main-menu-1 .submenu,
+	.menu.submenu.is-accordion-submenu {
+		background: #4a4a4a;
+	}
+	#menu-main-menu-1 .submenu {
+    	border: none;
+    	left: 50%;
+	    -webkit-transform: translateX(-50%);
+	    transform: translateX(-50%);
+	}
+		#menu-main-menu-1 .submenu li {
+			text-align: center;
+		}
+		#menu-main-menu-1 .submenu li,
+		.off-canvas #menu-main-menu .submenu li {
+			border-bottom: 2px solid #656565;
+		}
+			#menu-main-menu-1 .submenu li:last-child,
+			.off-canvas #menu-main-menu .submenu li:last-child {
+				border-bottom: none;
+			}
+		#menu-main-menu-1 .submenu li a,
+		#menu-main-menu.vertical .submenu li a {
+			text-transform: none;
+			font-weight: 400;
+			color: #fff;
+		}
+			#menu-main-menu-1 .submenu li a:hover {
+				background: #358fcd;
+			}
+	.menu.submenu.is-accordion-submenu {
+		box-shadow: inset 3px -2px 8px 3px rgba(0,0,0,0.30);
+		-webkit-box-shadow: inset 3px -2px 8px 3px rgba(0,0,0,0.30);
+	}
+
+/* Scrolled Header */
+header.header.scroll {
+	-webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
+	box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
+}
+	header.header.scroll #logo-primary {
+	    width: 180px;
+	}
+
+/* Page Banner */
+#banner {
+	position: relative;
+    height: 50vh;
+    display: block;
+    width: 100%;
+    margin-top: 96px;
+}
+	#banner .overlay {
+		background: rgba(1, 108, 197, 0.75);
+		width: 100%;
+		height: 100%;
+		display: block;
+		position: absolute;
+		z-index: 1;
+	}
+	#banner img {
+		width: 100%;
+	    object-fit: cover;
+	    display: block;
+	    max-height: 100%;
+	    height: 100%;
+	    position: absolute;
+	    z-index: 0;
+	}
+	#banner .banner-text {
+		position: absolute;
+	    top: 50%;
+	    -webkit-transform: translateY(-50%);
+	    -ms-transform: translateY(-50%);
+	    transform: translateY(-50%);
+	    width: 100%;
+	    text-align: center;
+	    color: #fff;
+	    z-index: 1;
+	}
+		#banner .banner-text .page-title {
+			text-transform: uppercase;
+			font-weight: 600;
+			margin: 0;
+		}
+		#banner .banner-text .page-byline {
+
+		}
+	#banner #breadcrumbs {
+		position: absolute;
+	    bottom: 0px;
+	    margin: 0;
+	    background: rgba(0, 0, 0, 0.25);
+	    width: 100%;
+	    color: #fff;
+	    padding: 0px 0px 2px 1em;
+	    font-size: 0.95em;
+	    z-index: 1;
+	}
+		#banner #breadcrumbs a {
+			color: #fff;
+		}
+
+/************
+	HOME
+*************/
+.home #banner .button-group {
+	
+}
+	.home #banner .button-group li {
+		margin: 0px 5px;
+	}
+		.home #banner .button-group li a.button {
+			font-size: 1.25rem;
+			background: none;
+			color: #fff;
+			border: 3px solid;
+			padding: 0.65em 1em;
+		}
+			.home #banner .button-group li a.button:hover,
+			.home #banner .button-group li a.button:focus,
+			.home #banner .button-group li a.button:active {
+				background: #f8981d;
+
+			}
+
+#purpose {
+	text-align: center;
+    padding: 2em 0px 1.5em;
+    border-top: 3px solid #f8981d;
+    border-bottom: 3px solid #f8981d;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+	#purpose .statement {
+
+	}
+
+#sermon-latest {
+	position: relative;
+    padding: 0px 0px 30em 0px;
+}
+	#sermon-latest img.background {
+		position: absolute;
+	    z-index: 0;
+	    object-fit: cover;
+	    object-position: 50% 25%;
+	    width: 100%;
+	    height: 100%;
+	}
+	#sermon-latest .text-container {
+		position: absolute;
+	    z-index: 2;
+	    width: 75%;
+	    right: 5%;
+	    color: #fff;
+	    bottom: 15%;
+	    text-align: right;
+	}
+		#sermon-latest .text-container h5 {
+			background: #f8981d;
+			display: inline-block;
+			margin: 0;
+			padding: 0.10em 0.5em;
+		}
+			#sermon-latest .text-container h5:after {
+				content: '';
+				display: table;
+			}
+		#sermon-latest .text-container h3 {
+			text-transform: uppercase;
+		    font-weight: 600;
+		    font-size: 2.5em;
+		    padding: 0 0.25em;
+		    background: rgba(0, 0, 0, 0.5);
+		    display: inline-block;
+		    clear: both;
+		    line-height: 1.15em;
+    		margin: 0;
+		}
+			#sermon-latest .text-container h3 a {
+				color: #fff;
+			}
+				#sermon-latest .text-container h3 a:hover {
+					text-decoration: underline;
+				}
+		#sermon-latest .text-container .meta {
+			display: block;
+			font-size: 1.25em;
+		    font-weight: 600;
+		    text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.75);
+		    margin: 0px 0px 10px 0px;
+		}
+			#sermon-latest .text-container .meta .speaker {
+
+			}
+			#sermon-latest .text-container .meta .date {
+
+			}
+		#sermon-latest .text-container .button {
+			background: rgb(50, 55, 60);
+			border: 3px solid #f8981d;
+			text-transform: uppercase;
+			font-weight: 600;
+			color: #fff;
+			font-size: 1.15em;
+		}
+			#sermon-latest .text-container .button:hover,
+			#sermon-latest .text-container .button:active,
+			#sermon-latest .text-container .button:focus {
+				background-color: #f8981d;
+				border-color: rgb(50, 55, 60);
+			}
+
+/************
+	STAFF
+*************/
+#staff {
+
+}
+	#staff li {
+		list-style-type: none;
+	    display: inline-block;
+	    width: 19%;
+	    text-align: center;
+	    padding: 1.5% 3% 1.5% 0;
+	    vertical-align: text-top;
+
+	}
+		#staff li .thumbnail {
+			-webkit-border-radius: 100%;
+			border-radius: 100%;
+			overflow: hidden;
+		}
+		#staff li img {
+			max-width: 100%;
+			width: 176px;
+			height: 176px;
+			object-fit: cover;
+
+		}
+		#staff li h3 {
+			margin: 0px;
+		    font-size: 1.25em;
+		    font-weight: 400;
+		}
+		#staff li h4 {
+			font-size: 1em;
+		}
+
+/************************************
+	LISTINGS
+	This powers Sermons, Events, etc.
+*************************************/
+#listing {
+
+}
+	#listing article {
+
+	}
+		#listing article.columns:last-child:not(:first-child) {
+			float: left;
+		}
+		#listing article .thumb {
+		    display: block;
+		    position: relative;
+		}
+			#listing article .thumb img {
+				width: 100%;
+			    display: block;
+			    object-fit: cover;
+			    position: relative;
+			}
+			#listing article .thumb,
+			#listing article .thumb img {
+				max-height: 194px;
+			}
+				#listing article .thumb .overlay {
+					opacity: 0;
+					position: absolute;
+				    width: 100%;
+				    height: 100%;
+				    z-index: 1;
+				    text-align: center;
+				    background: rgba(0, 0, 0, 0.75);
+
+				    -webkit-transition: all 220ms ease-in-out;
+					-moz-transition: all 220ms ease-in-out;
+					-ms-transition: all 220ms ease-in-out;
+					-o-transition: all 220ms ease-in-out;
+					transition: all 220ms ease-in-out;
+				}
+					#listing article .thumb:hover .overlay {
+						opacity: 1;
+					}
+					#listing article .thumb .overlay .text {
+						color: #fff;
+					    text-transform: uppercase;
+					    font-weight: 600;
+					    font-size: 1.5em;
+					    width: 100%;
+					    position: absolute;
+					    left: 0;
+					    top: 0%;
+
+					    -webkit-transform: translateY(0%);
+					    -ms-transform: translateY(0%);
+					    transform: translateY(0%);
+
+					    -webkit-transition: all 220ms linear;
+						-moz-transition: all 220ms linear;
+						-ms-transition: all 220ms linear;
+						-o-transition: all 220ms linear;
+						transition: all 220ms linear;
+					}
+						#listing article .thumb:hover .overlay .text {
+						    top: 50%;
+						    -webkit-transform: translateY(-50%);
+						    -ms-transform: translateY(-50%);
+						    transform: translateY(-50%);
+						    
+						}
+		#listing article h2 {
+			font-size: 1.5em;
+		    font-weight: 600;
+		    line-height: 1.25em;
+		    margin: 0;
+		    padding: 5px 0px 0px 0px;
+		}
+
+		#listing article .card {
+			padding: 5px 1em 1em;
+			text-align: center;
+		}
+			#listing article .card .date {
+				font-size: 1.25em;
+			}
+			#listing article .card .time {
+				display: block;
+				font-style: italic;
+			}
+			#listing article .card .venue {
+				display: block;
+				margin: 0px 0px 10px 0px;
+    			font-size: 0.85em;
+    			color: #4a4a4a;
+			}
+			#listing article .card .meta.sermon {
+				display: block;
+				margin: 10px 0px 10px;
+			}
+			#listing article .card .speaker,
+			#listing article .card .series,
+			#listing article .card .book {
+				width: 33%;
+    			display: inline-block;
+			}
+				#listing article .card .speaker a,
+				#listing article .card .series a,
+				#listing article .card .book a {
+					color: #4a4a4a;
+				}
+					#listing article .card .speaker a:hover,
+					#listing article .card .series a:hover,
+					#listing article .card .book a:hover {
+						text-decoration: underline;
+					}
+
+			#listing article .card .meta.sermon label {
+				margin: 0;
+			    line-height: 1em;
+			    font-style: italic;
+			}
+			#listing article .card .speaker {
+
+			}
+			#listing article .card .series {
+
+			}
+			#listing article .card .book {
+
+			}
+			#listing article .card .topic {
+
+			}
+
+			#listing article .card .button {
+				background: #ffffff;
+			    color: #000000;
+			    border: 1px solid;
+			}
+				#listing article .card .button:active,
+				#listing article .card .button:focus,
+				#listing article .card .button:hover {
+					color: #358fcd;
+				}
+
+.page-navigation {
+	clear: both;
+}
+
+/************
+	SERMONS
+*************/
+.single-ctc_sermon #banner {
+	height: auto;
+}
+#banner .flex-video,
+#banner .responsive-embed {
+	padding-bottom: 80vh;
+}
+
+.tabs-content.sermon {
+	border: none;
+	background: none;
+
+}
+	.tabs-content.sermon .tabs-panel {
+		padding: 0;
+	}
+		.tabs-content.sermon #listen.tabs-panel {
+			padding: 10em 0;
+			background: #000;
+		}
+
+.tabs-sermon {
+	border: none;
+	background: none;
+	text-align: center;
+}
+	.tabs-sermon .tabs-title,
+	.tabs-sermon .link-title {
+		float: none;
+		display: inline-block;
+	}
+		.tabs-sermon .tabs-title a,
+		.tabs-sermon .link-title a {
+			color: #000000;
+    		border: 1px solid;
+    		display: block;
+		    padding: 1.25rem 1.5rem;
+		    font-size: .75rem;
+		    line-height: 1;
+		}
+			.tabs-sermon .tabs-title.is-active a {
+				background: #fff;
+    			color: #388ecd;
+			}
+
+.ctc_sermon .article-header {
+	margin: 30px 0px 0px;
+}
+	.ctc_sermon .article-header .entry-title {
+		font-weight: 600;
+	}
+
+.ctc_sermon .entry-content {
+	font-size: 1.5em;
+}
+
+/************
+	EVENTS
+*************/
+.event-meta {
+	text-align: center;
+    margin: 0 0px 20px 0px;
+    padding: 0px 0px 20px 0px;
+    border-bottom: 1px solid #bfbfbf;
+}
+	.event-meta li {
+		list-style-type: none;
+		display: inline-block;
+    	text-align: center;
+    	margin-right: 30px;
+	}
+		.event-meta li:last-child {
+			margin-right: 0;
+		}
+		.event-meta li .label {
+			background: none;
+		    color: #6b6b6b;
+		    display: inline;
+		    padding: 0;
+		}
+		.event-meta li .info {
+			display: block;
+		}
+
+#event-map {
+	display: block;
+	width: 100%;
+	height: 400px;
+}
+
+/************
+	CONTACT
+*************/
+#gform_wrapper_1,
+#gforms_confirmation_message_1 {
+	clear: both;
+}
+
+
+/************
+	FOOTER
+*************/
+footer.footer {
+	background: #4a4a4a;
+    color: #fff;
+    margin: 0;
+}
+	footer.footer a {
+		color: #fff;
+	}
+	.footer-top {
+		background: #358fcd;
+		color: #fff;
+		padding: 1em 0;
+	}
+		.footer-top h5 {
+			margin: 0;
+		}
+		.footer-top p {
+			margin: 0;
+			font-size: 1em;
+		}
+		.footer-top .button {
+			margin: 0;
+		}
+		.footer-top .social {
+			font-size: 2rem;
+			text-align: right;
+		}
+			.footer-top .social li {
+				margin-right: 15px;
+			}
+				.footer-top .social li:last-child {
+					margin-right: 0;
+				}
+			.footer-top .social a {
+							}
+				.footer-top .social a:hover {
+					color: #4a4a4a;
+				}
+	#logo-footer {
+		max-width: 264px;
+	}
+		#logo-footer path,
+		#logo-footer polygon {
+			fill: #b9b9b9;
+		}
+	#inner-footer {
+		padding-top: 1em;
+	}
+
+	#bottom-footer {
+		padding-top: 1em;
+	}
+		#bottom-footer .fa {
+			
+		}
+
+	footer.footer .copyright {
+		font-size: 1em;
+    	color: #b7b7b7;
+	}
+		footer.footer .copyright a {
+			color: #b7b7b7;
+			text-decoration: underline;
+		}
+			footer.footer .copyright a:hover {
+				color: #fff;
+			}

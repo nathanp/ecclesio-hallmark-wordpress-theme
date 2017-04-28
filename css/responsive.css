@@ -1,0 +1,208 @@
+header.header.menu-opened {
+	position: relative;
+}
+button.hamburger {
+	position: absolute;
+    right: 0;
+    z-index: 9999;
+
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+	button.hamburger .hamburger-inner,
+	button.hamburger .hamburger-inner:after,
+	button.hamburger .hamburger-inner:before {
+		background-color: #358fcd;
+	}
+		button.hamburger:hover .hamburger-inner,
+		button.hamburger:hover .hamburger-inner:after,
+		button.hamburger:hover .hamburger-inner:before {
+			background-color: #358fcd;
+		}
+
+	button.hamburger:active,
+	button.hamburger:focus,
+	button.hamburger:hover,
+	.off-canvas #menu-main-menu li:active,
+	.off-canvas #menu-main-menu li:focus,
+	.off-canvas #menu-main-menu li:hover,
+	.off-canvas #menu-main-menu li a:active,
+	.off-canvas #menu-main-menu li a:focus,
+	.off-canvas #menu-main-menu li a:hover {
+		outline: none;
+	}
+.off-canvas {
+	background: #358fcd;
+	color: #fff;
+	font-size: 1.5em;
+
+}
+	.off-canvas #menu-main-menu {
+
+	}
+		.off-canvas #menu-main-menu li {
+			
+		}
+			.off-canvas #menu-main-menu li a {
+				color: #fff;
+				font-weight: 600;
+				font-size: 0.85em;
+			}
+				.off-canvas #menu-main-menu .submenu li {
+					border-bottom: 2px solid #656565;
+				}
+
+		.off-canvas #menu-main-menu .is-accordion-submenu-parent>a:after {
+			border-color: #fff transparent transparent;
+		}
+
+.js-off-canvas-overlay.is-overlay-fixed {
+	
+}
+
+@media screen and (max-width: 1024px) {
+	/*Page*/
+	#banner {
+		height: 30vh;
+	}
+
+	/*Staff*/
+	#staff li img {
+		width: 145px;
+		height: 145px;
+	}
+}
+
+
+@media screen and (max-width: 900px) {
+	header .top-bar-right.show-for-medium {
+		position: relative;
+	    top: 0;
+	    -webkit-transform: translateY(0%);
+	    -ms-transform: translateY(0%);
+	    transform: translateY(0%);
+	    left: 0;
+	    float: left;
+	}
+		#menu-main-menu-1 li a {
+			text-transform: uppercase;
+		    padding: .7rem 1.25rem;
+		    font-size: 0.90em;
+		}
+}
+
+@media screen and (max-width: 768px) {
+	#staff li {
+		width: 24.5%;
+	}
+
+	.footer-top p {
+		font-size: 0.9em;
+	}
+}
+
+@media screen and (max-width: 640px) {
+	/*Header*/
+	header.header {
+		position: relative;
+	}
+	#banner {
+		margin-top: 0px;
+	}
+}
+
+@media screen and (max-width: 420px) {
+	/*Home*/
+	.home #banner {
+		height: 40vh;
+	}
+		.home #banner .button-group li a.button {
+			font-size: 1rem;
+		}
+	
+	#purpose {
+		margin-top: 0;
+		margin-bottom: 1em;
+		padding-left: 1em;
+		padding-right: 1em;
+	}
+		#purpose .statement {
+		    font-size: 1.5em;
+		}
+
+	#sermon-latest .text-container {
+		width: 90%;
+	}
+	#sermon-latest .text-container h3 {
+		font-size: 1.5em;
+	}
+
+	/*Staff*/
+	#staff li {
+		width: 48.75%;
+	}
+
+	/*Sermons*/
+	.ctc_sermon .entry-content {
+		font-size: 1em;
+	}
+
+	/*Footer*/
+	.footer-top,
+	.footer-top .social {
+		text-align: center;
+	}
+		.footer-top .button {
+		    margin: 15px 0px;
+		}
+
+}
+
+@media screen and (max-width: 375px) {
+	#logo-primary {
+    	width: 180px;
+    }
+
+    #bottom-footer p {
+		font-size: 1em;
+	}
+}
+
+@media screen and (max-width: 320px) {
+	/*Home*/
+	.home #banner .banner-text .page-title {
+		font-size: 1.25em;
+	}
+	.home #banner .banner-text .page-byline {
+		font-size: 1em;
+	}
+	
+	#purpose {
+	    padding-top: 1em;
+	    padding-bottom: 1em;
+	}
+	#purpose .statement {
+		font-size: 1.25em;
+	}
+
+	/*Staff*/
+	#staff li {
+		width: 100%;
+	}
+
+	/*Sermons*/
+	#listing article .card .meta.sermon {
+		font-size: 0.8em;
+	}
+	.tabs-sermon .tabs-title a,
+	.tabs-sermon .link-title a {
+		padding-left: 1rem;
+		padding-right: 1rem;
+	}
+
+	#bottom-footer p {
+		font-size: 0.9em;
+	}
+}
