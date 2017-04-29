@@ -208,8 +208,8 @@ function get_video_thumbnail( $src, $res = null ) {
 
 	} elseif ( $url_pieces[2] == 'www.youtube.com' ) { // If Youtube
 
-		$extract_id = explode('?', $url_pieces[4]);
-		$id = $extract_id[0];
+		preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $src, $matches);
+    	$id = $matches[1];
 		$thumbnail = 'http://img.youtube.com/vi/' . $id . '/mqdefault.jpg';
 
 	}

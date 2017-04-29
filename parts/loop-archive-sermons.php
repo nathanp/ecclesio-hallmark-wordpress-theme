@@ -2,9 +2,10 @@
 	<div class="row" data-equalizer data-equalize-on="medium">
     <?php if (have_posts()) : while (have_posts()) : the_post();
     	$sermon_video_url	= ctfw_sermon_data()['video'];
+
     ?>
  		
-		<article id="post-<?php the_ID(); ?>" <?php post_class('large-4 medium-6 columns'); ?> role="article" data-equalizer-watch>
+		<article id="post-<?php the_ID(); ?>" <?php post_class('large-4 medium-6 columns'); ?> role="article">
 			<div class="thumb">
 				<a href="<?php the_permalink() ?>">
 					<span class="overlay">
@@ -21,7 +22,7 @@
 					?>
 				</a>
 			</div><!-- .thumb -->
-			<div class="card">
+			<div class="card" data-equalizer-watch>
 			<header class="article-header">
 				<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
 			</header> <!-- end article header -->
@@ -40,8 +41,9 @@
 			    		$primary_speaker = new WPSEO_Primary_Term('ctc_sermon_speaker', $post->ID);
 						$primary_speaker = $primary_speaker->get_primary_term();
 						$primary_speaker = get_term($primary_speaker);
-						
-						echo '<span class="speaker"><label>Speaker:</label><a href="'.get_term_link($primary_speaker).'">'.$primary_speaker->name.'</a></span>';
+						if($speakers) {
+							echo '<span class="speaker"><label>Speaker:</label><a href="'.get_term_link($primary_speaker).'">'.$primary_speaker->name.'</a></span>';
+						}
 
 			    		$sermon_series = get_the_terms( $post, 'ctc_sermon_series');
 			    		if($sermon_series) {
