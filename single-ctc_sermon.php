@@ -55,7 +55,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 							  </li>
 						<?php }
 							if($sermon_audio_embed) { ?>
-							  <li class="tabs-title <?php if(!$sermon_video_embed) echo 'is-active'; ?>">
+							  <li class="tabs-title <?php if(!$sermon_video_embed) echo 'is-active'; ?>" id="tab-listen">
 							  	<a href="#listen">
 							  		<i class="fa fa-headphones" aria-hidden="true"></i> Listen
 							  	</a>
@@ -84,11 +84,13 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 				    <section class="entry-content text-center" itemprop="articleBody">
 				    	<?php
 				    		$speakers = get_the_terms( $post, 'ctc_sermon_speaker');
-				    		//print_r($speakers);
-				    		foreach($speakers as $speaker) {
-								echo '<a href="'.get_term_link($speaker).'">'.$speaker->name,'</a>';
+				    		if($speakers) {
+					    		foreach($speakers as $speaker) {
+									echo '<a href="'.get_term_link($speaker).'">'.$speaker->name,'</a>';
+								}
+								echo " |";
 							}
-				    	?> | <?php echo get_the_date(); ?>
+				    	?> <?php echo get_the_date(); ?>
 				    	
 				    	<?php
 				    		$sermon_series = get_the_terms( $post, 'ctc_sermon_series');
@@ -143,13 +145,53 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 </div> <!-- end #content -->
 
 <script>
-jQuery(document).ready(function() {
-	<?php if (strpos($sermon_video_url,'vimeo.com') ) { ?>
-	    jQuery('#banner iframe').attr('src', function() {
-	        return this.src + '?title=0&byline=0&portrait=0&color=358fcd'
-	    });
-	<?php } ?>
-});
+	var iframe = document.querySelector('iframe');
+    var pauseButton = document.getElementById("tab-listen");
 </script>
+
+<?php if (strpos($sermon_video_url,'vimeo.com') ) { ?>
+	<script src="https://player.vimeo.com/api/player.js"></script>
+
+	<script>
+		jQuery(document).ready(function() {
+		    jQuery('#banner iframe').attr('src', function() {
+		        return this.src + '?title=0&byline=0&portrait=0&color=358fcd'
+		    });
+		});
+		var player = new Vimeo.Player(iframe);
+		pauseButton.addEventListener('click',function()
+		{
+			player.pause();
+		});
+	</script>
+<?php } ?>
+
+<?php if (strpos($sermon_video_url,'youtube.com') ) { ?>
+	<script>
+		jQuery(document).ready(function() {
+		    jQuery('#banner iframe').attr('src', function() {
+		        return this.src + '&enablejsapi=1&showinfo=0&modestbranding=1&rel=0'
+		    });
+		});
+
+		// https://developers.google.com/youtube/iframe_api_reference
+		var tag = document.createElement('script');
+		tag.src = "//www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+		var player = false
+
+		function onYouTubeIframeAPIReady() {
+			player = new YT.Player(iframe, {});
+		}
+		
+		var pauseButton = document.getElementById("tab-listen");
+		pauseButton.addEventListener("click", function() {
+			if (player) {
+				player.pauseVideo()
+			}
+		});
+	</script>
+<?php } ?>
 
 <?php get_footer(); ?>
