@@ -8,6 +8,12 @@ $MyUpdateChecker = new ThemeUpdateChecker(
 );
 // $MyUpdateChecker->purchaseCode = "somePurchaseCode";  <---- Optional!
 
+/**
+ * Include our Customizer settings.
+**/
+require get_stylesheet_directory() . '/inc/customizer/class-ecclesio-hallmark-customizer.php';
+new Ecclesio_Hallmark_Customizer();
+
 // Church Theme Content
 require_once(get_stylesheet_directory().'/inc/church-theme-content.php');
 
@@ -136,6 +142,15 @@ function ecclesio_scripts() {
 
 }
 add_action( 'wp_enqueue_scripts', 'ecclesio_scripts', 1000); //1000 places these after the defaults loaded by the parent theme
+
+function ecclesio_customizer_preview() {
+    wp_enqueue_script( 
+          'ecclesio-customizer',
+          get_stylesheet_directory_uri().'/js/ecclesio-customizer.js',
+          array( 'jquery','customize-preview' )
+    );
+}
+add_action('customize_preview_init','ecclesio_customizer_preview');
 
 /**
  * Remove query strings from static resources.

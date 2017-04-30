@@ -102,9 +102,7 @@ Template Name: Homepage
 			    $recent_sermons = wp_get_recent_posts($sermon_args);
 			    foreach( $recent_sermons as $sermon ){
 			    	
-			    	
 			    	echo '<img src="'.get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg" class="background" />';
-
 
 					echo "<span class='text-container'>";
 						echo "<h5>This Week's Message</h5><br />";
@@ -116,12 +114,14 @@ Template Name: Homepage
 				    			echo '</span>';
 				    		}
 						echo '</a></h3>';
-						
+						$speakers = get_the_terms( $sermon["ID"], 'ctc_sermon_speaker');
 						$primary_speaker = new WPSEO_Primary_Term('ctc_sermon_speaker', $sermon["ID"]);
 						$primary_speaker = $primary_speaker->get_primary_term();
 						$primary_speaker = get_term($primary_speaker);
 						echo "<span class='meta'>";
-							echo '<span class="speaker">'.$primary_speaker->name.'</span> | ';
+							if($speakers) {
+								echo '<span class="speaker">'.$primary_speaker->name.'</span> | ';
+							}
 							echo '<span class="date">'.get_the_time('F j, Y', $sermon['ID']).'</span>';
 						echo "</span>";
 						
