@@ -58,10 +58,37 @@ class Ecclesio_Hallmark_Customizer {
 		/*
 		 * Add settings to sections.
 		 */
+		$this->ecclesio_title_tagline_section( $wp_customize );
 		$this->ecclesio_church_info_section( $wp_customize );
 		$this->ecclesio_church_social_section( $wp_customize );
 		$this->ecclesio_theme_colors_section( $wp_customize );
 
+	}
+
+	/**
+	 * Existing Section: title_tagline
+	 *
+	 * @param WP_Customize_Manager $wp_customize
+	 *
+	 * @access private
+	 * @since  1.0
+	 * @return void
+	 */
+	private function ecclesio_title_tagline_section( $wp_customize ) {
+		$section = 'title_tagline';
+
+		/* Site Logo */
+		$setting = 'ecclesio_site_logo';
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'option',
+			'default' => get_bloginfo('stylesheet_directory') . '/images/logo.svg',
+		) );
+			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
+		    	'label'    => __( 'Site Logo', 'ecclesio-hallmark-theme' ),
+		    	'description' => __( 'Recommended format: transparent PNG or SVG. <br />Recommended dimensions: <strong>240x80px</strong>', 'ecclesio-hallmark-theme' ),
+				'section'  => $section,
+				'settings' => $setting,
+			) ) );
 	}
 
 	/**

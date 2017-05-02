@@ -4,7 +4,19 @@
 <div class="top-bar" id="top-bar-menu">
 	<div class="top-bar-left float-left">
 		<ul class="menu">
-			<li><a href="<?php echo home_url(); ?>"><img id="logo-primary" class="svg" src="<?php echo get_stylesheet_directory_uri(); ?>/images/logo.svg" alt=""></a></li>
+			<li>
+				<a href="<?php echo home_url(); ?>">
+					<?php
+						if ( get_option( 'ecclesio_site_logo' ) ) {
+							echo '<img id="logo-primary" class="svg" src="' . esc_url( get_option( 'ecclesio_site_logo' ) ) . '">';
+						}
+						else {
+							echo '<h1 class="site-title">'.get_bloginfo('name').'</h1>';
+						}
+					?>
+					
+				</a>
+			</li>
 		</ul>
 	</div>
 	<div class="top-bar-right show-for-medium">
