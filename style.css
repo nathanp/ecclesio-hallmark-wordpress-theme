@@ -163,6 +163,7 @@ header .top-bar-right.show-for-medium {
 		}
 			#menu-main-menu-1 .submenu li a:hover {
 				background: #358fcd;
+				color: #fff;
 			}
 	.menu.submenu.is-accordion-submenu {
 		box-shadow: inset 3px -2px 8px 3px rgba(0,0,0,0.30);

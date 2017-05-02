@@ -49,12 +49,18 @@ class Ecclesio_Hallmark_Customizer {
 			'title'    => __( 'Social Media', 'ecclesio-hallmark-theme' ),
 			'priority' => 102
 		) );
+		// New section for "Colors".
+		$wp_customize->add_section( 'ecclesio_theme_colors', array(
+			'title'    => __( 'Theme Colors', 'ecclesio-hallmark-theme' ),
+			'priority' => 103
+		) );
 
 		/*
 		 * Add settings to sections.
 		 */
 		$this->ecclesio_church_info_section( $wp_customize );
 		$this->ecclesio_church_social_section( $wp_customize );
+		$this->ecclesio_theme_colors_section( $wp_customize );
 
 	}
 
@@ -129,7 +135,7 @@ class Ecclesio_Hallmark_Customizer {
 			) );
 				
 
-	}
+	} // ecclesio_church_info_section
 
 	/**
 	 * Section: Social Media
@@ -341,6 +347,35 @@ class Ecclesio_Hallmark_Customizer {
 				'priority'    => 10
 			) ) );
 
+	} // ecclesio_church_social_section
+
+	/**
+	 * Section: Theme Colors
+	 *
+	 * @param WP_Customize_Manager $wp_customize
+	 *
+	 * @access private
+	 * @since  1.0
+	 * @return void
+	 */
+	private function ecclesio_theme_colors_section( $wp_customize ) {
+		$section = 'ecclesio_theme_colors';
+
+		/* Main Color */
+		$setting = 'ecclesio_color_main';
+		$wp_customize->add_setting( $setting, array(
+			'type' 				=> 'theme_mod',
+			'transport'			=> 'postMessage',
+			'default'           => '#358fcd',
+			'sanitize_callback' => 'sanitize_hex_color'
+		) );
+			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $setting, array(
+				'label'    => esc_html__( 'Main Color', 'ecclesio-hallmark-theme' ),
+				'section'  => $section,
+				'settings' => $setting,
+				'priority' => 10
+			) ) );
+		
 	}
 
 	/**
@@ -358,7 +393,7 @@ class Ecclesio_Hallmark_Customizer {
 		return ( $input === true ) ? true : false;
 	}
 
-}
+} //Ecclesio_Hallmark_Customizer
 
 /*
  * Make data publicly available by placing them outside of the Class
@@ -410,4 +445,45 @@ function get_customize_social_vimeo() {
 function get_customize_social_yt() {
     $option = get_option( 'ecclesio_social_yt' );
     return $option;
+}
+
+/**
+ * Generate CSS based on the Customizer settings.
+ *
+ * @since 1.0
+ * @return string
+ */
+function ecclesio_customizer_css() {
+
+	$css = '';
+
+	$color_main = get_theme_mod( 'ecclesio_color_main', '#358fcd' );
+		list($r, $g, $b) = sscanf($color_main, "#%02x%02x%02x");
+
+	$css .= '#banner .overlay { background: rgba('.$r.', '.$g.', '.$b.', 0.75); }';
+	$css .= '#menu-main-menu-1 .submenu li a:hover, .footer-top, .off-canvas, button.hamburger .hamburger-inner, button.hamburger .hamburger-inner:after, button.hamburger .hamburger-inner:before, .pagination .current { background-color: ' . $color_main . '; }';
+	$css .= 'a, #menu-main-menu-1 li.active>a, #menu-main-menu-1 li a:hover, #listing article .card .button:active, #listing article .card .button:focus, #listing article .card .button:hover, .button.outline-white:hover, .button.outline-white:active, .button.outline-white:focus, .tabs-sermon .tabs-title.is-active a { color: ' . $color_main . '; }';
+	$css .= '.dropdown.menu.medium-horizontal>li.is-dropdown-submenu-parent>a:after { border-color: ' . $color_main . ' transparent transparent; }';
+
+	return $css;
+
+}
+
+/* 
+ * Preview CSS changes without refreshs
+ * Also see ecclesio-customizer.js
+ * Also see functions.php
+ */
+add_action( 'wp_head', 'ecclesio_customizer_empty_style' );
+ 
+/**
+ * Print Empty Color CSS
+ */
+function ecclesio_customizer_empty_style(){
+ 
+    /* Add in Customizer Only (style tag placeholder for link color). */
+    global $wp_customize;
+    if ( isset( $wp_customize ) ){
+        echo "\n" . '<style type="text/css" id="ecclesio-customizer-preview"></style>' . "\n";
+    }
 }

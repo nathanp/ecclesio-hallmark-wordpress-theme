@@ -137,6 +137,9 @@ function ecclesio_scripts() {
 	// Font Awesome
 	wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
+	// Live preview CSS changes
+	wp_add_inline_style( 'ecclesio-responsive', ecclesio_customizer_css() ); //class-ecclesio-hallmark-customizer.php
+
 	// Hallmark - Custom JS
 	wp_enqueue_script( 'ecclesio-app-js', get_stylesheet_directory_uri() . '/js/ecclesio.js', array( 'jquery' ), '6.0', true );
 

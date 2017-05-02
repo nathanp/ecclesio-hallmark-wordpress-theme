@@ -34,12 +34,47 @@
 												</a>
 											</li>';
 									}
+									if(get_customize_social_google()) {
+										echo '<li>
+												<a href="'.get_customize_social_google().'" target="_blank">
+													<i class="fa fa-google-plus" aria-hidden="true"></i>
+												</a>
+											</li>';
+									}
+									if(get_customize_social_snap()) {
+										echo '<li>
+												<a href="'.get_customize_social_snap().'" target="_blank">
+													<i class="fa fa-snapchat-ghost" aria-hidden="true"></i>
+												</a>
+											</li>';
+									}
 									if(get_customize_social_itunes()) {
 										echo '<li>
 											<a href="'.get_customize_social_itunes().'" target="_blank">
 												<i class="fa fa-podcast" aria-hidden="true"></i>
 											</a>
 										</li>';
+									}
+									if(get_customize_social_spotify()) {
+										echo '<li>
+												<a href="'.get_customize_social_spotify().'" target="_blank">
+													<i class="fa fa-spotify" aria-hidden="true"></i>
+												</a>
+											</li>';
+									}
+									if(get_customize_social_vimeo()) {
+										echo '<li>
+												<a href="'.get_customize_social_vimeo().'" target="_blank">
+													<i class="fa fa-vimeo" aria-hidden="true"></i>
+												</a>
+											</li>';
+									}
+									if(get_customize_social_yt()) {
+										echo '<li>
+												<a href="'.get_customize_social_yt().'" target="_blank">
+													<i class="fa fa-youtube-play" aria-hidden="true"></i>
+												</a>
+											</li>';
 									}
 									?>
 								</ul>
