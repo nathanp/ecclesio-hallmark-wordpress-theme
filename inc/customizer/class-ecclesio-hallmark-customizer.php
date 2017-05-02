@@ -364,13 +364,27 @@ class Ecclesio_Hallmark_Customizer {
 		/* Main Color */
 		$setting = 'ecclesio_color_main';
 		$wp_customize->add_setting( $setting, array(
-			'type' 				=> 'theme_mod',
+			'type' 				=> 'theme_mod', // This is a THEME_MOD, *not* a site-wide option. AKA this sticks only with this theme.
 			'transport'			=> 'postMessage',
 			'default'           => '#358fcd',
 			'sanitize_callback' => 'sanitize_hex_color'
 		) );
 			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $setting, array(
 				'label'    => esc_html__( 'Main Color', 'ecclesio-hallmark-theme' ),
+				'section'  => $section,
+				'settings' => $setting,
+				'priority' => 10
+			) ) );
+		/* Accent Color */
+		$setting = 'ecclesio_color_accent';
+		$wp_customize->add_setting( $setting, array(
+			'type' 				=> 'theme_mod',
+			'transport'			=> 'postMessage',
+			'default'           => '#f8981d',
+			'sanitize_callback' => 'sanitize_hex_color'
+		) );
+			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $setting, array(
+				'label'    => esc_html__( 'Accent Color', 'ecclesio-hallmark-theme' ),
 				'section'  => $section,
 				'settings' => $setting,
 				'priority' => 10
@@ -455,18 +469,26 @@ function get_customize_social_yt() {
  */
 function ecclesio_customizer_css() {
 
+	// Variables
 	$css = '';
 
 	$color_main = get_theme_mod( 'ecclesio_color_main', '#358fcd' );
 		list($r, $g, $b) = sscanf($color_main, "#%02x%02x%02x");
 
+	$color_accent = get_theme_mod( 'ecclesio_color_accent', '#f8981d' );
+
+	// Generate CSS
+	//Main Color
 	$css .= '#banner .overlay { background: rgba('.$r.', '.$g.', '.$b.', 0.75); }';
 	$css .= '#menu-main-menu-1 .submenu li a:hover, .footer-top, .off-canvas, button.hamburger .hamburger-inner, button.hamburger .hamburger-inner:after, button.hamburger .hamburger-inner:before, .pagination .current { background-color: ' . $color_main . '; }';
 	$css .= 'a, #menu-main-menu-1 li.active>a, #menu-main-menu-1 li a:hover, #listing article .card .button:active, #listing article .card .button:focus, #listing article .card .button:hover, .button.outline-white:hover, .button.outline-white:active, .button.outline-white:focus, .tabs-sermon .tabs-title.is-active a { color: ' . $color_main . '; }';
 	$css .= '.dropdown.menu.medium-horizontal>li.is-dropdown-submenu-parent>a:after { border-color: ' . $color_main . ' transparent transparent; }';
+	//Accent Color
+	$css .= '#purpose, #sermon-latest .text-container .button { border-color: ' . $color_accent . '; }';
+	$css .= '.home #banner .button-group li a.button:hover, .home #banner .button-group li a.button:focus, .home #banner .button-group li a.button:active, #sermon-latest .text-container h5, #sermon-latest .text-container .button:hover, #sermon-latest .text-container .button:active, #sermon-latest .text-container .button:focus { background-color: ' . $color_accent . '; }';
 
+	// Return CSS
 	return $css;
-
 }
 
 /* 
