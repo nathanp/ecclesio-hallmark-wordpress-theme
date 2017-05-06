@@ -5,7 +5,7 @@ Author: Nathan Parikh
 Author URI: https://ndzynes.com
 Template: ecclesio-base-theme
 Description: Eccles.io's flagship theme.
-Version: 1.0.1
+Version: 1.0.2
 Text Domain: ecclesio
 */
 
@@ -355,33 +355,41 @@ header.header.scroll {
 #staff {
 
 }
-	#staff li {
+	#staff .person {
 		list-style-type: none;
 	    display: inline-block;
-	    width: 19%;
+	    /*width: 19%;*/
 	    text-align: center;
 	    padding: 1.5% 3% 1.5% 0;
 	    vertical-align: text-top;
 
 	}
-		#staff li .thumbnail {
+		#staff .person .thumbnail {
 			-webkit-border-radius: 100%;
 			border-radius: 100%;
 			overflow: hidden;
+			width: 100%;
+		    height: 0;
+		    padding: 100% 0px 0.25%;
+		    position: relative;
+		    z-index: 1;
 		}
-		#staff li img {
+		#staff .person img {
 			max-width: 100%;
-			width: 176px;
-			height: 176px;
-			object-fit: cover;
-
+		    width: 100%;
+		    height: 100%;
+		    object-fit: cover;
+		    position: absolute;
+		    top: 0;
+		    left: 0;
+		    z-index: 0;
 		}
-		#staff li h3 {
+		#staff .person h3 {
 			margin: 0px;
 		    font-size: 1.25em;
 		    font-weight: 400;
 		}
-		#staff li h4 {
+		#staff .person h4 {
 			font-size: 1em;
 		}
 
@@ -535,6 +543,9 @@ header.header.scroll {
 .page-navigation {
 	clear: both;
 }
+	.page-navigation .pagination {
+		text-align: center;
+	}
 
 /************
 	SERMONS
@@ -584,7 +595,7 @@ header.header.scroll {
     			color: #388ecd;
 			}
 
-.ctc_sermon .article-header {
+.single-ctc_sermon .ctc_sermon .article-header {
 	margin: 30px 0px 0px;
 }
 	.ctc_sermon .article-header .entry-title {

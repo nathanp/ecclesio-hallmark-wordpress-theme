@@ -20,7 +20,7 @@ Template Name: Staff
 			    
 			    <?php endwhile; endif; ?>
 				
-				<ul id="staff">
+				<div id="staff" class="row large-up-<?php echo get_theme_mod('ecclesio_staff_count'); ?> medium-up-3 small-up-2" data-equalizer>
 				    <?php
 				    $the_query = new WP_Query( array(
 					    'post_type' => 'ctc_person',
@@ -39,8 +39,9 @@ Template Name: Staff
 						$person_email		= strip_tags( get_post_meta( $post->ID , '_ctc_person_email' , true ) );
 						$person_urls		= strip_tags( get_post_meta( $post->ID , '_ctc_person_urls' , true ) );
 
+						//query count below is to add the "end" class to the last item to remove the float:right from Foundation
 					?>
-					<li>
+					<div class="person column<?php if (($the_query->current_post +1) == ($the_query->post_count)) { echo ' end'; } ?>" data-equalizer-watch>
 						<?php
 							if ( has_post_thumbnail() ) {
 								/* temporarily disable link to profile until profile pages are complete
@@ -53,9 +54,9 @@ Template Name: Staff
 							echo '<h3>'.get_the_title().'</h3>';
 							if($person_position) { echo "<h4>$person_position</h4>"; }
 						?>
-					</li>
+					</div>
 					<?php endwhile; ?>
-				</ul>					
+				</div>					
 			    					
 			</main> <!-- end #main -->
 		    

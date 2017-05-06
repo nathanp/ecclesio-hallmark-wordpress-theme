@@ -86,8 +86,9 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 				    		$speakers = get_the_terms( $post, 'ctc_sermon_speaker');
 				    		if($speakers) {
 					    		foreach($speakers as $speaker) {
-									echo '<a href="'.get_term_link($speaker).'">'.$speaker->name,'</a>';
+									$speaker_names[] = "<a href='".get_term_link($speaker)."'>$speaker->name</a>";
 								}
+								echo implode(', ', $speaker_names);
 								echo " |";
 							}
 				    	?> <?php echo get_the_date(); ?>
@@ -107,8 +108,9 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 				    		if($sermon_books) {
 				    			echo '<br>Book: ';
 					    		foreach($sermon_books as $sermon_book) {
-									echo '<a href="'.get_term_link($sermon_book).'">'.$sermon_book->name,'</a>';
+									$book_names[] = "<a href='".get_term_link($sermon_book)."'>$sermon_book->name</a>";
 								}
+								echo implode(', ', $book_names);
 							}
 				    	?>
 				    	
@@ -117,8 +119,9 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 				    		if($sermon_topics) {
 				    			echo '<br>Topic: ';
 					    		foreach($sermon_topics as $sermon_topic) {
-									echo '<a href="'.get_term_link($sermon_topic).'">'.$sermon_topic->name,'</a>';
+					    			$topic_names[] = "<a href='".get_term_link($sermon_topic)."'>$sermon_topic->name</a>";
 								}
+								echo implode(', ', $topic_names);
 							}
 				    	?>
 				    	

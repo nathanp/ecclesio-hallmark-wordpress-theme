@@ -5,6 +5,16 @@
             jQuery('.ecclesio-part-phone').html( to );
         } );
     } ); //wp.customize
+    wp.customize( 'ecclesio_part_church_services_heading', function( value ) {
+        value.bind( function( to ) {
+            jQuery('.ecclesio-part-services-heading').html( to );
+        } );
+    } ); //wp.customize
+    wp.customize( 'ecclesio_part_church_service_times', function( value ) {
+        value.bind( function( to ) {
+            jQuery('.ecclesio-part-service-times').html( to );
+        } );
+    } ); //wp.customize
 
     // function to convert hex to rgb
     function hexToRGB(hex, alpha) {
@@ -22,12 +32,10 @@
     wp.customize( 'ecclesio_color_main', function( value ) {
         value.bind( function( to ) {
             //Generate CSS
-            var color_main_banner   = '#banner .overlay { background: ' + hexToRGB(to, 0.75) + '; }';
-            var color_main_bg       = '#menu-main-menu-1 .submenu li a:hover, .footer-top, .off-canvas, button.hamburger .hamburger-inner, button.hamburger .hamburger-inner:after, button.hamburger .hamburger-inner:before, .pagination .current { background-color:' +  to + '}';
+            var color_main_bg       = '#menu-main-menu-1 .submenu li a:hover, .footer-top, .off-canvas, button.hamburger .hamburger-inner, button.hamburger .hamburger-inner:after, button.hamburger .hamburger-inner:before, .pagination .current, .button { background-color:' +  to + '}';
             var color_main_txt      = 'a, #menu-main-menu-1 li.active>a, #menu-main-menu-1 li a:hover, #listing article .card .button:active, #listing article .card .button:focus, #listing article .card .button:hover, .button.outline-white:hover, .button.outline-white:active, .button.outline-white:focus, .tabs-sermon .tabs-title.is-active a { color:' +  to + '}';
             var color_main_border   = '.dropdown.menu.medium-horizontal>li.is-dropdown-submenu-parent>a:after {  border-color: ' + to + ' transparent transparent; }';
             //Put in the preview-only CSS
-            $( '#ecclesio-customizer-preview' ).append( color_main_banner );
             $( '#ecclesio-customizer-preview' ).append( color_main_bg );
             $( '#ecclesio-customizer-preview' ).append( color_main_txt );
             $( '#ecclesio-customizer-preview' ).append( color_main_border );
@@ -43,6 +51,26 @@
             //Put in the preview-only CSS
             $( '#ecclesio-customizer-preview' ).append( color_accent_bg );
             $( '#ecclesio-customizer-preview' ).append( color_accent_border );
+        } );
+    } );//wp.customize
+
+    // Selective refresh the site's banner color
+    wp.customize( 'ecclesio_color_banner', function( value ) {
+        value.bind( function( to ) {
+            //Generate CSS
+            var color_banner   = '#banner .overlay { background: ' + hexToRGB(to, 0.75) + '; }';
+            //Put in the preview-only CSS
+            $( '#ecclesio-customizer-preview' ).append( color_banner );
+        } );
+    } );//wp.customize
+
+    // Selective refresh the site's footer color
+    wp.customize( 'ecclesio_color_footer', function( value ) {
+        value.bind( function( to ) {
+            //Generate CSS
+            var color_footer   = 'footer.footer { background: ' + to + '; }';
+            //Put in the preview-only CSS
+            $( '#ecclesio-customizer-preview' ).append( color_footer );
         } );
     } );//wp.customize
     

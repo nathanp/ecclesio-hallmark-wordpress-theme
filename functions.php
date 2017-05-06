@@ -185,14 +185,6 @@ function ecclesio_remove_query_strings_2( $src ){
 		add_filter( 'style_loader_src', 'ecclesio_remove_query_strings_2', 15, 1 );
 	}
 
-/*ACF Options Page
-if( function_exists('acf_add_options_page') ) {
-	
-	acf_add_options_page();
-	
-}
-*/
-
 /**
  * GET THUMBNAIL FROM VIMEO
  * Retrieves the thumbnail from a youtube or vimeo video
@@ -208,7 +200,7 @@ function get_video_thumbnail( $src, $res = null ) {
 	if ( $url_pieces[2] == 'vimeo.com' ) { // If Vimeo
 		$res = (string) $res; //argument for resolution
 		$id = (int) substr(parse_url($src, PHP_URL_PATH), 1);
-		$hash = unserialize(file_get_contents('http://vimeo.com/api/v2/video/' . $id . '.php'));
+		$hash = unserialize(file_get_contents('https://vimeo.com/api/v2/video/' . $id . '.php'));
 
 		if(get_transient('vimeo_' . $res . '_' . $id)) { // If thumbnail has already been cached, get that
 			$thumbnail = get_transient('vimeo_' . $res . '_' . $id);
@@ -228,7 +220,7 @@ function get_video_thumbnail( $src, $res = null ) {
 
 		preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $src, $matches);
     	$id = $matches[1];
-		$thumbnail = 'http://img.youtube.com/vi/' . $id . '/mqdefault.jpg';
+		$thumbnail = 'https://img.youtube.com/vi/' . $id . '/mqdefault.jpg';
 
 	}
 

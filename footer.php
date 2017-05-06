@@ -2,9 +2,9 @@
 					<div class="footer-top">
 						<div class="row">
 							<div class="large-4 medium-5 small-12 columns">
-								<h5> <i class="fa fa-clock-o" aria-hidden="true"></i> Sunday Service Times</h5>
-								<p>
-									Bible Study: 9:30am | Worship: 10:30am
+								<h5> <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="ecclesio-part-services-heading"><?php echo get_customize_partial_church_services_heading(); ?></span></h5>
+								<p class="ecclesio-part-service-times">
+									<?php echo get_customize_partial_church_service_times(); ?>
 								</p>
 							</div><!-- .columns -->
 							<div class="large-4 medium-3 small-12 columns text-center">
@@ -86,7 +86,14 @@
 						<div class="small-12 columns text-center">
 							
 							<a href="<?php echo home_url(); ?>">
-								<img id="logo-footer" class="svg" src="<?php echo get_stylesheet_directory_uri(); ?>/images/logo.svg" alt="">
+								<?php
+									if ( get_option( 'ecclesio_site_logo' ) ) {
+										echo '<img id="logo-footer" class="svg" src="' . esc_url( get_option( 'ecclesio_site_logo' ) ) . '">';
+									}
+									else {
+										
+									}
+								?>
 							</a>
 							<p>
 								<i class="fa fa-map-marker" aria-hidden="true"></i> 

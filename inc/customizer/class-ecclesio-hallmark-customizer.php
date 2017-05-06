@@ -36,6 +36,16 @@ class Ecclesio_Hallmark_Customizer {
 	public function register_customize_sections( $wp_customize ) {
 
 		/*
+		 * Rename Existing Sections
+		 */
+
+		// Yoast SEO
+		$wp_customize->add_section( 'wpseo_breadcrumbs_customizer_section' , array(
+			'title'		=> __('Breadcrumbs','ecclesio-hallmark-theme'),
+			'priority'	=> 120,
+		));
+
+		/*
 		 * Add Sections
 		 */
 
@@ -54,6 +64,12 @@ class Ecclesio_Hallmark_Customizer {
 			'title'    => __( 'Theme Colors', 'ecclesio-hallmark-theme' ),
 			'priority' => 103
 		) );
+		// New section for "Staff Options".
+		$wp_customize->add_section( 'ecclesio_church_staff', array(
+			'title'    => __( 'Staff', 'ecclesio-hallmark-theme' ),
+			'active_callback' => 'is_template_staff',
+			'priority' => 104
+		) );
 
 		/*
 		 * Add settings to sections.
@@ -62,6 +78,7 @@ class Ecclesio_Hallmark_Customizer {
 		$this->ecclesio_church_info_section( $wp_customize );
 		$this->ecclesio_church_social_section( $wp_customize );
 		$this->ecclesio_theme_colors_section( $wp_customize );
+		$this->ecclesio_church_staff_section( $wp_customize );
 
 	}
 
@@ -101,7 +118,7 @@ class Ecclesio_Hallmark_Customizer {
 	 * @return void
 	 */
 	private function ecclesio_church_info_section( $wp_customize ) {
-
+		$section = 'ecclesio_church_info';
 	    /* Church Phone Number */
 	    // Add Setting
 		$wp_customize->add_setting( 'ecclesio_church_phone', array(
@@ -158,6 +175,64 @@ class Ecclesio_Hallmark_Customizer {
 			    'settings' => array( 'ecclesio_church_address' ),
 			    'container_inclusive' => false,
 			    'render_callback' => 'get_customize_partial_church_address',
+			    'fallback_refresh' => false,
+			) );
+		/* Service Times Heading */
+		$setting = 'ecclesio_church_services_heading';
+		// Add Setting
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'option',
+			'capability' => 'edit_theme_options',
+			'default' => 'Sunday Service Times',
+			'transport' => 'postMessage', // or postMessage
+		) );
+			// Add Control
+			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
+				'label'       => esc_html__( 'Service Times Heading', 'ecclesio-hallmark-theme' ),
+				'input_attrs' => array(
+			        'placeholder' => 'Sunday Service Times'
+			    ),
+				'description' => esc_html__( 'This will go in the colored bar in your footer.', 'ecclesio-hallmark-theme' ),
+				'section'     => $section,
+				'settings'    => $setting,
+				'type'        => 'text',
+				'priority'    => 10
+			) ) );
+			// Selective Refresh
+			$wp_customize->selective_refresh->add_partial( 'ecclesio_part_church_services_heading', array(
+			    'selector' => '.ecclesio-part-services-heading',
+			    'settings' => array( $setting ),
+			    'container_inclusive' => false,
+			    'render_callback' => 'get_customize_partial_church_services_heading',
+			    'fallback_refresh' => false,
+			) );
+		/* Service Times */
+		$setting = 'ecclesio_church_service_times';
+		// Add Setting
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'option',
+			'capability' => 'edit_theme_options',
+			'default' => 'Bible Study: 9:30am | Worship: 10:30am',
+			'transport' => 'postMessage', // or postMessage
+		) );
+			// Add Control
+			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
+				'label'       => esc_html__( 'Service Times', 'ecclesio-hallmark-theme' ),
+				'input_attrs' => array(
+			        'placeholder' => ''
+			    ),
+				'description' => esc_html__( 'This will go in the colored bar in your footer.', 'ecclesio-hallmark-theme' ),
+				'section'     => $section,
+				'settings'    => $setting,
+				'type'        => 'text',
+				'priority'    => 10
+			) ) );
+			// Selective Refresh
+			$wp_customize->selective_refresh->add_partial( 'ecclesio_part_church_service_times', array(
+			    'selector' => '.ecclesio-part-service-times',
+			    'settings' => array( $setting ),
+			    'container_inclusive' => false,
+			    'render_callback' => 'get_customize_partial_church_service_times',
 			    'fallback_refresh' => false,
 			) );
 				
@@ -416,8 +491,76 @@ class Ecclesio_Hallmark_Customizer {
 				'settings' => $setting,
 				'priority' => 10
 			) ) );
+		/* Banner Color */
+		$setting = 'ecclesio_color_banner';
+		$wp_customize->add_setting( $setting, array(
+			'type' 				=> 'theme_mod',
+			'transport'			=> 'postMessage',
+			'default'           => '#016CC5',
+			'sanitize_callback' => 'sanitize_hex_color'
+		) );
+			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $setting, array(
+				'label'    => esc_html__( 'Banner Color', 'ecclesio-hallmark-theme' ),
+				'section'  => $section,
+				'settings' => $setting,
+				'priority' => 10
+			) ) );
+		/* Footer Color */
+		$setting = 'ecclesio_color_footer';
+		$wp_customize->add_setting( $setting, array(
+			'type' 				=> 'theme_mod',
+			'transport'			=> 'postMessage',
+			'default'           => '#4a4a4a',
+			'sanitize_callback' => 'sanitize_hex_color'
+		) );
+			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $setting, array(
+				'label'    => esc_html__( 'Footer Color', 'ecclesio-hallmark-theme' ),
+				'section'  => $section,
+				'settings' => $setting,
+				'priority' => 10
+			) ) );
 		
-	}
+	} //ecclesio_theme_colors
+
+	/**
+	 * Section: Church Staff
+	 *
+	 * @param WP_Customize_Manager $wp_customize
+	 *
+	 * @access private
+	 * @since  1.0
+	 * @return void
+	 */
+	private function ecclesio_church_staff_section( $wp_customize ) {
+		$section = 'ecclesio_church_staff';
+	    /* Display Count */
+	    $setting = 'ecclesio_staff_count';
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'theme_mod',
+			'capability' => 'edit_theme_options',
+			'default' => '4',
+			'transport' => 'refresh', // refresh or postMessage
+			'sanitize_callback' => 'sanitize_text_field'
+		) );
+			// Add Control
+			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
+				'label'       => esc_html__( 'People per Row', 'ecclesio-hallmark-theme' ),
+				'input_attrs' => array(
+			        'placeholder' => '4'
+			    ),
+				'description' => esc_html__( 'Number of staff displayed per row.', 'ecclesio-hallmark-theme' ),
+				'section'     => $section,
+				'settings'    => $setting,
+				'type'        => 'number',
+				'input_attrs' => array(
+				    'min' => 1,
+				    'max' => 12,
+				    'step' => 1,
+				  ),
+				'priority'    => 10
+			) ) );
+
+	} // ecclesio_church_staff_section
 
 	/**
 	 * Sanitize Checkbox
@@ -442,12 +585,20 @@ class Ecclesio_Hallmark_Customizer {
 
 //Partials
 function get_customize_partial_church_address() {
-    $phone = get_option( 'ecclesio_church_address' );
-    return $phone;
+    $option = get_option( 'ecclesio_church_address' );
+    return $option;
 }
 function get_customize_partial_church_phone() {
-    $phone = get_option( 'ecclesio_church_phone' );
-    return $phone;
+    $option = get_option( 'ecclesio_church_phone' );
+    return $option;
+}
+function get_customize_partial_church_services_heading() {
+    $option = get_option( 'ecclesio_church_services_heading' );
+    return $option;
+}
+function get_customize_partial_church_service_times() {
+    $option = get_option( 'ecclesio_church_service_times' );
+    return $option;
 }
 
 //Non-Partials
@@ -488,6 +639,18 @@ function get_customize_social_yt() {
     return $option;
 }
 
+/*
+ * Active Callbacks
+ */
+function is_template_staff(){
+    // Get the page's template
+    if ( is_page_template( 'template-people.php' ) == 0 ){
+        return false;
+    } else {
+        return true;
+    }
+}
+
 /**
  * Generate CSS based on the Customizer settings.
  *
@@ -500,19 +663,23 @@ function ecclesio_customizer_css() {
 	$css = '';
 
 	$color_main = get_theme_mod( 'ecclesio_color_main', '#358fcd' );
-		list($r, $g, $b) = sscanf($color_main, "#%02x%02x%02x");
-
 	$color_accent = get_theme_mod( 'ecclesio_color_accent', '#f8981d' );
+	$color_banner = get_theme_mod( 'ecclesio_color_banner', '#016CC5' );
+		list($r, $g, $b) = sscanf($color_banner, "#%02x%02x%02x");
+	$color_footer = get_theme_mod( 'ecclesio_color_footer', '#4a4a4a' );
 
 	// Generate CSS
 	//Main Color
-	$css .= '#banner .overlay { background: rgba('.$r.', '.$g.', '.$b.', 0.75); }';
-	$css .= '#menu-main-menu-1 .submenu li a:hover, .footer-top, .off-canvas, button.hamburger .hamburger-inner, button.hamburger .hamburger-inner:after, button.hamburger .hamburger-inner:before, .pagination .current { background-color: ' . $color_main . '; }';
+	$css .= '#menu-main-menu-1 .submenu li a:hover, .footer-top, .off-canvas, button.hamburger .hamburger-inner, button.hamburger .hamburger-inner:after, button.hamburger .hamburger-inner:before, .pagination .current, .button { background-color: ' . $color_main . '; }';
 	$css .= 'a, #menu-main-menu-1 li.active>a, #menu-main-menu-1 li a:hover, #listing article .card .button:active, #listing article .card .button:focus, #listing article .card .button:hover, .button.outline-white:hover, .button.outline-white:active, .button.outline-white:focus, .tabs-sermon .tabs-title.is-active a { color: ' . $color_main . '; }';
 	$css .= '.dropdown.menu.medium-horizontal>li.is-dropdown-submenu-parent>a:after { border-color: ' . $color_main . ' transparent transparent; }';
 	//Accent Color
 	$css .= '#purpose, #sermon-latest .text-container .button { border-color: ' . $color_accent . '; }';
 	$css .= '.home #banner .button-group li a.button:hover, .home #banner .button-group li a.button:focus, .home #banner .button-group li a.button:active, #sermon-latest .text-container h5, #sermon-latest .text-container .button:hover, #sermon-latest .text-container .button:active, #sermon-latest .text-container .button:focus { background-color: ' . $color_accent . '; }';
+	//Banner Color
+	$css .= '#banner .overlay { background: rgba('.$r.', '.$g.', '.$b.', 0.75); }';
+	//Foter Color
+	$css .= 'footer.footer { background-color: '. $color_footer .'; }';
 
 	// Return CSS
 	return $css;
@@ -536,3 +703,23 @@ function ecclesio_customizer_empty_style(){
         echo "\n" . '<style type="text/css" id="ecclesio-customizer-preview"></style>' . "\n";
     }
 }
+
+/* 
+ * Custom palette for color pickder
+ * https://wordpress.org/support/topic/universally-change-iris-palette/
+ */
+add_action('admin_enqueue_scripts', 'ecclesio_iris_palette');
+function ecclesio_iris_palette() {
+	wp_enqueue_script( 'ecclesio-customizer-iris-palette', get_stylesheet_directory_uri() . '/js/ecclesio-customizer-iris-palette.js');
+}
+
+/* 
+ * Remove sections from the Customizer
+ * https://wordpress.stackexchange.com/questions/181905/remove-the-widgets-tab-from-theme-customizer
+ */
+function ecclesio_edit_customizer( $wp_customize ) {
+	$wp_customize->remove_panel( 'widgets' );
+	$wp_customize->remove_section( 'static_front_page' );
+	$wp_customize->remove_section( 'themes' );
+}
+add_action( 'customize_register', 'ecclesio_edit_customizer' );
