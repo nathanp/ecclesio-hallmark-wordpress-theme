@@ -710,7 +710,11 @@ function ecclesio_customizer_empty_style(){
  */
 add_action('admin_enqueue_scripts', 'ecclesio_iris_palette');
 function ecclesio_iris_palette() {
-	wp_enqueue_script( 'ecclesio-customizer-iris-palette', get_stylesheet_directory_uri() . '/js/ecclesio-customizer-iris-palette.js');
+	/* Add in Customizer Only */
+	global $wp_customize;
+	if ( isset( $wp_customize ) ){
+		wp_enqueue_script( 'ecclesio-customizer-iris-palette', get_stylesheet_directory_uri() . '/js/ecclesio-customizer-iris-palette.js');
+	}
 }
 
 /* 

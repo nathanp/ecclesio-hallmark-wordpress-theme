@@ -121,6 +121,27 @@ function ecclesio_google_fonts_url() {
 }
 
 
+/* Google Fonts for the Customizer
+ * For now, rely on Ultimate Fonts plugin - https://wordpress.org/plugins/ultimate-fonts
+ * See https://wpultimatefonts.com/docs/integrate-ultimatefonts-into-your-wordpress-theme/
+ */
+add_action( 'after_setup_theme', 'ecclesio_ultimatefonts_setup' );
+function ecclesio_ultimatefonts_setup() {
+    add_theme_support( 'ultimate-fonts', array(
+        'no_settings'      => false, // Disable the plugin settings page
+        'default_elements' => array(
+            array(
+                'label'    => esc_html__( 'Heading/Button Font', 'ecclesio' ),
+                'selector' => 'h1, h2, h3, h4, h5, h6, button, .button, #menu-main-menu-1 li, #menu-main-menu.vertical, #breadcrumbs,#sermon-latest .text-container .meta,.tabs-sermon .tabs-title,.tabs-sermon .link-title,#listing article .thumb .overlay,.event-meta,.footer-top'
+            ),
+            array(
+                'label'    => esc_html__( 'Body Font', 'ecclesio' ),
+                'selector' => 'body,p,#purpose, #purpose .statement,#staff li h4'
+            ),
+        ),
+    ) );
+}
+
 /**
  * Enqueues scripts and styles.
  */
