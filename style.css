@@ -553,6 +553,9 @@ header.header.scroll {
 .single-ctc_sermon #banner {
 	height: auto;
 }
+	.single-ctc_sermon #banner iframe {
+		width: 100%;
+	}
 #banner .flex-video,
 #banner .responsive-embed {
 	padding-bottom: 80vh;

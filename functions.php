@@ -249,5 +249,46 @@ function get_video_thumbnail( $src, $res = null ) {
 
 }
 
+/**
+ * ENABLE AUTOMATIC EMBEDS FROM SERMON AUDIO
+ * Thanks to - https://github.com/CarlosRios/sermonaudio-embed
+ * Just paste the URL to the page from sermonaudio. E.g. http://www.sermonaudio.com/sermoninfo.asp?SID=51016846565
+**/
+// Get things going
+add_action( 'init', function(){
+	wp_embed_register_handler(
+		'sermonaudio',
+		'#http://(www\.)?sermonaudio\.com/sermoninfo.asp\?SID=([\d]+)#',
+		'wp_register_sermonaudio_embed',
+		true
+	);
+	wp_embed_register_handler(
+		'sermonaudio_2',
+		'#http://(www\.)?sermonaudio\.com/sermoninfo.asp\?m=t&s=([\d]+)#',
+		'wp_register_sermonaudio_embed',
+		true
+	);
+});
+// Provide WordPress with the embed code
+if( !function_exists( 'wp_register_sermonaudio_embed' ) ) {
+	function wp_register_sermonaudio_embed( $matches, $attr, $url, $rawattr )
+	{
+		$embed = sprintf(
+			'<iframe style="min-width:250px;" width="100%%" height="150" frameborder="0" src="http://www.sermonaudio.com/saplayer/player_embed.asp?SID=%1$s"></iframe>',
+			esc_attr( $matches[2] )
+		);
+		return apply_filters( 'wp_embed_sermonaudio', $embed, $matches, $attr, $url, $rawattr );
+	}
+}
+
+/**
+ * ENABLE AUTOMATIC EMBEDS FROM SOUNDCLOUD
+ * Thanks to - http://www.wpbeginner.com/wp-tutorials/how-to-embed-soundcloud-in-your-wordpress-posts-by-using-oembed/
+**/
+// Add SoundCloud oEmbed
+function add_oembed_soundcloud(){
+wp_oembed_add_provider( 'http://soundcloud.com/*', 'http://soundcloud.com/oembed' );
+}
+add_action('init','add_oembed_soundcloud');
 
 ?>

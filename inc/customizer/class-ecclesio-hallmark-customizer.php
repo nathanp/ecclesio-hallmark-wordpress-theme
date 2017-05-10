@@ -62,19 +62,19 @@ class Ecclesio_Hallmark_Customizer {
 		// New section for "Colors".
 		$wp_customize->add_section( 'ecclesio_theme_colors', array(
 			'title'    => __( 'Theme Colors', 'ecclesio-hallmark-theme' ),
-			'priority' => 103
+			'priority' => 20
 		) );
 		// New section for "Staff Options".
 		$wp_customize->add_section( 'ecclesio_church_staff', array(
 			'title'    => __( 'Staff', 'ecclesio-hallmark-theme' ),
 			'active_callback' => 'is_template_staff',
-			'priority' => 104
+			'priority' => 19 //place above "Site Identity"
 		) );
 		// New section for "Sermon Archive Options".
 		$wp_customize->add_section( 'ecclesio_church_sermons', array(
 			'title'    => __( 'Sermon Archive', 'ecclesio-hallmark-theme' ),
 			'active_callback' => 'is_archive_sermons',
-			'priority' => 104
+			'priority' => 19 //place above "Site Identity"
 		) );
 
 		/*
@@ -613,7 +613,7 @@ class Ecclesio_Hallmark_Customizer {
 			) ) );
 			// Selective Refresh
 			$wp_customize->selective_refresh->add_partial( 'ecclesio_part_sermon_banner_heading', array(
-			    'selector' => '#banner .banner-text .page-title',
+			    'selector' => '.post-type-archive-ctc_sermon #banner .banner-text .page-title',
 			    'settings' => array( $setting ),
 			    'container_inclusive' => false,
 			    'render_callback' => 'get_customize_partial_sermons_heading',

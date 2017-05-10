@@ -17,7 +17,7 @@
     } ); //wp.customize
     wp.customize( 'ecclesio_part_sermon_banner_heading', function( value ) {
         value.bind( function( to ) {
-            jQuery('#banner .banner-text .page-title').html( to );
+            jQuery('.post-type-archive-ctc_sermon #banner .banner-text .page-title').html( to );
         } );
     } ); //wp.customize
     wp.customize( 'ecclesio_part_sermon_banner_byline', function( value ) {

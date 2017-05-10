@@ -60,12 +60,13 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 							  		<i class="fa fa-headphones" aria-hidden="true"></i> Listen
 							  	</a>
 							  </li>
-							  <li class="link-title">
-							  	<a href="<?php echo $sermon_audio_dl; ?>" target="_blank">
-							  		<i class="fa fa-cloud-download" aria-hidden="true"></i> Download Audio
-							  	</a>
-							  </li>
-						<?php }
+							  <?php if(strpos($sermon_audio_dl, '.mp3') !== false) { ?>
+								  <li class="link-title">
+								  	<a href="<?php echo $sermon_audio_dl; ?>" target="_blank">
+								  		<i class="fa fa-cloud-download" aria-hidden="true"></i> Download Audio
+								  	</a>
+								  </li>
+						<?php } } 
 							if($sermon_pdf) { ?>
 							  <li class="link-title">
 							  	<a href="<?php echo $sermon_pdf; ?>" target="_blank">

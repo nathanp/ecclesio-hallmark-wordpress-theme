@@ -11,14 +11,24 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 	<span class="overlay"></span>
 	<?php
 		if ( get_theme_mod( 'ecclesio_sermon_banner_image' ) ) {
-			echo '<img src="' . esc_url( get_theme_mod( 'ecclesio_sermon_banner_image' ) ) . '">';
+			$banner_img_src = esc_url( get_theme_mod( 'ecclesio_sermon_banner_image' ) );
 		}
 		else {
-			echo '<img src="'.get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg" alt="">';
+			$banner_img_src = get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg';
 		}
+		echo '<img src="' . $banner_img_src . '" alt="">';
 	?>
 	<div class="banner-text">
-		<h1 class="page-title"><?php echo get_customize_partial_sermons_heading(); ?></h1>
+		<?php
+			if ( get_customize_partial_sermons_heading() ) {
+				$banner_heading = get_customize_partial_sermons_heading();
+			}
+			else {
+				$banner_heading = 'Sermons';
+			}
+			echo '<h1 class="page-title">'. $banner_heading .'</h1>';
+		?>
+		
 		<span class="ecclesio-part-sermons-byline">
 			<?php
 				if(get_customize_partial_sermons_byline() != "") {
