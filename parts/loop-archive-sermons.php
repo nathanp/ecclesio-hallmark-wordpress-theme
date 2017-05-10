@@ -2,12 +2,13 @@
 	<div class="row large-up-3 medium-up-2 small-up-1" data-equalizer data-equalize-on="medium">
     <?php if (have_posts()) : while (have_posts()) : the_post();
     	$sermon_video_url	= ctfw_sermon_data()['video'];
+    	$sermon_audio_embed = ctfw_sermon_data()['audio_player'];
     	$sermon_audio_dl 	= ctfw_sermon_data()['audio_download_url'];
 
     	if($sermon_video_url) {
     		$verb = "Watch";
     	}
-    	elseif($sermon_audio_dl) {
+    	elseif($sermon_audio_embed || $sermon_audio_dl) {
     		$verb = "Listen to";
     	}
     	else {

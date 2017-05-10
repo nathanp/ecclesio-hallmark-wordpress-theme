@@ -101,7 +101,21 @@ Template Name: Homepage
 				);
 			    $recent_sermons = wp_get_recent_posts($sermon_args);
 			    foreach( $recent_sermons as $sermon ){
-			    	
+
+			    	$sermon_video_url	= ctfw_sermon_data($sermon["ID"])['video'];
+					$sermon_audio_embed = ctfw_sermon_data($sermon["ID"])['audio_player'];
+					$sermon_audio_dl 	= ctfw_sermon_data($sermon["ID"])['audio_download_url'];
+
+			    	if($sermon_video_url) {
+			    		$verb = "Watch";
+			    	}
+			    	elseif($sermon_audio_embed || $sermon_audio_dl) {
+			    		$verb = "Listen";
+			    	}
+			    	else {
+			    		$verb = "View";
+			    	}
+
 			    	echo '<img src="'.get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg" class="background" />';
 
 					echo "<span class='text-container'>";
@@ -125,7 +139,7 @@ Template Name: Homepage
 							echo '<span class="date">'.get_the_time('F j, Y', $sermon['ID']).'</span>';
 						echo "</span>";
 						
-				        echo '<a href="' . get_permalink($sermon["ID"]) . '" title="Watch '.esc_attr($sermon["post_title"]).'" class="button">Watch Now</a>';
+				        echo '<a href="' . get_permalink($sermon["ID"]) . '" title="Watch '.esc_attr($sermon["post_title"]).'" class="button">'. $verb .' Now</a>';
 				    echo "</span>";
 			    }
 			?>
