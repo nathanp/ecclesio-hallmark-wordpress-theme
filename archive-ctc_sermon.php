@@ -10,17 +10,22 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 <div id="banner">
 	<span class="overlay"></span>
 	<?php
-		$banner_img_src = get_field('header_image');
-		if($banner_img_src) {
-			echo "<img src='$banner_img_src' alt=''>";	
+		if ( get_theme_mod( 'ecclesio_sermon_banner_image' ) ) {
+			echo '<img src="' . esc_url( get_theme_mod( 'ecclesio_sermon_banner_image' ) ) . '">';
 		}
 		else {
 			echo '<img src="'.get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg" alt="">';
 		}
 	?>
 	<div class="banner-text">
-		<h1 class="page-title">Sermons</h1>
-		<!--<h3 class='page-byline'>Watch</h3>-->
+		<h1 class="page-title"><?php echo get_customize_partial_sermons_heading(); ?></h1>
+		<span class="ecclesio-part-sermons-byline">
+			<?php
+				if(get_customize_partial_sermons_byline() != "") {
+					echo '<h3 class="page-byline">'.get_customize_partial_sermons_byline().'</h3>';
+				}
+			?>
+		</span>
 	</div><!-- .banner-text -->
 
 	<?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?>

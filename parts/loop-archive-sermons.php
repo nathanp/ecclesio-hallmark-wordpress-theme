@@ -1,23 +1,35 @@
 <main id="listing" class="sermons small-12 columns" role="main">
-	<div class="row" data-equalizer data-equalize-on="medium">
+	<div class="row large-up-3 medium-up-2 small-up-1" data-equalizer data-equalize-on="medium">
     <?php if (have_posts()) : while (have_posts()) : the_post();
     	$sermon_video_url	= ctfw_sermon_data()['video'];
+    	$sermon_audio_dl 	= ctfw_sermon_data()['audio_download_url'];
 
+    	if($sermon_video_url) {
+    		$verb = "Watch";
+    	}
+    	elseif($sermon_audio_dl) {
+    		$verb = "Listen to";
+    	}
+    	else {
+    		$verb = "View";
+    	}
     ?>
  		
-		<article id="post-<?php the_ID(); ?>" <?php post_class('large-4 medium-6 columns'); ?> role="article">
+		<article id="post-<?php the_ID(); ?>" <?php post_class('column'); ?> role="article">
 			<div class="thumb">
 				<a href="<?php the_permalink() ?>">
 					<span class="overlay">
-						<span class="text">Watch Sermon</span>
+						<span class="text"><?php echo $verb; ?> Sermon</span>
 					</span>
 					<?php
 						if(has_post_thumbnail()) {
 							the_post_thumbnail('full');
 						}
-						else {
-							//echo '<img src="http://placehold.it/1280x720/000000/ffffff?text=Watch" alt="">';
+						elseif($sermon_video_url) {
 							echo '<img src="'.get_video_thumbnail($sermon_video_url).'" alt="" />';
+						}
+						else {
+
 						}
 					?>
 				</a>
@@ -63,7 +75,7 @@
 			    	?>
 		    	</span><!-- .meta -->
 
-		    	<a href="<?php the_permalink() ?>" class="button">Watch Sermon</a>
+		    	<a href="<?php the_permalink() ?>" class="button"><?php echo $verb; ?> Sermon</a>
 			</footer> <!-- end article footer -->
 			</div>		    						
 		</article> <!-- end article -->

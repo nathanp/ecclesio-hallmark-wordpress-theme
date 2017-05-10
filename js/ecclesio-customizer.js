@@ -15,6 +15,16 @@
             jQuery('.ecclesio-part-service-times').html( to );
         } );
     } ); //wp.customize
+    wp.customize( 'ecclesio_part_sermon_banner_heading', function( value ) {
+        value.bind( function( to ) {
+            jQuery('#banner .banner-text .page-title').html( to );
+        } );
+    } ); //wp.customize
+    wp.customize( 'ecclesio_part_sermon_banner_byline', function( value ) {
+        value.bind( function( to ) {
+            jQuery('.ecclesio-part-sermons-byline').html( to );
+        } );
+    } ); //wp.customize
 
     // function to convert hex to rgb
     function hexToRGB(hex, alpha) {
@@ -46,9 +56,11 @@
     wp.customize( 'ecclesio_color_accent', function( value ) {
         value.bind( function( to ) {
             //Generate CSS
-            var color_accent_bg       = '.home #banner .button-group li a.button:hover, .home #banner .button-group li a.button:focus, .home #banner .button-group li a.button:active, #sermon-latest .text-container h5, #sermon-latest .text-container .button:hover, #sermon-latest .text-container .button:active, #sermon-latest .text-container .button:focus { background-color:' +  to + '}';
+            var color_accent_color    = 'a:focus, a:hover { color: ' + to + '; }';
+            var color_accent_bg       = '.home #banner .button-group li a.button:hover, .home #banner .button-group li a.button:focus, .home #banner .button-group li a.button:active, #sermon-latest .text-container h5, #sermon-latest .text-container .button:hover, #sermon-latest .text-container .button:active, #sermon-latest .text-container .button:focus, button.hamburger:hover .hamburger-inner, button.hamburger:hover .hamburger-inner:after, button.hamburger:hover .hamburger-inner:before { background-color:' +  to + '}';
             var color_accent_border   = '#purpose, #sermon-latest .text-container .button {  border-color: ' + to + '; }';
             //Put in the preview-only CSS
+            $( '#ecclesio-customizer-preview' ).append( color_accent_color );
             $( '#ecclesio-customizer-preview' ).append( color_accent_bg );
             $( '#ecclesio-customizer-preview' ).append( color_accent_border );
         } );

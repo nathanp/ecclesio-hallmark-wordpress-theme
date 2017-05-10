@@ -31,7 +31,7 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 		<div id="inner-content" class="row">
 			
 		    <main id="listing" class="events small-12 columns" role="main">
-    			<div class="row" data-equalizer data-equalize-on="medium">
+    			<div class="row large-up-3 medium-up-2 small-up-1" data-equalizer data-equalize-on="medium">
 			    <?php $posts_array = ctfw_get_events(); if($posts_array) {
 			    	foreach($posts_array as $post) {
 						//print_r(ctfw_event_data());
@@ -48,7 +48,7 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 						$event_lng 				= ctfw_event_data()['map_lng'];
 						$event_registration 	= ctfw_event_data()['registration_url'];
 			    ?>
-						<article id="post-<?php the_ID(); ?>" <?php post_class('large-4 medium-6 columns'); ?> role="article">
+						<article id="post-<?php the_ID(); ?>" <?php post_class('column'); ?> role="article">
 							<div class="thumb">
 								<a href="<?php the_permalink() ?>">
 									<span class="overlay">

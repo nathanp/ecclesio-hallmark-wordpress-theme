@@ -131,7 +131,7 @@ function ecclesio_ultimatefonts_setup() {
         'no_settings'      => false, // Disable the plugin settings page
         'default_elements' => array(
             array(
-                'label'    => esc_html__( 'Heading/Button Font', 'ecclesio' ),
+                'label'    => esc_html__( 'Heading Font', 'ecclesio' ),
                 'selector' => 'h1, h2, h3, h4, h5, h6, button, .button, #menu-main-menu-1 li, #menu-main-menu.vertical, #breadcrumbs,#sermon-latest .text-container .meta,.tabs-sermon .tabs-title,.tabs-sermon .link-title,#listing article .thumb .overlay,.event-meta,.footer-top'
             ),
             array(
@@ -248,5 +248,6 @@ function get_video_thumbnail( $src, $res = null ) {
 	return $thumbnail;
 
 }
+
 
 ?>

@@ -70,6 +70,12 @@ class Ecclesio_Hallmark_Customizer {
 			'active_callback' => 'is_template_staff',
 			'priority' => 104
 		) );
+		// New section for "Sermon Archive Options".
+		$wp_customize->add_section( 'ecclesio_church_sermons', array(
+			'title'    => __( 'Sermon Archive', 'ecclesio-hallmark-theme' ),
+			'active_callback' => 'is_archive_sermons',
+			'priority' => 104
+		) );
 
 		/*
 		 * Add settings to sections.
@@ -79,7 +85,7 @@ class Ecclesio_Hallmark_Customizer {
 		$this->ecclesio_church_social_section( $wp_customize );
 		$this->ecclesio_theme_colors_section( $wp_customize );
 		$this->ecclesio_church_staff_section( $wp_customize );
-
+		$this->ecclesio_church_sermons_section( $wp_customize );
 	}
 
 	/**
@@ -93,7 +99,6 @@ class Ecclesio_Hallmark_Customizer {
 	 */
 	private function ecclesio_title_tagline_section( $wp_customize ) {
 		$section = 'title_tagline';
-
 		/* Site Logo */
 		$setting = 'ecclesio_site_logo';
 		$wp_customize->add_setting( $setting, array(
@@ -563,6 +568,90 @@ class Ecclesio_Hallmark_Customizer {
 	} // ecclesio_church_staff_section
 
 	/**
+	 * Section: Sermons Archive
+	 *
+	 * @param WP_Customize_Manager $wp_customize
+	 *
+	 * @access private
+	 * @since  1.0
+	 * @return void
+	 */
+	private function ecclesio_church_sermons_section( $wp_customize ) {
+		$section = 'ecclesio_church_sermons';
+		/* Banner Image */
+		$setting = 'ecclesio_sermon_banner_image';
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'theme_mod', //option or theme_mod
+			'default' => get_bloginfo('stylesheet_directory') . '/images/home_sermon_latest.jpg',
+		) );
+			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
+		    	'label'    => __( 'Banner Image', 'ecclesio-hallmark-theme' ),
+		    	'description' => __( 'Recommended format: JPG.', 'ecclesio-hallmark-theme' ),
+				'section'  => $section,
+				'settings' => $setting,
+			) ) );
+	    /* Banner Heading */
+	    $setting = 'ecclesio_sermon_banner_heading';
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'option', //option or theme_mod
+			'capability' => 'edit_theme_options',
+			'default' => 'Sermons',
+			'transport' => 'postMessage', // refresh or postMessage
+			'sanitize_callback' => 'sanitize_text_field'
+		) );
+			// Add Control
+			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
+				'label'       => esc_html__( 'Banner Heading', 'ecclesio-hallmark-theme' ),
+				'input_attrs' => array(
+			        'placeholder' => 'Sermons'
+			    ),
+				'description' => esc_html__( 'Banner heading for Sermons archive.', 'ecclesio-hallmark-theme' ),
+				'section'     => $section,
+				'settings'    => $setting,
+				'type'        => 'text',
+				'priority'    => 10
+			) ) );
+			// Selective Refresh
+			$wp_customize->selective_refresh->add_partial( 'ecclesio_part_sermon_banner_heading', array(
+			    'selector' => '#banner .banner-text .page-title',
+			    'settings' => array( $setting ),
+			    'container_inclusive' => false,
+			    'render_callback' => 'get_customize_partial_sermons_heading',
+			    'fallback_refresh' => false,
+			) );
+		/* Banner Caption */
+	    $setting = 'ecclesio_sermon_banner_byline';
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'option', //option or theme_mod
+			'capability' => 'edit_theme_options',
+			'default' => '',
+			'transport' => 'postMessage', // refresh or postMessage
+			'sanitize_callback' => 'sanitize_text_field'
+		) );
+			// Add Control
+			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
+				'label'       => esc_html__( 'Banner Byline', 'ecclesio-hallmark-theme' ),
+				'input_attrs' => array(
+			        'placeholder' => ''
+			    ),
+				'description' => esc_html__( 'Banner byline for Sermons archive.', 'ecclesio-hallmark-theme' ),
+				'section'     => $section,
+				'settings'    => $setting,
+				'type'        => 'text',
+				'priority'    => 10
+			) ) );
+			// Selective Refresh
+			$wp_customize->selective_refresh->add_partial( 'ecclesio_part_sermon_banner_byline', array(
+			    'selector' => '.ecclesio-part-sermons-byline',
+			    'settings' => array( $setting ),
+			    'container_inclusive' => false,
+			    'render_callback' => 'get_customize_partial_sermons_byline',
+			    'fallback_refresh' => false,
+			) );
+
+	} // ecclesio_church_sermons_section
+
+	/**
 	 * Sanitize Checkbox
 	 * 
 	 * Accepts only "true" or "false" as possible values.
@@ -598,6 +687,14 @@ function get_customize_partial_church_services_heading() {
 }
 function get_customize_partial_church_service_times() {
     $option = get_option( 'ecclesio_church_service_times' );
+    return $option;
+}
+function get_customize_partial_sermons_heading() {
+    $option = get_option( 'ecclesio_sermon_banner_heading' );
+    return $option;
+}
+function get_customize_partial_sermons_byline() {
+    $option = get_option( 'ecclesio_sermon_banner_byline' );
     return $option;
 }
 
@@ -650,6 +747,14 @@ function is_template_staff(){
         return true;
     }
 }
+function is_archive_sermons(){
+    // Get the page's template
+    if ( is_post_type_archive( 'ctc_sermon' ) == 0 ){
+        return false;
+    } else {
+        return true;
+    }
+}
 
 /**
  * Generate CSS based on the Customizer settings.
@@ -674,8 +779,9 @@ function ecclesio_customizer_css() {
 	$css .= 'a, #menu-main-menu-1 li.active>a, #menu-main-menu-1 li a:hover, #listing article .card .button:active, #listing article .card .button:focus, #listing article .card .button:hover, .button.outline-white:hover, .button.outline-white:active, .button.outline-white:focus, .tabs-sermon .tabs-title.is-active a { color: ' . $color_main . '; }';
 	$css .= '.dropdown.menu.medium-horizontal>li.is-dropdown-submenu-parent>a:after { border-color: ' . $color_main . ' transparent transparent; }';
 	//Accent Color
+	$css .= 'a:focus, a:hover { color: ' . $color_accent . '; }';
 	$css .= '#purpose, #sermon-latest .text-container .button { border-color: ' . $color_accent . '; }';
-	$css .= '.home #banner .button-group li a.button:hover, .home #banner .button-group li a.button:focus, .home #banner .button-group li a.button:active, #sermon-latest .text-container h5, #sermon-latest .text-container .button:hover, #sermon-latest .text-container .button:active, #sermon-latest .text-container .button:focus { background-color: ' . $color_accent . '; }';
+	$css .= '.home #banner .button-group li a.button:hover, .home #banner .button-group li a.button:focus, .home #banner .button-group li a.button:active, #sermon-latest .text-container h5, #sermon-latest .text-container .button:hover, #sermon-latest .text-container .button:active, #sermon-latest .text-container .button:focus, button.hamburger:hover .hamburger-inner, button.hamburger:hover .hamburger-inner:after, button.hamburger:hover .hamburger-inner:before { background-color: ' . $color_accent . '; }';
 	//Banner Color
 	$css .= '#banner .overlay { background: rgba('.$r.', '.$g.', '.$b.', 0.75); }';
 	//Foter Color
