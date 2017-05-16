@@ -38,6 +38,9 @@ function sermons_change_sort_order($query){
     endif;    
 };
 
+// ACF - Remove default WP meta box - https://www.advancedcustomfields.com/blog/acf-pro-5-5-13-update/
+add_filter('acf/settings/remove_wp_meta_box', '__return_true');
+
 /**
  * Register Menus
  * http://codex.wordpress.org/Function_Reference/register_nav_menus#Examples
