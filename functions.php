@@ -221,7 +221,7 @@ function get_video_thumbnail( $src, $res = null ) {
 	if ( $url_pieces[2] == 'vimeo.com' ) { // If Vimeo
 		$res = (string) $res; //argument for resolution
 		$id = (int) substr(parse_url($src, PHP_URL_PATH), 1);
-		$hash = unserialize(file_get_contents('https://vimeo.com/api/v2/video/' . $id . '.php'));
+		$hash = wp_remote_get('https://vimeo.com/api/v2/video/' . $id . '.php');
 
 		if(get_transient('vimeo_' . $res . '_' . $id)) { // If thumbnail has already been cached, get that
 			$thumbnail = get_transient('vimeo_' . $res . '_' . $id);
