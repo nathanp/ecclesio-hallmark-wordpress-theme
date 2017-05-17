@@ -827,9 +827,10 @@ function ecclesio_iris_palette() {
  * Remove sections from the Customizer
  * https://wordpress.stackexchange.com/questions/181905/remove-the-widgets-tab-from-theme-customizer
  */
-function ecclesio_edit_customizer( $wp_customize ) {
-	$wp_customize->remove_panel( 'widgets' );
+function ecclesio_edit_customizer_sections( $wp_customize ) {
+	
 	$wp_customize->remove_section( 'static_front_page' );
 	$wp_customize->remove_section( 'themes' );
 }
-add_action( 'customize_register', 'ecclesio_edit_customizer' );
+add_action( 'customize_register', 'ecclesio_edit_customizer_sections' );
+
