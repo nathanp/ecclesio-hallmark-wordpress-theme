@@ -23,7 +23,7 @@ require_once get_stylesheet_directory() . '/church-theme-framework/framework.php
 // Sermon Archive - Order by Publish Date
 add_action( 'pre_get_posts', 'sermons_change_sort_order'); 
 function sermons_change_sort_order($query){
-    if(is_post_type_archive( 'ctc_sermon' )):
+    if( is_post_type_archive( 'ctc_sermon' ) || is_tax(array('ctc_sermon_book','ctc_sermon_series','ctc_sermon_speaker','ctc_sermon_topic')) ):
        //Set the number of posts to display
        $query->set( 'posts_per_page', 9 );
 
