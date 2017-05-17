@@ -210,7 +210,22 @@ function ecclesio_remove_query_strings_2( $src ){
 	}
 
 /**
- * GET THUMBNAIL FROM VIMEO
+ * STRIP HTTP and HTTPS
+ * Including this specifically for the below Vimeo thumbnail code
+ * Returns a protocol agnostic URL
+ */
+function remove_http($url) {
+   $disallowed = array('http:', 'https:');
+   foreach($disallowed as $d) {
+      if(strpos($url, $d) === 0) {
+         return str_replace($d, '', $url);
+      }
+   }
+   return $url;
+}
+
+/**
+ * GET THUMBNAIL FROM VIMEO/YOUTUBE
  * Retrieves the thumbnail from a youtube or vimeo video
  * @param - $src: the url of the "player"
  * @return - string
@@ -228,17 +243,17 @@ function get_video_thumbnail( $src, $res = null ) {
 		$request = wp_remote_get('https://vimeo.com/api/v2/video/' . $id . '.json');
 		$body = wp_remote_retrieve_body( $request );
 		$hash = json_decode( $body, true); //use the true parameter to return as array instead of an object
-
+		//print_r($hash);
 		if(get_transient('vimeo_' . $res . '_' . $id)) { // If thumbnail has already been cached, get that
-			$thumbnail = get_transient('vimeo_' . $res . '_' . $id);
+			$thumbnail = remove_http(get_transient('vimeo_' . $res . '_' . $id));
 		}
 		else { // If no thumbnail has been cached
 			if ( '' !== $res ) { //if $res is set, e.g. get_video_thumbnail($sermon_video_url, 'hd')
 				$hash = (explode("_640",$hash[0]['thumbnail_large']));
-				$thumbnail = $hash[0];
+				$thumbnail = remove_http($hash[0]);
 			}
 			else {
-				$thumbnail = $hash[0]['thumbnail_large']; //default to 640px width
+				$thumbnail = remove_http($hash[0]['thumbnail_large']); //default to 640px width
 			}
 			set_transient('vimeo_' . $res . '_' . $id, $thumbnail, 2629743);
 		}
