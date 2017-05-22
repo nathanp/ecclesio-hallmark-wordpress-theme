@@ -1,13 +1,13 @@
 <div id="banner">
 	<span class="overlay"></span>
 	<?php
-		$banner_img_src = get_field('header_image');
-		if($banner_img_src) {
-			echo "<img src='$banner_img_src' alt=''>";	
+		if( function_exists('get_field')) {
+			$banner_img_src = get_field('header_image');
 		}
 		else {
-			echo '<img src="'.get_stylesheet_directory_uri().'/images/ft-worth.jpg" alt="">';
+			$banner_img_src = get_stylesheet_directory_uri().'/images/ft-worth.jpg';
 		}
+		echo "<img src='$banner_img_src' alt=''>";	
 	?>
 	<div class="banner-text">
 		
@@ -20,17 +20,18 @@
 				$banner_heading = "Search Results";
 				$banner_byline = '"'.get_search_query().'"';
 			}
-			else {
+			elseif( function_exists('get_field')) {
 				$banner_heading = get_field('header_primary_text');
 				$banner_byline = get_field('header_byline');
 			}
-			$banner_page_title = get_the_title();
+			else {
+				$banner_heading = get_the_title();
+				$banner_byline = '';
+			}
 			
 
 			if($banner_heading) {
 				echo "<h1 class='page-title'>$banner_heading</h1>";	
-			} else {
-				echo "<h1 class='page-title'>$banner_page_title</h1>";
 			}
 			if($banner_byline) {
 				echo "<h3 class='page-byline'>$banner_byline</h3>";	

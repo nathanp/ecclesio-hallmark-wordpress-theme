@@ -122,26 +122,34 @@ Template Name: Homepage
 						echo "<h5>This Week's Message</h5><br />";
 						echo '<h3><a href="' . get_permalink($sermon["ID"]) . '" title="Watch '.esc_attr($sermon["post_title"]).'" >'.
 							$sermon["post_title"];
-							if(get_field('subtitle', $sermon["ID"])) {
+							if( function_exists('get_field') && get_field('subtitle', $sermon["ID"]) ) {
 								echo '<span class="show-for-medium">';
 				    				echo ' - '.get_field('subtitle', $sermon["ID"]);
 				    			echo '</span>';
 				    		}
 						echo '</a></h3>';
-						$speakers = get_the_terms( $sermon["ID"], 'ctc_sermon_speaker');
+
+						if(taxonomy_exists('ctc_sermon_speaker')) { //Church Theme Content
+							$speakers = get_the_terms( $sermon["ID"], 'ctc_sermon_speaker');	
+						}
+						
 						if (class_exists('WPSEO_Primary_Term')) { //YoastSEO
 							$primary_speaker = new WPSEO_Primary_Term('ctc_sermon_speaker', $sermon["ID"]);
 							$primary_speaker = $primary_speaker->get_primary_term();
 							$primary_speaker = get_term($primary_speaker);
 								$primary_speaker_name = $primary_speaker->name;
 						}
-						else {
+						elseif( !empty($speakers) ) {
+							$primary_speaker = $speakers[0]->term_id;
 							$primary_speaker_name = $speakers[0]->name;
 						}
+						else {
+							$primary_speaker = '';
+							$primary_speaker_name = '';
+						}
+						
 						echo "<span class='meta'>";
-							if($speakers) {
-								echo '<span class="speaker">'.$primary_speaker_name.'</span> | ';
-							}
+							echo '<span class="speaker">'.$primary_speaker_name.'</span> | ';
 							echo '<span class="date">'.get_the_time('F j, Y', $sermon['ID']).'</span>';
 						echo "</span>";
 						

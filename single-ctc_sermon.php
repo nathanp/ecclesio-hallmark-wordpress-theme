@@ -18,8 +18,6 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 ?>
 
 <div id="banner">
-	
-
 	<div class="tabs-content sermon" data-tabs-content="sermon-tabs">
 		<?php
 			if($sermon_video_embed) { ?>
