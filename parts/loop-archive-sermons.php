@@ -49,6 +49,7 @@
 		    	
 		    	<span class="meta sermon">
 			    	<?php
+			    		// Sermon Speakers
 			    		$speakers = get_the_terms( $post, 'ctc_sermon_speaker');
 			    		if (class_exists('WPSEO_Primary_Term')) { //YoastSEO
 							$primary_speaker = new WPSEO_Primary_Term('ctc_sermon_speaker', $sermon["ID"]);
@@ -56,15 +57,15 @@
 							$primary_speaker = get_term($primary_speaker);
 								$primary_speaker_name = $primary_speaker->name;
 						}
-						elseif( !empty($speakers) ) {
-								$primary_speaker = $speakers[0]->term_id;
-								$primary_speaker_name = $speakers[0]->name;
-						}
-
+							elseif( !empty($speakers) ) {
+									$primary_speaker = $speakers[0]->term_id;
+									$primary_speaker_name = $speakers[0]->name;
+							}
 						if($speakers) {
 							echo '<span class="speaker"><label>Speaker:</label><a href="'.get_term_link($primary_speaker).'">'.$primary_speaker_name.'</a></span>';
 						}
 
+						// Sermon Series
 			    		$sermon_series = get_the_terms( $post, 'ctc_sermon_series');
 			    		if($sermon_series) {
 			    			echo '<span class="series"><label>Series:</label>';
@@ -74,17 +75,17 @@
 							echo '</span>';
 						}
 
+						// Sermon Books
 						$sermon_books = get_the_terms( $post, 'ctc_sermon_book');
 			    		if (class_exists('WPSEO_Primary_Term')) { //YoastSEO
 							$primary_book = new WPSEO_Primary_Term('ctc_sermon_book', $post->ID);
 							$primary_book = $primary_book->get_primary_term();
 								$primary_book_name = $primary_book->name;
 						}
-						elseif( !empty($sermon_books) ) {
-							$primary_book = $sermon_books[0]->term_id;
-							$primary_book_name = $sermon_books[0]->name;
-						}
-
+							elseif( !empty($sermon_books) ) {
+								$primary_book = $sermon_books[0]->term_id;
+								$primary_book_name = $sermon_books[0]->name;
+							}
 						if($primary_book) {
 							$primary_book = get_term($primary_book);
 							echo '<span class="book"><label>Book:</label><a href="'.get_term_link($primary_book).'">'.$primary_book_name.'</a></span>';	
