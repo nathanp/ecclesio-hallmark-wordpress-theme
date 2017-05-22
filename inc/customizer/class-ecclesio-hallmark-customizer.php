@@ -834,3 +834,87 @@ function ecclesio_edit_customizer_sections( $wp_customize ) {
 }
 add_action( 'customize_register', 'ecclesio_edit_customizer_sections' );
 
+
+/**
+ * Customize the available fonts in the Customizer
+ * Utilizes Ultimate Fonts plugin
+ */
+function ecclesio_fonts( $fonts_array ) {
+ 
+ 	$fonts_array = array(
+		'system' => array(
+			'label' => esc_html__( 'System Fonts', 'ultimate-fonts' ),
+			'fonts' => array(
+				'Arial'               => '400,400italic,700,700italic|Helvetica, sans-serif',
+				'Tahoma'              => '400,400italic,700,700italic|Geneva, sans-serif',
+				'Verdana'             => '400,400italic,700,700italic|Geneva, sans-serif',
+				'Lucida Sans Unicode' => '400,400italic,700,700italic|"Lucida Grande", sans-serif',
+				'Georgia'             => '400,400italic,700,700italic|serif',
+				'Times New Roman'     => '400,400italic,700,700italic|Times, serif',
+				'Palatino Linotype'   => '400,400italic,700,700italic|"Book Antiqua", Palatino, serif',
+			),
+		),
+		'google' => array(
+			'label' => esc_html__( 'Google Fonts', 'ultimate-fonts' ),
+			'fonts' => array(
+				'Abril Fatface'            => '400|cursive|latin,latin-ext',
+				'Alegreya'                 => '400,400italic,700,700italic,900,900italic|serif|latin,latin-ext',
+				'Alegreya SC'              => '400,400italic,700,700italic,900,900italic|serif|latin,latin-ext',
+				'Alegreya Sans'            => '100,100italic,300,300italic,400,400italic,500,500italic,700,700italic,800,800italic,900,900italic|sans-serif|vietnamese,latin,latin-ext',
+				'Alegreya Sans SC'         => '100,100italic,300,300italic,400,400italic,500,500italic,700,700italic,800,800italic,900,900italic|sans-serif|vietnamese,latin,latin-ext',
+				'Archivo Black'            => '400|sans-serif|latin,latin-ext',
+				'Archivo Narrow'           => '400,400italic,700,700italic|sans-serif|latin,latin-ext',
+				'Arvo'                     => '400,400italic,700,700italic|serif|latin',
+				'Bitter'                   => '400,400italic,700|serif|latin,latin-ext',
+				'Cabin'                    => '400,400italic,500,500italic,600,600italic,700,700italic|sans-serif|latin',
+				'Cabin Condensed'          => '400,500,600,700|sans-serif|latin',
+				'Cardo'                    => '400,400italic,700|serif|greek-ext,greek,latin,latin-ext',
+				'Chivo'                    => '400,400italic,900,900italic|sans-serif|latin',
+				'Cormorant'                => '300,300i,400,400i,500,500i,600,600i,700,700i|sans-serif|latin',
+				'Crimson Text'             => '400,400italic,600,600italic,700,700italic|serif|latin',
+				'Domine'                   => '400,700|serif|latin,latin-ext',
+				'Eczar'                    => '400,500,600,700,800|serif|devanagari,latin,latin-ext',
+				'Fira Sans'                => '300,300italic,400,400italic,500,500italic,700,700italic|sans-serif|cyrillic-ext,cyrillic,greek,latin,latin-ext',
+				'Gentium Basic'            => '400,400italic,700,700italic|serif|latin,latin-ext',
+				'Gentium Book Basic'       => '400,400italic,700,700italic|serif|latin,latin-ext',
+				'Karla'                    => '400,400italic,700,700italic|sans-serif|latin,latin-ext',
+				'Lato'                     => '100,100italic,300,300italic,400,400italic,700,700italic,900,900italic|sans-serif|latin,latin-ext',
+				'Libre Baskerville'        => '400,400italic,700|serif|latin,latin-ext',
+				'Lora'                     => '400,400italic,700,700italic|serif|cyrillic,latin,latin-ext',
+				'Merriweather'             => '300,300italic,400,400italic,700,700italic,900,900italic|serif|cyrillic-ext,cyrillic,latin,latin-ext',
+				'Merriweather Sans'        => '300,300italic,400,400italic,700,700italic,800,800italic|sans-serif|latin,latin-ext',
+				'Montserrat'               => '400,700|sans-serif|latin',
+				'Neuton'                   => '200,300,400,400italic,700,800|serif|latin,latin-ext',
+				'Old Standard TT'          => '400,400italic,700|serif|latin',
+				'Open Sans'                => '300,300italic,400,400italic,600,600italic,700,700italic,800,800italic|sans-serif|cyrillic-ext,greek-ext,cyrillic,vietnamese,greek,latin,latin-ext',
+				'Open Sans Condensed'      => '300,300italic,700|sans-serif|cyrillic-ext,greek-ext,cyrillic,vietnamese,greek,latin,latin-ext',
+				'Oswald'                   => '300,400,700|sans-serif|latin,latin-ext',
+				'PT Sans'                  => '400,400italic,700,700italic|sans-serif|cyrillic-ext,cyrillic,latin,latin-ext',
+				'PT Sans Caption'          => '400,700|sans-serif|cyrillic-ext,cyrillic,latin,latin-ext',
+				'PT Sans Narrow'           => '400,700|sans-serif|cyrillic-ext,cyrillic,latin,latin-ext',
+				'PT Serif'                 => '400,400italic,700,700italic|serif|cyrillic-ext,cyrillic,latin,latin-ext',
+				'PT Serif Caption'         => '400,400italic|serif|cyrillic-ext,cyrillic,latin,latin-ext',
+				'Playfair Display'         => '400,400italic,700,700italic,900,900italic|serif|cyrillic,latin,latin-ext',
+				'Playfair Display SC'      => '400,400italic,700,700italic,900,900italic|serif|cyrillic,latin,latin-ext',
+				'Poppins'                  => '300,400,500,600,700|sans-serif|devanagari,latin,latin-ext',
+				'Rajdhani'                 => '300,400,500,600,700|sans-serif|devanagari,latin,latin-ext',
+				'Raleway'                  => '100,100italic,200,200italic,300,300italic,400,400italic,500,500italic,600,600italic,700,700italic,800,800italic,900,900italic|sans-serif|latin,latin-ext',
+				'Roboto'                   => '100,100italic,300,300italic,400,400italic,500,500italic,700,700italic,900,900italic|sans-serif|cyrillic-ext,greek-ext,cyrillic,vietnamese,greek,latin,latin-ext',
+				'Roboto Condensed'         => '300,300italic,400,400italic,700,700italic|sans-serif|cyrillic-ext,greek-ext,cyrillic,vietnamese,greek,latin,latin-ext',
+				'Roboto Slab'              => '100,300,400,700|serif|cyrillic-ext,greek-ext,cyrillic,vietnamese,greek,latin,latin-ext',
+				'Rubik'                    => '300,300italic,400,400italic,500,500italic,700,700italic,900,900italic|sans-serif|cyrillic,latin,latin-ext',
+				'Rubik One'                => '400|sans-serif|cyrillic,latin,latin-ext',
+				'Source Code Pro'          => '200,300,400,500,600,700,900|monospace|latin,latin-ext',
+				'Source Sans Pro'          => '200,200italic,300,300italic,400,400italic,600,600italic,700,700italic,900,900italic|sans-serif|vietnamese,latin,latin-ext',
+				'Source Serif Pro'         => '400,600,700|serif|latin,latin-ext',
+				'Ubuntu'                   => '300,300italic,400,400italic,500,500italic,700,700italic|sans-serif|cyrillic-ext,greek-ext,cyrillic,greek,latin,latin-ext',
+				'Ubuntu Condensed'         => '400|sans-serif|cyrillic-ext,greek-ext,cyrillic,greek,latin,latin-ext',
+				'Vollkorn'                 => '400,400italic,700,700italic|serif|latin',
+				'Work Sans'                => '100,200,300,400,500,600,700,800,900|sans-serif|latin,latin-ext',
+			),
+		),
+	);   
+ 
+    return $fonts_array;
+}
+add_filter('ultimate_fonts_fonts', 'ecclesio_fonts');

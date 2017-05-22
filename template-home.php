@@ -129,12 +129,18 @@ Template Name: Homepage
 				    		}
 						echo '</a></h3>';
 						$speakers = get_the_terms( $sermon["ID"], 'ctc_sermon_speaker');
-						$primary_speaker = new WPSEO_Primary_Term('ctc_sermon_speaker', $sermon["ID"]);
-						$primary_speaker = $primary_speaker->get_primary_term();
-						$primary_speaker = get_term($primary_speaker);
+						if (class_exists('WPSEO_Primary_Term')) { //YoastSEO
+							$primary_speaker = new WPSEO_Primary_Term('ctc_sermon_speaker', $sermon["ID"]);
+							$primary_speaker = $primary_speaker->get_primary_term();
+							$primary_speaker = get_term($primary_speaker);
+								$primary_speaker_name = $primary_speaker->name;
+						}
+						else {
+							$primary_speaker_name = $speakers[0]->name;
+						}
 						echo "<span class='meta'>";
 							if($speakers) {
-								echo '<span class="speaker">'.$primary_speaker->name.'</span> | ';
+								echo '<span class="speaker">'.$primary_speaker_name.'</span> | ';
 							}
 							echo '<span class="date">'.get_the_time('F j, Y', $sermon['ID']).'</span>';
 						echo "</span>";
