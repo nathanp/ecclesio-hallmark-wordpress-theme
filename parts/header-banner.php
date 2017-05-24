@@ -20,7 +20,7 @@
 				$banner_heading = "Search Results";
 				$banner_byline = '"'.get_search_query().'"';
 			}
-			elseif( function_exists('get_field')) {
+			elseif( function_exists('get_field') && ( (get_field('header_primary_text') || get_field('header_byline')) != "" ) ) {
 				$banner_heading = get_field('header_primary_text');
 				$banner_byline = get_field('header_byline');
 			}
