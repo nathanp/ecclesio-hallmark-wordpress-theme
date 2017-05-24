@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Narrow Single Column Content
+Template Name: Left Sidebar
 */
 ?>
 
@@ -11,8 +11,10 @@ Template Name: Narrow Single Column Content
 	<div id="content">
 	
 		<div id="inner-content" class="row">
-	
-		    <main id="main" class="large-8 medium-10 small-12 small-centered columns" role="main">
+			
+			
+
+		    <main id="main" class="large-8 medium-8 small-12 columns" role="main">
 				
 				<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -21,10 +23,10 @@ Template Name: Narrow Single Column Content
 			    <?php endwhile; endif; ?>							
 			    					
 			</main> <!-- end #main -->
+
+			<?php get_sidebar(); ?>
 		    
 		</div> <!-- end #inner-content -->
-
-		<?php get_template_part( 'parts/acf', 'layout' ); ?>
 
 	</div> <!-- end #content -->
 
