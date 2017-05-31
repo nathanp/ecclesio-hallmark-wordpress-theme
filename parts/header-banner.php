@@ -7,7 +7,7 @@
 		else {
 			$banner_img_src = get_stylesheet_directory_uri().'/images/ft-worth.jpg';
 		}
-		echo "<img src='$banner_img_src' alt=''>";	
+		echo "<img class='banner-bg' src='$banner_img_src' alt=''>";	
 	?>
 	<div class="banner-text">
 		

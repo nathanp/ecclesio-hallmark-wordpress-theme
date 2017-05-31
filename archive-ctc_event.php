@@ -13,10 +13,10 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 	<?php
 		$banner_img_src = get_field('header_image');
 		if($banner_img_src) {
-			echo "<img src='$banner_img_src' alt=''>";	
+			echo "<img class='banner-bg' src='$banner_img_src' alt=''>";	
 		}
 		else {
-			echo '<img src="'.get_stylesheet_directory_uri().'/images/ft-worth.jpg" alt="">';
+			echo '<img class="banner-bg" src="'.get_stylesheet_directory_uri().'/images/ft-worth.jpg" alt="">';
 		}
 	?>
 	<div class="banner-text">

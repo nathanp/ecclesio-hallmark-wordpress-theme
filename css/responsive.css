@@ -67,6 +67,9 @@ button.hamburger {
 	#banner {
 		height: 30vh;
 	}
+		.single-ctc_person #banner {
+			height: 50vh;
+		}
 
 	/*Staff*/
 	#staff li img {
@@ -142,6 +145,9 @@ button.hamburger {
 	#staff li {
 		width: 48.75%;
 	}
+		.single-ctc_person #banner {
+			height: 30vh;
+		}
 
 	/*Sermons*/
 	.ctc_sermon .entry-content {

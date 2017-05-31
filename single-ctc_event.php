@@ -29,7 +29,7 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 			the_post_thumbnail('full');
 		}
 		else {
-			echo '<img src="'.get_stylesheet_directory_uri().'/images/ft-worth.jpg" alt="">';
+			echo '<img class="banner-bg" src="'.get_stylesheet_directory_uri().'/images/ft-worth.jpg" alt="">';
 		}
 	?>
 	<div class="banner-text">

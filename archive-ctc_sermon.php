@@ -16,7 +16,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 		else {
 			$banner_img_src = get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg';
 		}
-		echo '<img src="' . $banner_img_src . '" alt="">';
+		echo '<img class="banner-bg" src="' . $banner_img_src . '" alt="">';
 	?>
 	<div class="banner-text">
 		<?php

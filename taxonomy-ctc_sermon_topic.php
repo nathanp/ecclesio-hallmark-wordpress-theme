@@ -1,8 +1,7 @@
 <?php
 /*
-Sermons by Book template.
+Sermons by Topic template.
 Based on the Church Theme Framework and  custom post type.
-If you need to see all potential data, use something like print_r(ctfw_sermon_data());
 */
 ?>
 <?php get_header(); ?>
@@ -12,10 +11,10 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 	<?php
 		$banner_img_src = get_field('header_image');
 		if($banner_img_src) {
-			echo "<img src='$banner_img_src' alt=''>";	
+			echo "<img class='banner-bg' src='$banner_img_src' alt=''>";	
 		}
 		else {
-			echo '<img src="'.get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg" alt="">';
+			echo '<img class="banner-bg" src="'.get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg" alt="">';
 		}
 	?>
 	<div class="banner-text">

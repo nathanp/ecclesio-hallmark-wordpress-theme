@@ -558,8 +558,8 @@ class Ecclesio_Hallmark_Customizer {
 				'settings'    => $setting,
 				'type'        => 'number',
 				'input_attrs' => array(
-				    'min' => 1,
-				    'max' => 12,
+				    'min' => 2,
+				    'max' => 6,
 				    'step' => 1,
 				  ),
 				'priority'    => 10
