@@ -103,7 +103,7 @@ class Ecclesio_Hallmark_Customizer {
 		$setting = 'ecclesio_site_logo';
 		$wp_customize->add_setting( $setting, array(
 			'type' => 'option',
-			'default' => get_bloginfo('stylesheet_directory') . '/images/logo.svg',
+			'default' => get_stylesheet_directory_uri() . '/images/logo.svg',
 		) );
 			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
 		    	'label'    => __( 'Site Logo', 'ecclesio-hallmark-theme' ),
@@ -582,7 +582,7 @@ class Ecclesio_Hallmark_Customizer {
 		$setting = 'ecclesio_sermon_banner_image';
 		$wp_customize->add_setting( $setting, array(
 			'type' => 'theme_mod', //option or theme_mod
-			'default' => get_bloginfo('stylesheet_directory') . '/images/home_sermon_latest.jpg',
+			'default' => get_stylesheet_directory_uri() . '/images/home_sermon_latest.jpg',
 		) );
 			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
 		    	'label'    => __( 'Banner Image', 'ecclesio-hallmark-theme' ),
