@@ -372,6 +372,7 @@ header.header.scroll {
 			overflow: hidden;
 			width: 100%;
 		    height: 0;
+		    margin: 0;
 		    padding: 100% 0px 0.25%;
 		    position: relative;
 		    z-index: 1;
@@ -536,6 +537,8 @@ header.header.scroll {
 			#listing article .card .book {
 				width: 33%;
     			display: inline-block;
+    			vertical-align: text-top;
+    			line-height: 1.25em;
 			}
 				#listing article .card .speaker a,
 				#listing article .card .series a,

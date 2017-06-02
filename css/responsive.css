@@ -116,6 +116,11 @@ button.hamburger {
 }
 
 @media screen and (max-width: 420px) {
+	/*Foundation*/
+	.thumbnail {
+		border: none;
+	}
+	
 	/*Home*/
 	.home #banner {
 		height: 40vh;

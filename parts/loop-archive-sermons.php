@@ -28,7 +28,9 @@
 						elseif($sermon_video_url) {
 							echo '<img src="'.get_video_thumbnail($sermon_video_url).'" alt="" />';
 						}
-						else { }
+						else {
+							echo '<img src="http://via.placeholder.com/640x360/000000/ffffff?text='.get_the_title().'" alt="" />';	
+						}
 					?>
 				</a>
 			</div><!-- .thumb -->
