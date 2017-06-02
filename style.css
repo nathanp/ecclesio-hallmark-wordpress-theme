@@ -406,6 +406,21 @@ header.header.scroll {
 			font-size: 1em;
 		}
 
+#sidebar.person {
+	overflow: hidden;
+}
+	#sidebar.person .person-profiles {
+		margin: 10px 0px;
+    	display: block;
+	}
+		#sidebar.person .person-profiles a {
+			color: #000;
+		}
+		#sidebar.person .person-profiles .fa {
+			font-size: 1.25em;
+    		margin: 0px 0.25em 0px 0px;
+		}
+
 /************************************
 	LISTINGS
 	This powers Sermons, Events, etc.

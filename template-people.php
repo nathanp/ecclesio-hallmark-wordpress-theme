@@ -48,20 +48,24 @@ Template Name: Staff
 						$person_phone 		= strip_tags( get_post_meta( $post->ID , '_ctc_person_phone' , true ) );
 						$person_email		= strip_tags( get_post_meta( $post->ID , '_ctc_person_email' , true ) );
 						$person_urls		= strip_tags( get_post_meta( $post->ID , '_ctc_person_urls' , true ) );
+						if(has_post_thumbnail($post->ID)) {
+						    $person_thumb = get_the_post_thumbnail( $post->ID, array( 200, 200 ) );
+						} else {
+						    $person_thumb = '<img src="'.get_stylesheet_directory_uri().'/images/fallback_staff.png" />';
+						}
 
 						//query count below is to add the "end" class to the last item to remove the float:right from Foundation
 					?>
 					<div class="person column<?php if (($the_query->current_post +1) == ($the_query->post_count)) { echo ' end'; } ?>" data-equalizer-watch>
 						<?php
-							if ( has_post_thumbnail() ) {
-								//Only link to the person if they have filled out their content
-								if(trim($post->post_content) != "") { echo '<a href="' . get_permalink( $post->ID ) . '">'; }
-									echo '<span class="thumbnail">';
-										echo get_the_post_thumbnail( $post->ID, array( 200, 200 ) );
-										if(trim($post->post_content) != "") { echo '<span class="overlay"><span class="text">Meet<br />'.$person_fname.'</span></span>'; }
-									echo '</span>';
-								if(trim($post->post_content) != "") { echo '</a>'; } 
-							} // if has post thumbnail
+							//Only link to the person if they have filled out their content
+							if(trim($post->post_content) != "") { echo '<a href="' . get_permalink( $post->ID ) . '">'; }
+								echo '<span class="thumbnail">';
+									echo $person_thumb;
+									if(trim($post->post_content) != "") { echo '<span class="overlay"><span class="text">Meet<br />'.$person_fname.'</span></span>'; }
+								echo '</span>';
+							if(trim($post->post_content) != "") { echo '</a>'; } 
+							
 							echo '<h3>';
 								if(trim($post->post_content) != "") { echo '<a href="' . get_permalink( $post->ID ) . '">'; }
 									echo get_the_title();
@@ -71,7 +75,7 @@ Template Name: Staff
 						?>
 					</div>
 					<?php endwhile; ?>
-				</div>					
+				</div><!-- #staff -->				
 			    					
 			</main> <!-- end #main -->
 		    

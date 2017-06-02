@@ -26,7 +26,7 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 	<span class="overlay"></span>
 	<?php
 		if(has_post_thumbnail()) {
-			the_post_thumbnail('full');
+			the_post_thumbnail('full', ['class' => 'banner-bg']);
 		}
 		else {
 			echo '<img class="banner-bg" src="'.get_stylesheet_directory_uri().'/images/ft-worth.jpg" alt="">';

@@ -41,23 +41,52 @@ If you need to see all potential data, use something like print_r(ctfw_person_da
 
 	<div id="inner-content" class="row">
 		
-		<div id="sidebar" class="sidebar person large-3 medium-3 columns" role="complementary">
+		<div id="sidebar" class="sidebar person large-3 medium-4 columns" role="complementary">
 			<?php if( $person_phone || $person_email || $person_urls ) { ?>
-				<h3>Contact <?php echo $person_fname; ?></h3>	
+				<h3>Connect</h3>	
 			<?php } ?>
 			<p>
 				<?php if($person_email) { ?>
-					<i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:<?php echo $person_email; ?>">Email</a>
+					<i class="fa fa-envelope" aria-hidden="true"></i> <?php echo ctfw_email($person_email); ?>
 					<br>
 				<?php } ?>
 				<?php if($person_phone) { ?>
 					<i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:<?php echo $person_phone; ?>"><?php echo $person_phone; ?></a>
 					<br>
-				<?php } ?>
+				<?php }
+				if($person_urls) {
+					$urls = wp_extract_urls( $person_urls );
+					echo '<span class="person-profiles">';
+						foreach ($urls as $url) {
+					       $url = esc_url($url);
+					       if(strpos($url, 'facebook.com') !== false){
+					       	$fa_icon_class = 'facebook';
+					       }
+					       elseif(strpos($url, 'twitter.com') !== false){
+					       	$fa_icon_class = 'twitter';
+					       }
+					       elseif(strpos($url, 'instagram.com') !== false){
+					       	$fa_icon_class = 'instagram';
+					       }
+					       elseif(strpos($url, 'snapchat.com') !== false){
+					       	$fa_icon_class = 'snapchat-ghost';
+					       }
+					       elseif(strpos($url, 'linkedin.com') !== false){
+					       	$fa_icon_class = 'linkedin';
+					       }
+						   else {
+					       	$fa_icon_class = 'link';
+					       }
+					       echo '<a href="'.$url.'" target="_blank">';
+					       	echo '<i class="fa fa-'.$fa_icon_class.'" aria-hidden="true"></i> ';
+					       echo '</a>';
+					    }//end foreach
+					echo '</span><!-- .person-profiles-->';
+				}//endif ?>
 			</p>
 		</div>
 
-		<main id="main" class="large-9 medium-9 columns" role="main">
+		<main id="main" class="large-9 medium-8 columns" role="main">
 		
 		    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 		
