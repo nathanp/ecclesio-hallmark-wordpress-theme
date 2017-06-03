@@ -11,15 +11,25 @@ Template Name: Homepage
 	<div id="content">
 	
 		<div id="inner-content" class="row">
-			
-			<div id="purpose" class="large-8 medium-10 small-centered columns">
-				<h2 class="statement">We exist to love God, love others, and serve the world.</h2>
-			</div>
-
-		    <div id="listing" class="events large-12 medium-12 columns">
-    			<div class="row" data-equalizer data-equalize-on="medium">
-			    <?php
-			    	$events_array = ctfw_get_events(); if($events_array) {
+			<?php if( function_exists('get_field') && get_field( 'purpose_statement' ) ) { ?>
+				<div id="purpose" class="large-8 medium-10 small-centered columns">
+					<h2 class="statement"><?php the_field( 'purpose_statement' ); ?></h2>
+				</div>
+			<?php }
+	    	// Event Category Option
+	    	if( function_exists('get_field') && get_field( 'event_category' ) ) {
+	    		$event_category_ids = get_field( 'event_category' );
+				$args = array( 'category' => $event_category_ids, );
+			} else {
+				$args = array();
+			}
+	    	$events_array = ctfw_get_events($args);
+	    		$events_array_count = count($events_array);
+	    	?>
+	    	<div id="listing" class="events small-12 columns">
+				<div class="row large-up-<?php echo $events_array_count; ?>" data-equalizer data-equalize-on="medium">
+				<?php
+			    	if($events_array) {
 			    	foreach(array_slice($events_array, 0, 3) as $post) { //limits to 3
 						//print_r(ctfw_event_data());
 				    	$event_title 			= get_the_title();
@@ -34,8 +44,8 @@ Template Name: Homepage
 						$event_lat 				= ctfw_event_data()['map_lat'];
 						$event_lng 				= ctfw_event_data()['map_lng'];
 						$event_registration 	= ctfw_event_data()['registration_url'];
-			    ?>
-						<article id="post-<?php the_ID(); ?>" <?php post_class('large-4 columns'); ?> role="article">
+		    		?>
+						<article id="post-<?php the_ID(); ?>" <?php post_class('columns'); ?> role="article">
 							<div class="thumb">
 								<a href="<?php the_permalink() ?>">
 									<span class="overlay">
@@ -75,19 +85,17 @@ Template Name: Homepage
 							</div><!-- .card -->			
 						</article> <!-- end article -->
 				    
-				<?php } //endfor
-					
-				} //endif
-				else {
-					
-				} ?>
+			<?php 	} //endfor
+					wp_reset_query();
+					} //endif
+					else { }
+			?>
 				</div><!-- .row -->															
 		    </div> <!-- #listing -->
 		    
 		</div> <!-- #inner-content -->
 
 		<div id="sermon-latest">
-			
 			<?php
 				$sermon_args = array(
 					'numberposts' => 1,
@@ -116,10 +124,23 @@ Template Name: Homepage
 			    		$verb = "View";
 			    	}
 
-			    	echo '<img src="'.get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg" class="background" />';
+			    	// Latest Sermon Image
+			    	if( function_exists('get_field') && get_field( 'latest_sermon_image' ) ) {
+			    		$img_src = get_field( 'latest_sermon_image' );
+					} else {
+						$img_src = get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg';
+					}
+			    	echo '<img src="'. $img_src .'" class="background" />';
+
+			    	// Latest Sermon Heading
+			    	if( function_exists('get_field') && get_field( 'latest_sermon_heading' ) ) {
+			    		$latest_sermon_heading = get_field( 'latest_sermon_heading' );
+					} else {
+						$latest_sermon_heading = "This Week's Message";
+					}
 
 					echo "<span class='text-container'>";
-						echo "<h5>This Week's Message</h5><br />";
+						echo "<h5>$latest_sermon_heading</h5><br />";
 						echo '<h3><a href="' . get_permalink($sermon["ID"]) . '" title="Watch '.esc_attr($sermon["post_title"]).'" >'.
 							$sermon["post_title"];
 							if( function_exists('get_field') && get_field('subtitle', $sermon["ID"]) ) {
@@ -155,7 +176,8 @@ Template Name: Homepage
 						
 				        echo '<a href="' . get_permalink($sermon["ID"]) . '" title="Watch '.esc_attr($sermon["post_title"]).'" class="button">'. $verb .' Now</a>';
 				    echo "</span>";
-			    }
+			    } //foreach
+			    wp_reset_query();
 			?>
 
 		</div><!-- #sermon-latest -->

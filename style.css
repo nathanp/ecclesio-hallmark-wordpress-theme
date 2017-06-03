@@ -64,6 +64,12 @@ a {
 /************
 	GENERAL
 *************/
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 ul.inline-menu {
 	margin: 0;
 }
@@ -242,25 +248,28 @@ header.header.scroll {
 /************
 	HOME
 *************/
-.home #banner .button-group {
+.page-template-template-home #banner .button-group {
 	
 }
-	.home #banner .button-group li {
+	.page-template-template-home #banner .button-group li {
 		margin: 0px 5px;
 	}
-		.home #banner .button-group li a.button {
+		.page-template-template-home #banner .button-group li a.button {
 			font-size: 1.25rem;
 			background: none;
 			color: #fff;
 			border: 3px solid;
 			padding: 0.65em 1em;
 		}
-			.home #banner .button-group li a.button:hover,
-			.home #banner .button-group li a.button:focus,
-			.home #banner .button-group li a.button:active {
+			.page-template-template-home #banner .button-group li a.button:hover,
+			.page-template-template-home #banner .button-group li a.button:focus,
+			.page-template-template-home #banner .button-group li a.button:active {
 				background: #f8981d;
-
 			}
+
+.page-template-template-home #content #inner-content {
+	padding-top: 0;
+}
 
 #purpose {
 	text-align: center;

@@ -36,14 +36,23 @@
 			if($banner_byline) {
 				echo "<h3 class='page-byline'>$banner_byline</h3>";	
 			}
-			if(is_front_page()) {
-				echo "
-					<ul class='button-group'>
-					  <li><a href='/first-visit/' class='button'>I'm New</a></li>
-					  <li><a href='https://www.google.com/maps/dir//4201+W+Risinger+Rd,+Fort+Worth,+TX+76123/@32.6161951,-97.3866526,17z/data=!4m16!1m7!3m6!1s0x864e6c5d2fe4b0ef:0xb8443c54d1a3ca47!2s4201+W+Risinger+Rd,+Fort+Worth,+TX+76123!3b1!8m2!3d32.6161951!4d-97.3844586!4m7!1m0!1m5!1m1!1s0x864e6c5d2fe4b0ef:0xb8443c54d1a3ca47!2m2!1d-97.3844586!2d32.6161951' class='button' target='_blank'>Directions</a></li>
-					</ul>
-				";
-			}
+
+			if( have_rows('header_buttons') ):
+		    	echo '<ul class="button-group">';
+		    	while( have_rows('header_buttons') ): the_row();
+		    		$link = get_sub_field('button_link');
+		    		$text = get_sub_field('button_text');
+		    		$new_window = get_sub_field('open_in_new_window');
+		    			if($new_window) {
+		    				$target = 'target="_blank"';
+		    			} else {
+		    				$target = '';
+		    			}
+
+		    		echo '<li><a href="'.$link.'" class="button" '.$target.'>'.$text.'</a></li>';
+			    endwhile;
+			    echo '</ul>';
+			endif;
 		?>
 	</div><!-- .banner-text -->
 	<?php
