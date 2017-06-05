@@ -187,13 +187,20 @@ header.header.scroll {
 	}
 
 /* Page Banner */
-#banner {
+#banner,
+.content-banner {
 	position: relative;
     height: 50vh;
     display: block;
     width: 100%;
     margin-top: 96px;
 }
+	.content-banner {
+		margin-top: 0;
+		margin-bottom: 1.5em;
+		overflow: hidden;
+		max-height: 420px;
+	}
 	#banner .overlay {
 		background: rgba(1, 108, 197, 0.75);
 		width: 100%;
@@ -202,7 +209,8 @@ header.header.scroll {
 		position: absolute;
 		z-index: 1;
 	}
-	#banner img.banner-bg {
+	#banner img.banner-bg,
+	.content-banner img.banner-bg {
 		width: 100%;
 	    object-fit: cover;
 	    display: block;
@@ -211,7 +219,11 @@ header.header.scroll {
 	    position: absolute;
 	    z-index: 0;
 	}
-	#banner .banner-text {
+		.content-banner img.banner-bg {
+			position: relative;
+		}
+	#banner .banner-text,
+	.content-banner .banner-text {
 		position: absolute;
 	    top: 50%;
 	    -webkit-transform: translateY(-50%);
@@ -222,13 +234,19 @@ header.header.scroll {
 	    color: #fff;
 	    z-index: 1;
 	}
-		#banner .banner-text .page-title {
+		#banner .banner-text .page-title,
+		.content-banner .banner-text .page-title {
 			text-transform: uppercase;
 			font-weight: 600;
 			margin: 0;
 		}
 		#banner .banner-text .page-byline {
 
+		}
+		.content-banner .banner-text .page-caption {
+			padding: 0 5em;
+		    display: block;
+		    font-size: 1.25em;
 		}
 	#banner #breadcrumbs {
 		position: absolute;

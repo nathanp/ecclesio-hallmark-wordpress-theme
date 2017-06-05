@@ -211,10 +211,10 @@
                             "mime_types": ""
                         },
                         {
-                            "key": "field_59250d2a77384",
-                            "label": "Image Caption",
-                            "name": "image_caption",
-                            "type": "wysiwyg",
+                            "key": "field_5935cc5bcf9bf",
+                            "label": "Image Title",
+                            "name": "image_title",
+                            "type": "text",
                             "instructions": "",
                             "required": 0,
                             "conditional_logic": 0,
@@ -224,10 +224,29 @@
                                 "id": ""
                             },
                             "default_value": "",
-                            "tabs": "all",
-                            "toolbar": "basic",
-                            "media_upload": 0,
-                            "delay": 1
+                            "placeholder": "",
+                            "prepend": "",
+                            "append": "",
+                            "maxlength": ""
+                        },
+                        {
+                            "key": "field_59250d2a77384",
+                            "label": "Image Caption",
+                            "name": "image_caption",
+                            "type": "textarea",
+                            "instructions": "",
+                            "required": 0,
+                            "conditional_logic": 0,
+                            "wrapper": {
+                                "width": "",
+                                "class": "",
+                                "id": ""
+                            },
+                            "default_value": "",
+                            "placeholder": "",
+                            "maxlength": "",
+                            "rows": "",
+                            "new_lines": "wpautop"
                         },
                         {
                             "key": "field_59250d5c77385",
@@ -283,8 +302,8 @@
             },
             {
                 "param": "page_template",
-                "operator": "!=",
-                "value": "template-home.php"
+                "operator": "==",
+                "value": "template-advanced.php"
             }
         ]
     ],
@@ -296,5 +315,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1496441433
+    "modified": 1496697971
 }
