@@ -20,16 +20,20 @@
 				$banner_heading = "Search Results";
 				$banner_byline = '"'.get_search_query().'"';
 			}
-			elseif( function_exists('get_field') && ( (get_field('header_primary_text') || get_field('header_byline')) != "" ) ) {
-				$banner_heading = get_field('header_primary_text');
-				$banner_byline = get_field('header_byline');
+			elseif( function_exists('get_field') ) {
+				if(get_field('header_primary_text')) {
+					$banner_heading = get_field('header_primary_text');	
+				} else { $banner_heading = get_the_title(); }
+				if(get_field('header_byline')) {
+					$banner_byline = get_field('header_byline');
+				} else { $banner_byline = ''; }
 			}
 			else {
 				$banner_heading = get_the_title();
-				$banner_byline = '';
+				$banner_byline = get_field('header_byline');
 			}
 			
-
+			
 			if($banner_heading) {
 				echo "<h1 class='page-title'>$banner_heading</h1>";	
 			}
