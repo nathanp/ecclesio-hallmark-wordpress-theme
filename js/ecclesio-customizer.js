@@ -15,16 +15,6 @@
             jQuery('.ecclesio-part-service-times').html( to );
         } );
     } ); //wp.customize
-    wp.customize( 'ecclesio_part_sermon_banner_heading', function( value ) {
-        value.bind( function( to ) {
-            jQuery('.post-type-archive-ctc_sermon #banner .banner-text .page-title').html( to );
-        } );
-    } ); //wp.customize
-    wp.customize( 'ecclesio_part_sermon_banner_byline', function( value ) {
-        value.bind( function( to ) {
-            jQuery('.ecclesio-part-sermons-byline').html( to );
-        } );
-    } ); //wp.customize
 
     // function to convert hex to rgb
     function hexToRGB(hex, alpha) {

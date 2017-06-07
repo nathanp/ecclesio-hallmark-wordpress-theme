@@ -11,17 +11,29 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 <div id="banner">
 	<span class="overlay"></span>
 	<?php
-		$banner_img_src = get_field('header_image');
-		if($banner_img_src) {
-			echo "<img class='banner-bg' src='$banner_img_src' alt=''>";	
+		if ( get_theme_mod( 'ecclesio_event_banner_image' ) ) {
+			$banner_img_src = esc_url( get_theme_mod( 'ecclesio_event_banner_image' ) );
 		}
 		else {
-			echo '<img class="banner-bg" src="'.get_stylesheet_directory_uri().'/images/ft-worth.jpg" alt="">';
+			$banner_img_src = get_stylesheet_directory_uri().'/images/ft-worth.jpg';
 		}
+		echo '<img class="banner-bg" src="' . $banner_img_src . '" alt="">';
 	?>
 	<div class="banner-text">
-		<h1 class="page-title">Events</h1>
-		<h3 class='page-byline'>What's happening at Hallmark</h3>
+		<?php
+			if ( get_customize_partial_events_heading() ) {
+				$banner_heading = get_customize_partial_events_heading();
+			}
+			else {
+				$banner_heading = 'Events';
+			}
+			echo '<h1 class="page-title">'. $banner_heading .'</h1>';
+		
+			if(get_customize_partial_events_byline() != "") {
+				$banner_byline = get_customize_partial_events_byline();
+				echo '<h3 class="page-byline">'. $banner_byline .'</h3>';
+			}
+		?>
 	</div><!-- .banner-text -->
 
 	<?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?>

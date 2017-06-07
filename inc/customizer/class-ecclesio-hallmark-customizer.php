@@ -76,6 +76,12 @@ class Ecclesio_Hallmark_Customizer {
 			'active_callback' => 'is_archive_sermons',
 			'priority' => 19 //place above "Site Identity"
 		) );
+		// New section for "Event Archive Options".
+		$wp_customize->add_section( 'ecclesio_church_events', array(
+			'title'    => __( 'Event Archive', 'ecclesio-hallmark-theme' ),
+			'active_callback' => 'is_archive_events',
+			'priority' => 19 //place above "Site Identity"
+		) );
 
 		/*
 		 * Add settings to sections.
@@ -86,6 +92,7 @@ class Ecclesio_Hallmark_Customizer {
 		$this->ecclesio_theme_colors_section( $wp_customize );
 		$this->ecclesio_church_staff_section( $wp_customize );
 		$this->ecclesio_church_sermons_section( $wp_customize );
+		$this->ecclesio_church_events_section( $wp_customize );
 	}
 
 	/**
@@ -642,7 +649,7 @@ class Ecclesio_Hallmark_Customizer {
 			) ) );
 			// Selective Refresh
 			$wp_customize->selective_refresh->add_partial( 'ecclesio_part_sermon_banner_byline', array(
-			    'selector' => '.ecclesio-part-sermons-byline',
+			    'selector' => '.post-type-archive-ctc_sermon #banner .banner-text .page-byline',
 			    'settings' => array( $setting ),
 			    'container_inclusive' => false,
 			    'render_callback' => 'get_customize_partial_sermons_byline',
@@ -650,6 +657,90 @@ class Ecclesio_Hallmark_Customizer {
 			) );
 
 	} // ecclesio_church_sermons_section
+
+	/**
+	 * Section: Events Archive
+	 *
+	 * @param WP_Customize_Manager $wp_customize
+	 *
+	 * @access private
+	 * @since  1.0
+	 * @return void
+	 */
+	private function ecclesio_church_events_section( $wp_customize ) {
+		$section = 'ecclesio_church_events';
+		/* Banner Image */
+		$setting = 'ecclesio_event_banner_image';
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'theme_mod', //option or theme_mod
+			'default' => get_stylesheet_directory_uri() . '/images/ft-worth.jpg',
+		) );
+			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
+		    	'label'    => __( 'Banner Image', 'ecclesio-hallmark-theme' ),
+		    	'description' => __( 'Recommended format: JPG.', 'ecclesio-hallmark-theme' ),
+				'section'  => $section,
+				'settings' => $setting,
+			) ) );
+	    /* Banner Heading */
+	    $setting = 'ecclesio_event_banner_heading';
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'option', //option or theme_mod
+			'capability' => 'edit_theme_options',
+			'default' => 'Events',
+			'transport' => 'postMessage', // refresh or postMessage
+			'sanitize_callback' => 'sanitize_text_field'
+		) );
+			// Add Control
+			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
+				'label'       => esc_html__( 'Banner Heading', 'ecclesio-hallmark-theme' ),
+				'input_attrs' => array(
+			        'placeholder' => 'Events'
+			    ),
+				'description' => esc_html__( 'Banner heading for Events archive.', 'ecclesio-hallmark-theme' ),
+				'section'     => $section,
+				'settings'    => $setting,
+				'type'        => 'text',
+				'priority'    => 10
+			) ) );
+			// Selective Refresh
+			$wp_customize->selective_refresh->add_partial( 'ecclesio_part_event_banner_heading', array(
+			    'selector' => '.post-type-archive-ctc_event #banner .banner-text .page-title',
+			    'settings' => array( $setting ),
+			    'container_inclusive' => false,
+			    'render_callback' => 'get_customize_partial_events_heading',
+			    'fallback_refresh' => false,
+			) );
+		/* Banner Caption */
+	    $setting = 'ecclesio_event_banner_byline';
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'option', //option or theme_mod
+			'capability' => 'edit_theme_options',
+			'default' => '',
+			'transport' => 'postMessage', // refresh or postMessage
+			'sanitize_callback' => 'sanitize_text_field'
+		) );
+			// Add Control
+			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
+				'label'       => esc_html__( 'Banner Byline', 'ecclesio-hallmark-theme' ),
+				'input_attrs' => array(
+			        'placeholder' => ''
+			    ),
+				'description' => esc_html__( 'Banner byline for Events archive.', 'ecclesio-hallmark-theme' ),
+				'section'     => $section,
+				'settings'    => $setting,
+				'type'        => 'text',
+				'priority'    => 10
+			) ) );
+			// Selective Refresh
+			$wp_customize->selective_refresh->add_partial( 'ecclesio_part_event_banner_byline', array(
+			    'selector' => '.post-type-archive-ctc_event #banner .banner-text .page-byline',
+			    'settings' => array( $setting ),
+			    'container_inclusive' => false,
+			    'render_callback' => 'get_customize_partial_events_byline',
+			    'fallback_refresh' => false,
+			) );
+
+	} // ecclesio_church_events_section
 
 	/**
 	 * Sanitize Checkbox
@@ -695,6 +786,14 @@ function get_customize_partial_sermons_heading() {
 }
 function get_customize_partial_sermons_byline() {
     $option = get_option( 'ecclesio_sermon_banner_byline' );
+    return $option;
+}
+function get_customize_partial_events_heading() {
+    $option = get_option( 'ecclesio_event_banner_heading' );
+    return $option;
+}
+function get_customize_partial_events_byline() {
+    $option = get_option( 'ecclesio_event_banner_byline' );
     return $option;
 }
 
@@ -750,6 +849,14 @@ function is_template_staff(){
 function is_archive_sermons(){
     // Get the page's template
     if ( is_post_type_archive( 'ctc_sermon' ) == 0 ){
+        return false;
+    } else {
+        return true;
+    }
+}
+function is_archive_events(){
+    // Get the page's template
+    if ( is_post_type_archive( 'ctc_event' ) == 0 ){
         return false;
     } else {
         return true;

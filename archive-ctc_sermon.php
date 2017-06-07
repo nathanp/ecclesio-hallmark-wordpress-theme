@@ -27,15 +27,12 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 				$banner_heading = 'Sermons';
 			}
 			echo '<h1 class="page-title">'. $banner_heading .'</h1>';
+			
+			if(get_customize_partial_sermons_byline() != "") {
+				$banner_byline = get_customize_partial_sermons_byline();
+				echo '<h3 class="page-byline">'. $banner_byline .'</h3>';
+			}
 		?>
-		
-		<span class="ecclesio-part-sermons-byline">
-			<?php
-				if(get_customize_partial_sermons_byline() != "") {
-					echo '<h3 class="page-byline">'.get_customize_partial_sermons_byline().'</h3>';
-				}
-			?>
-		</span>
 	</div><!-- .banner-text -->
 
 	<?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?>
