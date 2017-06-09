@@ -20,7 +20,9 @@
 
 # Updates
 Updates are managed via kernl.us
+
   - Update style.css and kernl.version when updating versions
   - ACF - Using ACF's local JSON feature to store field settings in the inc/acf-json folder. This allows everyon to receive ACF field updates automatically and puts it all in version control.
   - Ready to distribute - ZIP folder, exclude the .git and node_modules folders. Exclude the .gitignore and README files.
+  - On Windows with 7zip installed, run ```"C:\Program Files\7-Zip\7z.exe" a -tzip ecclesio-hallmark-theme-v1.x.x.zip ecclesio-hallmark-theme\ -mx9 -xr!.git -xr!.gitignore -xr!node_modules```
   - *Want to set up Contiual Integration with BitBucket soon*

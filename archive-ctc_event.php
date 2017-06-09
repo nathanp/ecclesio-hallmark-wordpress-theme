@@ -15,7 +15,7 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 			$banner_img_src = esc_url( get_theme_mod( 'ecclesio_event_banner_image' ) );
 		}
 		else {
-			$banner_img_src = get_stylesheet_directory_uri().'/images/ft-worth.jpg';
+			$banner_img_src = get_template_directory_uri().'/images/ft-worth.jpg';
 		}
 		echo '<img class="banner-bg" src="' . $banner_img_src . '" alt="">';
 	?>

@@ -34,20 +34,20 @@ function site_scripts() {
   global $wp_styles; // Call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
     
     // Load What-Input files in footer
-    wp_enqueue_script( 'what-input', get_stylesheet_directory_uri() . '/vendor/what-input/dist/what-input.min.js', array(), '', true );
+    wp_enqueue_script( 'what-input', get_template_directory_uri() . '/vendor/what-input/dist/what-input.min.js', array(), '', true );
     
     // Adding Foundation scripts file in the footer
-    wp_enqueue_script( 'foundation-js', get_stylesheet_directory_uri() . '/vendor/foundation-sites/dist/js/foundation.min.js', array( 'jquery' ), '6.2.3', true );
+    wp_enqueue_script( 'foundation-js', get_template_directory_uri() . '/vendor/foundation-sites/dist/js/foundation.min.js', array( 'jquery' ), '6.2.3', true );
     
     // Adding scripts file in the footer
-    wp_enqueue_script( 'site-js', get_stylesheet_directory_uri() . '/assets/js/scripts.js', array( 'jquery' ), '', true );
+    wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/scripts.js', array( 'jquery' ), '', true );
 	
 	// Select which grid system you want to use (Foundation Grid by default)
-    wp_enqueue_style( 'foundation-css', get_stylesheet_directory_uri() . '/vendor/foundation-sites/dist/css/foundation.min.css', array(), '', 'all' );
-     //wp_enqueue_style( 'foundation-css', get_stylesheet_directory_uri() . '/vendor/foundation-sites/dist/foundation-flex.min.css', array(), '', 'all' );
+    wp_enqueue_style( 'foundation-css', get_template_directory_uri() . '/vendor/foundation-sites/dist/css/foundation.min.css', array(), '', 'all' );
+     //wp_enqueue_style( 'foundation-css', get_template_directory_uri()() . '/vendor/foundation-sites/dist/foundation-flex.min.css', array(), '', 'all' );
 
     // Register main stylesheet
-    wp_enqueue_style( 'site-css', get_stylesheet_directory_uri() . '/assets/css/style.css', array(), '', 'all' );
+    wp_enqueue_style( 'site-css', get_template_directory_uri() . '/assets/css/style.css', array(), '', 'all' );
 
     // Comment reply script for threaded comments
     if ( is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
@@ -64,11 +64,11 @@ function ecclesio_scripts() {
   wp_enqueue_style( 'ecclesio-fonts', ecclesio_google_fonts_url(), array(), null );
 
   // Primary CSS
-  wp_enqueue_style( 'ecclesio-primary', get_stylesheet_directory_uri() . '/style.css', array(), '1.0' );
+  wp_enqueue_style( 'ecclesio-primary', get_template_directory_uri() . '/style.css', array(), '1.0' );
   // Responsive
-  wp_enqueue_style( 'ecclesio-responsive', get_stylesheet_directory_uri() . '/css/responsive.css', array(), '1.0' );
+  wp_enqueue_style( 'ecclesio-responsive', get_template_directory_uri() . '/css/responsive.css', array(), '1.0' );
   // Hamburgers Navigation
-  wp_enqueue_style( 'ecclesio-hamburgers', get_stylesheet_directory_uri() . '/css/hamburgers.min.css', array(), '1.0' );
+  wp_enqueue_style( 'ecclesio-hamburgers', get_template_directory_uri() . '/css/hamburgers.min.css', array(), '1.0' );
   // Font Awesome
   wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
@@ -76,7 +76,7 @@ function ecclesio_scripts() {
   wp_add_inline_style( 'ecclesio-responsive', ecclesio_customizer_css() ); //class-ecclesio-hallmark-customizer.php
 
   // Hallmark - Custom JS
-  wp_enqueue_script( 'ecclesio-app-js', get_stylesheet_directory_uri() . '/js/ecclesio.js', array( 'jquery' ), '6.0', true );
+  wp_enqueue_script( 'ecclesio-app-js', get_template_directory_uri() . '/js/ecclesio.js', array( 'jquery' ), '6.0', true );
 
 }
 add_action( 'wp_enqueue_scripts', 'ecclesio_scripts', 1000); //1000 places these after the defaults loaded by the parent theme
@@ -84,7 +84,7 @@ add_action( 'wp_enqueue_scripts', 'ecclesio_scripts', 1000); //1000 places these
 function ecclesio_customizer_preview() {
     wp_enqueue_script( 
           'ecclesio-customizer',
-          get_stylesheet_directory_uri().'/js/ecclesio-customizer.js',
+          get_template_directory().'/js/ecclesio-customizer.js',
           array( 'jquery','customize-preview' )
     );
 }

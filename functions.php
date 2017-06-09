@@ -1,7 +1,7 @@
 <?php
 
 // Check for theme updates
-require(get_stylesheet_directory().'/inc/theme_update_check.php');
+require(get_template_directory().'/inc/theme_update_check.php');
 $MyUpdateChecker = new ThemeUpdateChecker(
     'ecclesio-hallmark-theme',
     'https://kernl.us/api/v1/theme-updates/590352595c8dfe786f92b50d/'
@@ -9,29 +9,29 @@ $MyUpdateChecker = new ThemeUpdateChecker(
 // $MyUpdateChecker->purchaseCode = "somePurchaseCode";  <---- Optional!
 
 // Church Theme Framework
-require_once (get_stylesheet_directory() . '/church-theme-framework/framework.php'); // do this before anything
+require_once (get_template_directory() . '/church-theme-framework/framework.php'); // do this before anything
 
 // Church Theme Content
-require_once(get_stylesheet_directory().'/inc/church-theme-content.php');
+require_once(get_template_directory().'/inc/church-theme-content.php');
 
 // Theme support options
-require_once(get_stylesheet_directory().'/assets/functions/theme-support.php'); 
+require_once(get_template_directory().'/assets/functions/theme-support.php'); 
 
 /**
  * Include our Customizer settings.
 **/
-require get_stylesheet_directory() . '/inc/customizer/class-ecclesio-hallmark-customizer.php';
+require get_template_directory() . '/inc/customizer/class-ecclesio-hallmark-customizer.php';
 new Ecclesio_Hallmark_Customizer();
 
 // WP Head and other cleanup functions
-require_once(get_stylesheet_directory().'/assets/functions/cleanup.php');
+require_once(get_template_directory().'/assets/functions/cleanup.php');
 
 // Advanced Custom Fields
-require_once(get_stylesheet_directory().'/inc/acf.php');
+require_once(get_template_directory().'/inc/acf.php');
 
 
 // Register custom menus and menu walkers
-require_once(get_stylesheet_directory().'/assets/functions/menu.php');
+require_once(get_template_directory().'/assets/functions/menu.php');
 /**
  * Register Menus
  * http://codex.wordpress.org/Function_Reference/register_nav_menus#Examples
@@ -76,19 +76,19 @@ function ecclesio_ultimatefonts_setup() {
 }
 
 // Register scripts and stylesheets
-require_once(get_stylesheet_directory().'/assets/functions/enqueue-scripts.php'); 
+require_once(get_template_directory().'/assets/functions/enqueue-scripts.php'); 
 
 // Sermon Functions
-require_once(get_stylesheet_directory().'/inc/sermons.php'); 
+require_once(get_template_directory().'/inc/sermons.php'); 
 
 // Register sidebars/widget areas
-require_once(get_stylesheet_directory().'/assets/functions/sidebar.php'); 
+require_once(get_template_directory().'/assets/functions/sidebar.php'); 
 
 // Makes WordPress comments suck less
-require_once(get_stylesheet_directory().'/assets/functions/comments.php'); 
+require_once(get_template_directory().'/assets/functions/comments.php'); 
 
 // Replace 'older/newer' post links with numbered navigation
-require_once(get_stylesheet_directory().'/assets/functions/page-navi.php'); 
+require_once(get_template_directory().'/assets/functions/page-navi.php'); 
 
 // Adds support for multiple languages
 //require_once(get_template_directory().'/assets/translation/translation.php'); 

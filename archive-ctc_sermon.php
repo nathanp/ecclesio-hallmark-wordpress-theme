@@ -14,7 +14,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 			$banner_img_src = esc_url( get_theme_mod( 'ecclesio_sermon_banner_image' ) );
 		}
 		else {
-			$banner_img_src = get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg';
+			$banner_img_src = get_template_directory_uri().'/images/home_sermon_latest.jpg';
 		}
 		echo '<img class="banner-bg" src="' . $banner_img_src . '" alt="">';
 	?>

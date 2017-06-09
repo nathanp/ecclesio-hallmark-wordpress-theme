@@ -110,7 +110,7 @@ class Ecclesio_Hallmark_Customizer {
 		$setting = 'ecclesio_site_logo';
 		$wp_customize->add_setting( $setting, array(
 			'type' => 'option',
-			'default' => get_stylesheet_directory_uri() . '/images/logo.svg',
+			'default' => get_template_directory_uri() . '/images/logo.svg',
 		) );
 			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
 		    	'label'    => __( 'Site Logo', 'ecclesio-hallmark-theme' ),
@@ -589,7 +589,7 @@ class Ecclesio_Hallmark_Customizer {
 		$setting = 'ecclesio_sermon_banner_image';
 		$wp_customize->add_setting( $setting, array(
 			'type' => 'theme_mod', //option or theme_mod
-			'default' => get_stylesheet_directory_uri() . '/images/home_sermon_latest.jpg',
+			'default' => get_template_directory_uri() . '/images/home_sermon_latest.jpg',
 		) );
 			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
 		    	'label'    => __( 'Banner Image', 'ecclesio-hallmark-theme' ),
@@ -673,7 +673,7 @@ class Ecclesio_Hallmark_Customizer {
 		$setting = 'ecclesio_event_banner_image';
 		$wp_customize->add_setting( $setting, array(
 			'type' => 'theme_mod', //option or theme_mod
-			'default' => get_stylesheet_directory_uri() . '/images/ft-worth.jpg',
+			'default' => get_template_directory_uri() . '/images/ft-worth.jpg',
 		) );
 			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
 		    	'label'    => __( 'Banner Image', 'ecclesio-hallmark-theme' ),
@@ -926,7 +926,7 @@ function ecclesio_iris_palette() {
 	/* Add in Customizer Only */
 	global $wp_customize;
 	if ( isset( $wp_customize ) ){
-		wp_enqueue_script( 'ecclesio-customizer-iris-palette', get_stylesheet_directory_uri() . '/js/ecclesio-customizer-iris-palette.js');
+		wp_enqueue_script( 'ecclesio-customizer-iris-palette', get_template_directory_uri() . '/js/ecclesio-customizer-iris-palette.js');
 	}
 }
 
