@@ -8,133 +8,34 @@ $MyUpdateChecker = new ThemeUpdateChecker(
 );
 // $MyUpdateChecker->purchaseCode = "somePurchaseCode";  <---- Optional!
 
+// Church Theme Framework
+require_once (get_stylesheet_directory() . '/church-theme-framework/framework.php'); // do this before anything
+
+// Church Theme Content
+require_once(get_stylesheet_directory().'/inc/church-theme-content.php');
+
+// Theme support options
+require_once(get_stylesheet_directory().'/assets/functions/theme-support.php'); 
+
 /**
  * Include our Customizer settings.
 **/
 require get_stylesheet_directory() . '/inc/customizer/class-ecclesio-hallmark-customizer.php';
 new Ecclesio_Hallmark_Customizer();
 
-// Church Theme Content
-require_once(get_stylesheet_directory().'/inc/church-theme-content.php');
+// WP Head and other cleanup functions
+require_once(get_stylesheet_directory().'/assets/functions/cleanup.php');
 
-// Church Theme Framework
-require_once get_stylesheet_directory() . '/church-theme-framework/framework.php'; // do this before anything
+// Advanced Custom Fields
+require_once(get_stylesheet_directory().'/inc/acf.php');
 
-// Sermon Archive - Order by Publish Date
-add_action( 'pre_get_posts', 'sermons_change_sort_order'); 
-function sermons_change_sort_order($query){
-    if( is_post_type_archive( 'ctc_sermon' ) || is_tax(array('ctc_sermon_book','ctc_sermon_series','ctc_sermon_speaker','ctc_sermon_topic')) ):
-       //Set the number of posts to display
-       $query->set( 'posts_per_page', 9 );
 
-       //Set the order ASC or DESC
-       $query->set( 'order', 'DESC' );
-       //Set the orderby
-       $query->set( 'orderby', 'post_date' );
-       
-
-       $query->set( 'suppress_filters', true );
-       
-    endif;    
-};
-
-// ACF - Remove default WP meta box - https://www.advancedcustomfields.com/blog/acf-pro-5-5-13-update/
-add_filter('acf/settings/remove_wp_meta_box', '__return_true');
-
-// ACF - Local JSON - https://www.advancedcustomfields.com/resources/local-json/
-add_filter('acf/settings/save_json', 'ecclesio_acf_json_save_point');
-function ecclesio_acf_json_save_point( $path ) {
-    // update path
-    $path = get_stylesheet_directory() . '/inc/acf-json';
-    // return
-    return $path;
-}
-add_filter('acf/settings/load_json', 'ecclesio_acf_json_load_point');
-function ecclesio_acf_json_load_point( $paths ) {
-    // remove original path (optional)
-    unset($paths[0]);
-    // append path
-    $paths[] = get_stylesheet_directory() . '/inc/acf-json';
-    // return
-    return $paths;
-}
-
-// ACF - Automate the Sync JSON process
-add_action( 'admin_init', 'ecclesio_sync_acf_fields' );
-function ecclesio_sync_acf_fields() {
-    // vars
-    $groups = acf_get_field_groups();
-    $sync   = array();
-    // bail early if no field groups
-    if( empty( $groups ) )
-        return;
-    // find JSON field groups which have not yet been imported
-    foreach( $groups as $group ) {
-        // vars
-        $local      = acf_maybe_get( $group, 'local', false );
-        $modified   = acf_maybe_get( $group, 'modified', 0 );
-        $private    = acf_maybe_get( $group, 'private', false );
-        // ignore DB / PHP / private field groups
-        if( $local !== 'json' || $private ) {
-            // do nothing
-        } elseif( ! $group[ 'ID' ] ) {
-            $sync[ $group[ 'key' ] ] = $group;
-        } elseif( $modified && $modified > get_post_modified_time( 'U', true, $group[ 'ID' ], true ) ) {
-            $sync[ $group[ 'key' ] ]  = $group;
-        }
-    }//foreach
-    // bail if no sync needed
-    if( empty( $sync ) )
-        return;
-    if( ! empty( $sync ) ) { //if( ! empty( $keys ) ) {
-        // vars
-        $new_ids = array();
-        foreach( $sync as $key => $v ) { //foreach( $keys as $key ) {
-            // append fields
-            if( acf_have_local_fields( $key ) ) {
-                $sync[ $key ][ 'fields' ] = acf_get_local_fields( $key );
-            }
-            // import
-            $field_group = acf_import_field_group( $sync[ $key ] );
-        }//foreach
-    }//if
-}//ecclesio_sync_acf_fields
-
+// Register custom menus and menu walkers
+require_once(get_stylesheet_directory().'/assets/functions/menu.php');
 /**
  * Register Menus
  * http://codex.wordpress.org/Function_Reference/register_nav_menus#Examples
  
-register_nav_menus(array(
-    'primary-menu' => 'Primary', // registers the menu in the WordPress admin menu editor
-    'secondary-menu' => 'Secondary',
-    'footer-menu-primary' => 'Footer Primary',
-    'footer-menu-secondary' => 'Footer Secondary'
-));
-*/
-
-/**
- * Primary Menu
- * http://codex.wordpress.org/Function_Reference/wp_nav_menu
-
-if ( ! function_exists( 'themeium_nav_primary' ) ) {
-	function themeium_nav_primary() {
-	    wp_nav_menu(array( 
-	        'container' => false,                           // remove nav container
-	        'container_class' => '',                        // class of container
-	        'menu' => '',                                   // menu name
-	        'menu_class' => 'menu',            // adding custom nav class
-	        'theme_location' => 'primary-menu',             // where it's located in the theme
-	        'before' => '',                                 // before each link <a> 
-	        'after' => '',                                  // after each link </a>
-	        'link_before' => '',                            // before each link text
-	        'link_after' => '',                             // after each link text
-	        'items_wrap' => '<ul id="%1$s" class="%2$s" data-responsive-menu="drilldown medium-dropdown">%3$s</ul>',
-	        'depth' => 5,                                   // limit the depth of the nav
-	        'fallback_cb' => false,                         // fallback function (see below)
-	    ));
-	}
-}
- */
 
 /* The Top Menu
  * Added data-close-on-click-inside to fix touch-screen dropdown issue
@@ -151,36 +52,6 @@ function ecclesio_top_nav() {
         'walker' => new Topbar_Menu_Walker()
     ));
 } 
-
-/**
- * Register Google fonts.
- *
- *
- * @return string Google fonts URL for the theme.
- */
-function ecclesio_google_fonts_url() {
-	$fonts_url = '';
-	$fonts     = array();
-	$subsets   = 'latin,latin-ext';
-
-	/* translators: If there are characters in your language that are not supported by Catamaran, translate this to 'off'. Do not translate into your own language. */
-	if ( 'off' !== _x( 'on', 'Montserrat font: on or off', 'ecclesio' ) ) {
-		$fonts[] = 'Montserrat:300,400,700';
-	}
-	if ( 'off' !== _x( 'on', 'Lora font: on or off', 'ecclesio' ) ) {
-		$fonts[] = 'Lora:400,700';
-	}
-
-	if ( $fonts ) {
-		$fonts_url = add_query_arg( array(
-			'family' => urlencode( implode( '|', $fonts ) ),
-			'subset' => urlencode( $subsets ),
-		), 'https://fonts.googleapis.com/css' );
-
-	}
-	$fonts_url = str_replace("%2B", "+", $fonts_url); //keep plus signs
-	return $fonts_url;
-}
 
 
 /* Google Fonts for the Customizer
@@ -204,171 +75,31 @@ function ecclesio_ultimatefonts_setup() {
     ) );
 }
 
-/**
- * Enqueues scripts and styles.
- */
-function ecclesio_scripts() {
-	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'ecclesio-fonts', ecclesio_google_fonts_url(), array(), null );
+// Register scripts and stylesheets
+require_once(get_stylesheet_directory().'/assets/functions/enqueue-scripts.php'); 
 
-	// Primary CSS
-	wp_enqueue_style( 'ecclesio-primary', get_stylesheet_directory_uri() . '/style.css', array(), '1.0' );
-	// Responsive
-	wp_enqueue_style( 'ecclesio-responsive', get_stylesheet_directory_uri() . '/css/responsive.css', array(), '1.0' );
-	// Hamburgers Navigation
-	wp_enqueue_style( 'ecclesio-hamburgers', get_stylesheet_directory_uri() . '/css/hamburgers.min.css', array(), '1.0' );
-	// Font Awesome
-	wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+// Sermon Functions
+require_once(get_stylesheet_directory().'/inc/sermons.php'); 
 
-	// Live preview CSS changes
-	wp_add_inline_style( 'ecclesio-responsive', ecclesio_customizer_css() ); //class-ecclesio-hallmark-customizer.php
+// Register sidebars/widget areas
+require_once(get_stylesheet_directory().'/assets/functions/sidebar.php'); 
 
-	// Hallmark - Custom JS
-	wp_enqueue_script( 'ecclesio-app-js', get_stylesheet_directory_uri() . '/js/ecclesio.js', array( 'jquery' ), '6.0', true );
+// Makes WordPress comments suck less
+require_once(get_stylesheet_directory().'/assets/functions/comments.php'); 
 
-}
-add_action( 'wp_enqueue_scripts', 'ecclesio_scripts', 1000); //1000 places these after the defaults loaded by the parent theme
+// Replace 'older/newer' post links with numbered navigation
+require_once(get_stylesheet_directory().'/assets/functions/page-navi.php'); 
 
-function ecclesio_customizer_preview() {
-    wp_enqueue_script( 
-          'ecclesio-customizer',
-          get_stylesheet_directory_uri().'/js/ecclesio-customizer.js',
-          array( 'jquery','customize-preview' )
-    );
-}
-add_action('customize_preview_init','ecclesio_customizer_preview');
+// Adds support for multiple languages
+//require_once(get_template_directory().'/assets/translation/translation.php'); 
 
-/**
- * Remove query strings from static resources.
- * Only does this for someone not an admin, so can more easily test development, etc.
- * https://atulhost.com/query-strings-remover
- */
-function ecclesio_remove_query_strings_1( $src ){	
-	$rqs = explode( '?ver', $src );
-	return $rqs[0];
-}
-	if ( is_admin() ) {
-		// Remove query strings from static resources disabled in admin
-	}
-	else {
-		add_filter( 'script_loader_src', 'ecclesio_remove_query_strings_1', 15, 1 );
-		add_filter( 'style_loader_src', 'ecclesio_remove_query_strings_1', 15, 1 );
-	}
+// Remove 4.2 Emoji Support
+// require_once(get_template_directory().'/assets/functions/disable-emoji.php'); 
 
-function ecclesio_remove_query_strings_2( $src ){
-	$rqs = explode( '&ver', $src );
-    return $rqs[0];
-}
-	if ( is_admin() ) {
-		// Remove query strings from static resources disabled in admin
-	}
+// Adds site styles to the WordPress editor
+//require_once(get_template_directory().'/assets/functions/editor-styles.php'); 
 
-	else {
-		add_filter( 'script_loader_src', 'ecclesio_remove_query_strings_2', 15, 1 );
-		add_filter( 'style_loader_src', 'ecclesio_remove_query_strings_2', 15, 1 );
-	}
-
-/**
- * STRIP HTTP and HTTPS
- * Including this specifically for the below Vimeo thumbnail code
- * Returns a protocol agnostic URL
- */
-function remove_http($url) {
-   $disallowed = array('http:', 'https:');
-   foreach($disallowed as $d) {
-      if(strpos($url, $d) === 0) {
-         return str_replace($d, '', $url);
-      }
-   }
-   return $url;
-}
-
-/**
- * GET THUMBNAIL FROM VIMEO/YOUTUBE
- * Retrieves the thumbnail from a youtube or vimeo video
- * @param - $src: the url of the "player"
- * @return - string
- * @todo - do some real world testing. 
- * 
-**/
-function get_video_thumbnail( $src, $res = null ) {
-
-	$url_pieces = explode('/', $src);
-	
-	if ( $url_pieces[2] == 'vimeo.com' ) { // If Vimeo
-		$res = (string) $res; //argument for resolution
-		$id = (int) substr(parse_url($src, PHP_URL_PATH), 1);
-
-		$request = wp_remote_get('https://vimeo.com/api/v2/video/' . $id . '.json');
-		$body = wp_remote_retrieve_body( $request );
-		$hash = json_decode( $body, true); //use the true parameter to return as array instead of an object
-		//print_r($hash);
-		if(get_transient('vimeo_' . $res . '_' . $id)) { // If thumbnail has already been cached, get that
-			$thumbnail = remove_http(get_transient('vimeo_' . $res . '_' . $id));
-		}
-		else { // If no thumbnail has been cached
-			if ( '' !== $res ) { //if $res is set, e.g. get_video_thumbnail($sermon_video_url, 'hd')
-				$hash = (explode("_640",$hash[0]['thumbnail_large']));
-				$thumbnail = remove_http($hash[0]);
-			}
-			else {
-				$thumbnail = remove_http($hash[0]['thumbnail_large']); //default to 640px width
-			}
-			set_transient('vimeo_' . $res . '_' . $id, $thumbnail, 2629743);
-		}
-
-	} elseif ( $url_pieces[2] == 'www.youtube.com' ) { // If Youtube
-
-		preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $src, $matches);
-    	$id = $matches[1];
-		$thumbnail = 'https://img.youtube.com/vi/' . $id . '/mqdefault.jpg';
-
-	}
-
-	return $thumbnail;
-
-}
-
-/**
- * ENABLE AUTOMATIC EMBEDS FROM SERMON AUDIO
- * Thanks to - https://github.com/CarlosRios/sermonaudio-embed
- * Just paste the URL to the page from sermonaudio. E.g. http://www.sermonaudio.com/sermoninfo.asp?SID=51016846565
-**/
-// Get things going
-add_action( 'init', function(){
-	wp_embed_register_handler(
-		'sermonaudio',
-		'#http://(www\.)?sermonaudio\.com/sermoninfo.asp\?SID=([\d]+)#',
-		'wp_register_sermonaudio_embed',
-		true
-	);
-	wp_embed_register_handler(
-		'sermonaudio_2',
-		'#http://(www\.)?sermonaudio\.com/sermoninfo.asp\?m=t&s=([\d]+)#',
-		'wp_register_sermonaudio_embed',
-		true
-	);
-});
-// Provide WordPress with the embed code
-if( !function_exists( 'wp_register_sermonaudio_embed' ) ) {
-	function wp_register_sermonaudio_embed( $matches, $attr, $url, $rawattr )
-	{
-		$embed = sprintf(
-			'<iframe style="min-width:250px;" width="100%%" height="150" frameborder="0" src="http://www.sermonaudio.com/saplayer/player_embed.asp?SID=%1$s"></iframe>',
-			esc_attr( $matches[2] )
-		);
-		return apply_filters( 'wp_embed_sermonaudio', $embed, $matches, $attr, $url, $rawattr );
-	}
-}
-
-/**
- * ENABLE AUTOMATIC EMBEDS FROM SOUNDCLOUD
- * Thanks to - http://www.wpbeginner.com/wp-tutorials/how-to-embed-soundcloud-in-your-wordpress-posts-by-using-oembed/
-**/
-// Add SoundCloud oEmbed
-function add_oembed_soundcloud(){
-wp_oembed_add_provider( 'http://soundcloud.com/*', 'http://soundcloud.com/oembed' );
-}
-add_action('init','add_oembed_soundcloud');
+// Related post function - no need to rely on plugins
+// require_once(get_template_directory().'/assets/functions/related-posts.php'); 
 
 ?>
