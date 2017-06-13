@@ -19,9 +19,9 @@ Template Name: Homepage
 	    	// Event Category Option
 	    	if( function_exists('get_field') && get_field( 'event_category' ) ) {
 	    		$event_category_ids = get_field( 'event_category' );
-				$args = array( 'category' => $event_category_ids, );
+				$args = array( 'category' => $event_category_ids, 'limit' => 3 );
 			} else {
-				$args = array();
+				$args = array( 'limit' => 3 );
 			}
 	    	$events_array = ctfw_get_events($args);
 	    		$events_array_count = count($events_array);
@@ -30,7 +30,7 @@ Template Name: Homepage
 				<div class="row large-up-<?php echo $events_array_count; ?>" data-equalizer data-equalize-on="medium">
 				<?php
 			    	if($events_array) {
-			    	foreach(array_slice($events_array, 0, 3) as $post) { //limits to 3
+			    	foreach($events_array as $post) {
 						//print_r(ctfw_event_data());
 				    	$event_title 			= get_the_title();
 						$event_date 			= ctfw_event_data()['date'];
