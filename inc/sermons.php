@@ -41,13 +41,12 @@
 	 * 
 	**/
 	function get_video_thumbnail( $src, $res = null ) {
-
 		$url_pieces = explode('/', $src);
-		
-		if ( $url_pieces[2] == 'vimeo.com' ) { // If Vimeo
-			$res = (string) $res; //argument for resolution
-			$id = (int) substr(parse_url($src, PHP_URL_PATH), 1);
 
+		//If a Vimeo URL - https://stackoverflow.com/questions/10488943/easy-way-to-get-vimeo-id-from-a-vimeo-url
+		if(preg_match("/(https?:\/\/)?(www\.)?(player\.)?vimeo\.com\/([a-z]*\/)*([0-9]{6,11})[?]?.*/", $src, $output_array)) {
+			$res = (string) $res; //argument for resolution
+			$id = $output_array[5];
 			$request = wp_remote_get('https://vimeo.com/api/v2/video/' . $id . '.json');
 			$body = wp_remote_retrieve_body( $request );
 			$hash = json_decode( $body, true); //use the true parameter to return as array instead of an object
@@ -67,15 +66,11 @@
 			}
 
 		} elseif ( $url_pieces[2] == 'www.youtube.com' ) { // If Youtube
-
 			preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $src, $matches);
 	    	$id = $matches[1];
 			$thumbnail = 'https://img.youtube.com/vi/' . $id . '/mqdefault.jpg';
-
 		}
-
 		return $thumbnail;
-
 	}
 
 	/**
