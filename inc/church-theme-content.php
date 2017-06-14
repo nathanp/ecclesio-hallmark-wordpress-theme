@@ -49,8 +49,14 @@ add_theme_support( 'ctc-events', array(
         '_ctc_event_map_zoom',
         '_ctc_event_registration_url',
     ),
-    'field_overrides' => array()
+    'field_overrides' => array(
+        '_ctc_event_recurrence' => array(
+            'desc' => sprintf( __( 'Dates automatically move forward after event ends. <br />Install <a href="%s" target="_blank">Custom Recurring Events</a> for more options.', 'ecclesio' ), 'https://eccles.io' )
+        )//Adds custom link to purchase recurring events add-on
+    )
 ) );
+// Remove default link to purchase recurring events add-on
+remove_action( 'ctmb_field-_ctc_event_recurrence', 'ctc_append_custom_recurrence_note' );
 
 // People
 add_theme_support( 'ctc-people', array(
