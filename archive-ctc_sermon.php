@@ -20,7 +20,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 	?>
 	<div class="banner-text">
 		<?php
-			if ( get_customize_partial_sermons_heading() ) {
+			if ( function_exists('get_customize_partial_sermons_heading') && get_customize_partial_sermons_heading() ) {
 				$banner_heading = get_customize_partial_sermons_heading();
 			}
 			else {
@@ -28,7 +28,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 			}
 			echo '<h1 class="page-title">'. $banner_heading .'</h1>';
 			
-			if(get_customize_partial_sermons_byline() != "") {
+			if( function_exists('get_customize_partial_sermons_byline') && get_customize_partial_sermons_byline() != "") {
 				$banner_byline = get_customize_partial_sermons_byline();
 				echo '<h3 class="page-byline">'. $banner_byline .'</h3>';
 			}

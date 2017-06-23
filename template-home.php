@@ -95,20 +95,21 @@ Template Name: Homepage
 		    
 		</div> <!-- #inner-content -->
 
-		<div id="sermon-latest">
-			<?php
-				$sermon_args = array(
-					'numberposts' => 1,
-					'offset' => 0,
-					'category' => 0,
-					'orderby' => 'post_date',
-					'order' => 'DESC',
-					'post_type' => 'ctc_sermon',
-					'post_status' => 'publish',
-					'suppress_filters' => true
-				);
-			    $recent_sermons = wp_get_recent_posts($sermon_args);
-			    foreach( $recent_sermons as $sermon ){
+		<?php
+			$sermon_args = array(
+				'numberposts' => 1,
+				'offset' => 0,
+				'category' => 0,
+				'orderby' => 'post_date',
+				'order' => 'DESC',
+				'post_type' => 'ctc_sermon',
+				'post_status' => 'publish',
+				'suppress_filters' => true
+			);
+		    $recent_sermons = wp_get_recent_posts($sermon_args);
+		    if($recent_sermons) { ?>
+		    	<div id="sermon-latest">
+			    	<?php foreach( $recent_sermons as $sermon ){
 
 			    	$sermon_video_url	= ctfw_sermon_data($sermon["ID"])['video'];
 					$sermon_audio_embed = ctfw_sermon_data($sermon["ID"])['audio_player'];
@@ -170,17 +171,19 @@ Template Name: Homepage
 						}
 						
 						echo "<span class='meta'>";
-							echo '<span class="speaker">'.$primary_speaker_name.'</span> | ';
+							if(!empty($primary_speaker_name)) { echo '<span class="speaker">'.$primary_speaker_name.'</span> | '; }
 							echo '<span class="date">'.get_the_time('F j, Y', $sermon['ID']).'</span>';
 						echo "</span>";
 						
 				        echo '<a href="' . get_permalink($sermon["ID"]) . '" title="Watch '.esc_attr($sermon["post_title"]).'" class="button">'. $verb .' Now</a>';
 				    echo "</span>";
-			    } //foreach
-			    wp_reset_query();
-			?>
-
-		</div><!-- #sermon-latest -->
+			    	} //foreach
+		    } //if
+		    else { ?>
+				</div><!-- #sermon-latest -->
+		    <?php }
+		    wp_reset_query();
+		?>
 
 	</div> <!-- #content -->
 

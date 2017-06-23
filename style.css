@@ -109,12 +109,39 @@ header.header {
 #logo-primary {
 	width: 240px;
 	-webkit-transition: all 400ms ease-in-out;
--moz-transition: all 400ms ease-in-out;
--ms-transition: all 400ms ease-in-out;
--o-transition: all 400ms ease-in-out;
-transition: all 400ms ease-in-out;
-
+	-moz-transition: all 400ms ease-in-out;
+	-ms-transition: all 400ms ease-in-out;
+	-o-transition: all 400ms ease-in-out;
+	transition: all 400ms ease-in-out;
 }
+
+/* Text Logo */
+h1.site-title {
+	font-size: 2em;
+	margin: 0;
+	font-weight: 600;
+	height: 84px;
+	line-height: 2.5em;
+	-webkit-transition: all 400ms ease-in-out;
+	-moz-transition: all 400ms ease-in-out;
+	-ms-transition: all 400ms ease-in-out;
+	-o-transition: all 400ms ease-in-out;
+	transition: all 400ms ease-in-out;
+}
+
+/* Scrolled Header */
+header.header.scroll {
+	-webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
+	box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
+}
+	header.header.scroll #logo-primary {
+	    width: 180px;
+	}
+	header.header.scroll h1.site-title {
+		font-size: 1.5em;
+		line-height: 2em;
+		height: auto;
+	}
 
 /* Menu Area */
 header .top-bar-right.show-for-medium {
@@ -174,15 +201,6 @@ header .top-bar-right.show-for-medium {
 	.menu.submenu.is-accordion-submenu {
 		box-shadow: inset 3px -2px 8px 3px rgba(0,0,0,0.30);
 		-webkit-box-shadow: inset 3px -2px 8px 3px rgba(0,0,0,0.30);
-	}
-
-/* Scrolled Header */
-header.header.scroll {
-	-webkit-box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
-	box-shadow: 0px 0px 5px 2px rgba(0, 0, 0, 0.25);
-}
-	header.header.scroll #logo-primary {
-	    width: 180px;
 	}
 
 /* Page Banner */

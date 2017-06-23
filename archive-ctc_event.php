@@ -21,7 +21,7 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 	?>
 	<div class="banner-text">
 		<?php
-			if ( get_customize_partial_events_heading() ) {
+			if ( function_exists('get_customize_partial_events_heading') && get_customize_partial_events_heading() ) {
 				$banner_heading = get_customize_partial_events_heading();
 			}
 			else {
@@ -29,7 +29,7 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 			}
 			echo '<h1 class="page-title">'. $banner_heading .'</h1>';
 		
-			if(get_customize_partial_events_byline() != "") {
+			if( function_exists('get_customize_partial_events_byline') && get_customize_partial_events_byline() != "") {
 				$banner_byline = get_customize_partial_events_byline();
 				echo '<h3 class="page-byline">'. $banner_byline .'</h3>';
 			}
@@ -52,7 +52,7 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 						$event_time_range 		= ctfw_event_data()['time_range'];
 						$event_hide_time_range 	= ctfw_event_data()['hide_time_range'];
 						$event_time_desc 		= ctfw_event_data()['time'];
-						$event_venue 			= ctfw_event_data()['venue'];
+						$event_venue 			= esc_html(ctfw_event_data()['venue']);
 						$event_address 			= ctfw_event_data()['address'];
 						$event_directions 		= ctfw_event_data()['directions_url'];
 						$event_has_coord 		= ctfw_event_data()['map_has_coordinates'];

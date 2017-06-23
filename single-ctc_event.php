@@ -12,7 +12,7 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 	//print_r(ctfw_event_data());
 	$event_date 		= ctfw_event_data()['date'];
 	$event_time_range 	= ctfw_event_data()['time_range'];
-	$event_venue 		= ctfw_event_data()['venue'];
+	$event_venue 		= esc_html(ctfw_event_data()['venue']);
 	$event_address 		= ctfw_event_data()['address'];
 	$event_directions 	= ctfw_event_data()['directions_url'];
 	$event_has_coord 	= ctfw_event_data()['map_has_coordinates'];
