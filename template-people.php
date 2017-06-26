@@ -31,13 +31,18 @@ Template Name: Staff
 				
 				<div id="staff" class="row large-up-<?php echo get_theme_mod('ecclesio_staff_count'); ?> medium-up-3 small-up-2" data-equalizer>
 				    <?php
+				    if( function_exists('get_field') ) {
+				    	$people_group_ids = get_field( 'people_group' );
+				    }
+				    else {
+				    	$people_group_ids = 'staff';
+				    }
 				    $the_query = new WP_Query( array(
 					    'post_type' => 'ctc_person',
 					    'tax_query' => array(
 					        array (
 					            'taxonomy' => 'ctc_person_group',
-					            'field' => 'slug',
-					            'terms' => 'staff',
+					            'terms' => $people_group_ids,
 					        )
 					    ),
 					) );

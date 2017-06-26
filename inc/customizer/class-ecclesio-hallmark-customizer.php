@@ -544,6 +544,7 @@ class Ecclesio_Hallmark_Customizer {
 	 * @return void
 	 */
 	private function ecclesio_church_staff_section( $wp_customize ) {
+		require_once(TEMPLATEPATH . '/inc/customizer/class_ecclesio_staff_taxonomy_dropdown.php');
 		$section = 'ecclesio_church_staff';
 	    /* Display Count */
 	    $setting = 'ecclesio_staff_count';
@@ -571,7 +572,6 @@ class Ecclesio_Hallmark_Customizer {
 				  ),
 				'priority'    => 10
 			) ) );
-
 	} // ecclesio_church_staff_section
 
 	/**
