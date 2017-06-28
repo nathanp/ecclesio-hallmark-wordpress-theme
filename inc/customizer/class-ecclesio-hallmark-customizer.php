@@ -535,46 +535,6 @@ class Ecclesio_Hallmark_Customizer {
 	} //ecclesio_theme_colors
 
 	/**
-	 * Section: Church Staff
-	 *
-	 * @param WP_Customize_Manager $wp_customize
-	 *
-	 * @access private
-	 * @since  1.0
-	 * @return void
-	 */
-	private function ecclesio_church_staff_section( $wp_customize ) {
-		require_once(TEMPLATEPATH . '/inc/customizer/class_ecclesio_staff_taxonomy_dropdown.php');
-		$section = 'ecclesio_church_staff';
-	    /* Display Count */
-	    $setting = 'ecclesio_staff_count';
-		$wp_customize->add_setting( $setting, array(
-			'type' => 'theme_mod',
-			'capability' => 'edit_theme_options',
-			'default' => '4',
-			'transport' => 'refresh', // refresh or postMessage
-			'sanitize_callback' => 'sanitize_text_field'
-		) );
-			// Add Control
-			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'People per Row', 'ecclesio-hallmark-theme' ),
-				'input_attrs' => array(
-			        'placeholder' => '4'
-			    ),
-				'description' => esc_html__( 'Number of staff displayed per row.', 'ecclesio-hallmark-theme' ),
-				'section'     => $section,
-				'settings'    => $setting,
-				'type'        => 'number',
-				'input_attrs' => array(
-				    'min' => 2,
-				    'max' => 6,
-				    'step' => 1,
-				  ),
-				'priority'    => 10
-			) ) );
-	} // ecclesio_church_staff_section
-
-	/**
 	 * Section: Sermons Archive
 	 *
 	 * @param WP_Customize_Manager $wp_customize

@@ -23,6 +23,27 @@
             "load_terms": 0,
             "return_format": "id",
             "multiple": 0
+        },
+        {
+            "key": "field_595306185d6d2",
+            "label": "People Per Row",
+            "name": "people_per_row",
+            "type": "number",
+            "instructions": "Number of staff displayed per row.",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": 3,
+            "placeholder": "",
+            "prepend": "",
+            "append": "",
+            "min": 2,
+            "max": 6,
+            "step": ""
         }
     ],
     "location": [
@@ -42,5 +63,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1498514555
+    "modified": 1498613353
 }

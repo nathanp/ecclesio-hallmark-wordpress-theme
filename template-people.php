@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Staff
+Template Name: People
 */
 ?>
 
@@ -9,12 +9,18 @@ Template Name: Staff
 	<?php get_template_part( 'parts/header', 'banner' ); ?>
 
 	<?php
-	//change column sizes based on how many staff per row
-	if( get_theme_mod('ecclesio_staff_count') < 4 ) {
-		$columns_classes = 'large-8 medium-10 small-12 small-centered';
-	} else {
-		$columns_classes = 'small-12';
-	}
+		if( function_exists('get_field') ) {
+	    	$people_per_row = get_field( 'people_per_row' );
+	    }
+	    else {
+	    	$people_per_row = 3;
+	    }
+		//change column sizes based on how many staff per row
+		if( $people_per_row < 4 ) {
+			$columns_classes = 'large-8 medium-10 small-12 small-centered';
+		} else {
+			$columns_classes = 'small-12';
+		}
 	?>
 
 	<div id="content">
@@ -29,7 +35,7 @@ Template Name: Staff
 			    
 			    <?php endwhile; endif; ?>
 				
-				<div id="staff" class="row large-up-<?php echo get_theme_mod('ecclesio_staff_count'); ?> medium-up-3 small-up-2" data-equalizer>
+				<div id="staff" class="row large-up-<?php echo $people_per_row; ?> medium-up-3 small-up-2" data-equalizer>
 				    <?php
 				    if( function_exists('get_field') ) {
 				    	$people_group_ids = get_field( 'people_group' );
