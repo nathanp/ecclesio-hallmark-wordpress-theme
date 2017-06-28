@@ -76,6 +76,11 @@ class Ecclesio_Hallmark_Customizer {
 			'active_callback' => 'is_archive_events',
 			'priority' => 19 //place above "Site Identity"
 		) );
+		// New section for "Footer".
+		$wp_customize->add_section( 'ecclesio_church_footer', array(
+			'title'    => __( 'Footer Options', 'ecclesio-hallmark-theme' ),
+			'priority' => 190 //place above "Additional CSS"
+		) );
 
 		/*
 		 * Add settings to sections.
@@ -86,6 +91,7 @@ class Ecclesio_Hallmark_Customizer {
 		$this->ecclesio_theme_colors_section( $wp_customize );
 		$this->ecclesio_church_sermons_section( $wp_customize );
 		$this->ecclesio_church_events_section( $wp_customize );
+		$this->ecclesio_church_footer_section( $wp_customize );
 	}
 
 	/**
@@ -696,6 +702,65 @@ class Ecclesio_Hallmark_Customizer {
 	} // ecclesio_church_events_section
 
 	/**
+	 * Section: Footer
+	 *
+	 * @param WP_Customize_Manager $wp_customize
+	 *
+	 * @access private
+	 * @since  1.0
+	 * @return void
+	 */
+	private function ecclesio_church_footer_section( $wp_customize ) {
+		$section = 'ecclesio_church_footer';
+		$text_domain = 'ecclesio-hallmark-theme';
+	    /* Footer CTA Text */
+	    $setting = 'ecclesio_church_footer_cta_text';
+	    // Add Setting
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'option',
+			'default' => 'Contact Us',
+			'transport' => 'postMessage', // refresh or postMessage
+			'sanitize_callback' => 'sanitize_text_field'
+		) );
+			// Add Control
+			$wp_customize->add_control( new WP_Customize_Control( $wp_customize,  $setting, array(
+				'label'       => esc_html__( 'Footer Button Text', $text_domain ),
+				'description' => esc_html__( 'Type the button text for the main call to action button in the footer.', $text_domain ),
+				'section'     => $section,
+				'settings'    => $setting,
+				'type'        => 'text',
+				'priority'    => 10
+			) ) );
+			// Selective Refresh
+			$wp_customize->selective_refresh->add_partial( 'ecclesio_part_church_footer_cta_text', array(
+			    'selector' => '.ecclesio-part-cta-text', //match this selector with the selctor in the customizer js file.
+			    'settings' => array( $setting ),
+			    'container_inclusive' => false,
+			    'render_callback' => 'get_customize_partial_church_footer_cta_text',
+			    'fallback_refresh' => false,
+			) );
+		/* Footer CTA URL */
+	    $setting = 'ecclesio_church_footer_cta_url';
+	    // Add Setting
+		$wp_customize->add_setting( $setting, array(
+			'type' => 'option',
+			'default' => '',
+			'transport' => 'refresh', // refresh or postMessage
+			'sanitize_callback' => 'sanitize_text_field'
+		) );
+			// Add Control
+			$wp_customize->add_control( new WP_Customize_Control( $wp_customize,  $setting, array(
+				'label'       => esc_html__( 'Footer Button URL', $text_domain ),
+				'description' => esc_html__( 'Type the URL for the main call to action button in the footer.', $text_domain ),
+				'section'     => $section,
+				'settings'    => $setting,
+				'type'        => 'text',
+				'priority'    => 10
+			) ) );				
+
+	} // ecclesio_church_footer_section
+
+	/**
 	 * Sanitize Checkbox
 	 * 
 	 * Accepts only "true" or "false" as possible values.
@@ -749,6 +814,10 @@ function get_customize_partial_events_byline() {
     $option = get_option( 'ecclesio_event_banner_byline' );
     return $option;
 }
+function get_customize_partial_church_footer_cta_text() {
+    $option = get_option( 'ecclesio_church_footer_cta_text' );
+    return $option;
+}
 
 //Non-Partials
 function get_customize_social_fb() {
@@ -785,6 +854,10 @@ function get_customize_social_vimeo() {
 }
 function get_customize_social_yt() {
     $option = get_option( 'ecclesio_social_yt' );
+    return $option;
+}
+function get_customize_church_footer_cta_url() {
+    $option = get_option( 'ecclesio_church_footer_cta_url' );
     return $option;
 }
 
@@ -828,7 +901,7 @@ function ecclesio_customizer_css() {
 	// Generate CSS
 	//Main Color
 	$css .= '#menu-main-menu-1 .submenu li a:hover, .footer-top, .off-canvas, button.hamburger .hamburger-inner, button.hamburger .hamburger-inner:after, button.hamburger .hamburger-inner:before, .pagination .current, .button { background-color: ' . $color_main . '; }';
-	$css .= 'a, #menu-main-menu-1 li.active>a, #menu-main-menu-1 li a:hover, #listing article .card .button:active, #listing article .card .button:focus, #listing article .card .button:hover, .button.outline-white:hover, .button.outline-white:active, .button.outline-white:focus, .tabs-sermon .tabs-title.is-active a { color: ' . $color_main . '; }';
+	$css .= 'a, #menu-main-menu-1 > li.active > a, #menu-main-menu-1 li a:hover, #listing article .card .button:active, #listing article .card .button:focus, #listing article .card .button:hover, .button.outline-white:hover, .button.outline-white:active, .button.outline-white:focus, .tabs-sermon .tabs-title.is-active a { color: ' . $color_main . '; }';
 	$css .= '.dropdown.menu.medium-horizontal>li.is-dropdown-submenu-parent>a:after { border-color: ' . $color_main . ' transparent transparent; }';
 	//Accent Color
 	$css .= 'a:focus, a:hover { color: ' . $color_accent . '; }';
@@ -838,7 +911,7 @@ function ecclesio_customizer_css() {
 	$css .= '#banner .overlay { background: rgba('.$r.', '.$g.', '.$b.', 0.75); }';
 	//Foter Color
 	$css .= 'footer.footer { background-color: '. $color_footer .'; }';
-
+	$css .= '.footer-top .social a:hover { color: '. $color_footer .'; }';
 	// Return CSS
 	return $css;
 }
@@ -883,6 +956,7 @@ function ecclesio_edit_customizer_sections( $wp_customize ) {
 	
 	$wp_customize->remove_section( 'static_front_page' );
 	$wp_customize->remove_section( 'themes' );
+	$wp_customize->remove_section( 'colors' );
 }
 add_action( 'customize_register', 'ecclesio_edit_customizer_sections' );
 

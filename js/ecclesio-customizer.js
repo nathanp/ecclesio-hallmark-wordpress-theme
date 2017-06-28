@@ -16,6 +16,13 @@
         } );
     } ); //wp.customize
 
+    //Selective refresh on Footer
+    wp.customize( 'ecclesio_part_church_footer_cta_text', function( value ) {
+        value.bind( function( to ) {
+            jQuery('.ecclesio-part-cta-text').html( to );
+        } );
+    } ); //wp.customize
+
     // function to convert hex to rgb
     function hexToRGB(hex, alpha) {
         var r = parseInt(hex.slice(1, 3), 16),
@@ -70,9 +77,11 @@
     wp.customize( 'ecclesio_color_footer', function( value ) {
         value.bind( function( to ) {
             //Generate CSS
-            var color_footer   = 'footer.footer { background: ' + to + '; }';
+            var color_footer_bg      = 'footer.footer { background: ' + to + '; }';
+            var color_footer_color   = '.footer-top .social a:hover { color: ' + to + '; }';
             //Put in the preview-only CSS
-            $( '#ecclesio-customizer-preview' ).append( color_footer );
+            $( '#ecclesio-customizer-preview' ).append( color_footer_bg );
+            $( '#ecclesio-customizer-preview' ).append( color_footer_color );
         } );
     } );//wp.customize
     
