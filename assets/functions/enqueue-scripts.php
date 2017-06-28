@@ -84,7 +84,7 @@ add_action( 'wp_enqueue_scripts', 'ecclesio_scripts', 1000); //1000 places these
 function ecclesio_customizer_preview() {
     wp_enqueue_script( 
           'ecclesio-customizer',
-          get_template_directory().'/js/ecclesio-customizer.js',
+          get_template_directory_uri().'/js/ecclesio-customizer.js',
           array( 'jquery','customize-preview' )
     );
 }

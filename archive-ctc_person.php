@@ -12,8 +12,11 @@ Based on the Church Theme Framework and  custom post type.
 		if ( get_theme_mod( 'ecclesio_staff_banner_image' ) ) {
 			$banner_img_src = esc_url( get_theme_mod( 'ecclesio_staff_banner_image' ) );
 		}
+		elseif ( get_header_image() ) {
+			$banner_img_src = get_header_image();
+		}       
 		else {
-			$banner_img_src = get_template_directory_uri().'/images/home_sermon_latest.jpg';
+			$banner_img_src = get_stylesheet_directory_uri().'/images/demo_banner.jpg';
 		}
 		echo '<img class="banner-bg" src="' . $banner_img_src . '" alt="">';
 	?>

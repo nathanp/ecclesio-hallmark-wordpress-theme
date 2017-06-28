@@ -1,11 +1,14 @@
 <div id="banner">
 	<span class="overlay"></span>
 	<?php
-		if( function_exists('get_field')) {
+		if( function_exists('get_field') && get_field('header_image') != '' ) {
 			$banner_img_src = get_field('header_image');
 		}
+		elseif ( get_header_image() ) {
+			$banner_img_src = get_header_image();
+		}       
 		else {
-			$banner_img_src = get_stylesheet_directory_uri().'/images/ft-worth.jpg';
+			$banner_img_src = get_stylesheet_directory_uri().'/images/demo_banner.jpg';
 		}
 		echo "<img class='banner-bg' src='$banner_img_src' alt=''>";	
 	?>

@@ -129,7 +129,7 @@ Template Name: Homepage
 			    	if( function_exists('get_field') && get_field( 'latest_sermon_image' ) ) {
 			    		$img_src = get_field( 'latest_sermon_image' );
 					} else {
-						$img_src = get_template_directory_uri().'/images/home_sermon_latest.jpg';
+						$img_src = get_template_directory_uri().'/images/demo_banner_bible.jpg';
 					}
 			    	echo '<img src="'. $img_src .'" class="background" />';
 

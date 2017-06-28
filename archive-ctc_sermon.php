@@ -13,8 +13,11 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 		if ( get_theme_mod( 'ecclesio_sermon_banner_image' ) ) {
 			$banner_img_src = esc_url( get_theme_mod( 'ecclesio_sermon_banner_image' ) );
 		}
+		elseif ( get_header_image() ) {
+			$banner_img_src = get_header_image();
+		}       
 		else {
-			$banner_img_src = get_template_directory_uri().'/images/home_sermon_latest.jpg';
+			$banner_img_src = get_stylesheet_directory_uri().'/images/demo_banner_bible.jpg';
 		}
 		echo '<img class="banner-bg" src="' . $banner_img_src . '" alt="">';
 	?>

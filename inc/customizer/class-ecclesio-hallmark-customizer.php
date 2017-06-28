@@ -64,12 +64,6 @@ class Ecclesio_Hallmark_Customizer {
 			'title'    => __( 'Theme Colors', 'ecclesio-hallmark-theme' ),
 			'priority' => 20
 		) );
-		// New section for "Staff Options".
-		$wp_customize->add_section( 'ecclesio_church_staff', array(
-			'title'    => __( 'Staff', 'ecclesio-hallmark-theme' ),
-			'active_callback' => 'is_template_staff',
-			'priority' => 19 //place above "Site Identity"
-		) );
 		// New section for "Sermon Archive Options".
 		$wp_customize->add_section( 'ecclesio_church_sermons', array(
 			'title'    => __( 'Sermon Archive', 'ecclesio-hallmark-theme' ),
@@ -90,7 +84,6 @@ class Ecclesio_Hallmark_Customizer {
 		$this->ecclesio_church_info_section( $wp_customize );
 		$this->ecclesio_church_social_section( $wp_customize );
 		$this->ecclesio_theme_colors_section( $wp_customize );
-		$this->ecclesio_church_staff_section( $wp_customize );
 		$this->ecclesio_church_sermons_section( $wp_customize );
 		$this->ecclesio_church_events_section( $wp_customize );
 	}
@@ -110,7 +103,7 @@ class Ecclesio_Hallmark_Customizer {
 		$setting = 'ecclesio_site_logo';
 		$wp_customize->add_setting( $setting, array(
 			'type' => 'option',
-			'default' => get_template_directory_uri() . '/images/logo.svg',
+			
 		) );
 			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
 		    	'label'    => __( 'Site Logo', 'ecclesio-hallmark-theme' ),
@@ -798,14 +791,6 @@ function get_customize_social_yt() {
 /*
  * Active Callbacks
  */
-function is_template_staff(){
-    // Get the page's template
-    if ( is_page_template( 'template-people.php' ) == 0 ){
-        return false;
-    } else {
-        return true;
-    }
-}
 function is_archive_sermons(){
     // Get the page's template
     if ( is_post_type_archive( 'ctc_sermon' ) == 0 ){
@@ -881,7 +866,7 @@ function ecclesio_customizer_empty_style(){
  * Custom palette for color pickder
  * https://wordpress.org/support/topic/universally-change-iris-palette/
  */
-add_action('admin_enqueue_scripts', 'ecclesio_iris_palette');
+add_action('admin_enqueue_scripts', 'ecclesio_iris_palette', 9000);
 function ecclesio_iris_palette() {
 	/* Add in Customizer Only */
 	global $wp_customize;
