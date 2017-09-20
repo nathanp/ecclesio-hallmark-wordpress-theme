@@ -61,7 +61,7 @@
 						</article> <!-- end article -->
 				    
 				<?php } //endfor
-					joints_page_navi();
+					//joints_page_navi();
 				} //endif
 				else {
 					get_template_part( 'parts/content', 'missing' );
