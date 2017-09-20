@@ -696,6 +696,14 @@ header .top-bar-right.show-for-medium {
 /************
 	EVENTS
 *************/
+#banner .banner-text a.button {
+	background: none;
+	border: 2px solid #fff;
+}
+	#banner .banner-text a.button:hover {
+		background: #fff;
+		color: #000;
+	}
 .event-meta {
 	text-align: center;
     margin: 0 0px 20px 0px;

@@ -92,15 +92,18 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 				    	</ul><!-- .event-meta -->
 						<?php the_content(); ?>
 					</section> <!-- end article section -->
-					<p class="text-center">
-						<?php
-							if($event_registration) {
-								echo '<a href="'.$event_registration.'" target="_blank" class="button">Register</a>';
-							}
-							if($event_has_coord == 1) {
-								echo '<a href="'.$event_directions.'" target="_blank" class="button">Get Directions</a>';
-						} ?>
-					</p>
+
+					<div class="button-group">
+						<p class="text-center">
+							<?php
+								if($event_registration) {
+									echo '<a href="'.$event_registration.'" target="_blank" class="button">Register</a>';
+								}
+								if($event_has_coord == 1) {
+									echo '<a href="'.$event_directions.'" target="_blank" class="button">Get Directions</a>';
+							} ?>
+						</p>
+					</div><!-- .button-group -->
 
 				</article> <!-- end article -->
 		    					
