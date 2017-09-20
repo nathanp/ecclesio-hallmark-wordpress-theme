@@ -10,13 +10,16 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 <div id="banner">
 	<span class="overlay"></span>
 	<?php
-		$banner_img_src = get_field('header_image');
-		if($banner_img_src) {
-			echo "<img class='banner-bg' src='$banner_img_src' alt=''>";	
+		if ( get_theme_mod( 'ecclesio_sermon_banner_image' ) ) {
+			$banner_img_src = esc_url( get_theme_mod( 'ecclesio_sermon_banner_image' ) );
 		}
+		elseif ( get_header_image() ) {
+			$banner_img_src = get_header_image();
+		}       
 		else {
-			echo '<img class="banner-bg" src="'.get_stylesheet_directory_uri().'/images/home_sermon_latest.jpg" alt="">';
+			$banner_img_src = get_stylesheet_directory_uri().'/images/demo_banner_bible.jpg';
 		}
+		echo '<img class="banner-bg" src="' . $banner_img_src . '" alt="">';
 	?>
 	<div class="banner-text">
 		<h3 class='page-byline'>Sermons from</h3>
