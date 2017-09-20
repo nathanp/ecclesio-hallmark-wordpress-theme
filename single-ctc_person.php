@@ -15,11 +15,12 @@ If you need to see all potential data, use something like print_r(ctfw_person_da
 	$person_phone		= ctfw_person_data()['phone'];
 	$person_email		= ctfw_person_data()['email'];
 	$person_urls		= ctfw_person_data()['urls'];
+	$banner_img_src 	= get_header_image();
 ?>
 
 <div id="banner">
 	<span class="overlay"></span>
-	<?php echo '<img class="banner-bg" src="'.get_stylesheet_directory_uri().'/images/ft-worth.jpg" alt="">'; ?>
+	<?php echo '<img class="banner-bg" src="'.$banner_img_src.'" alt="">'; ?>
 	<div class="banner-text">
 		<?php
 			if ( has_post_thumbnail() ) {
