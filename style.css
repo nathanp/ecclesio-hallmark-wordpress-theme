@@ -4,7 +4,7 @@ Theme URI: https://eccles.io
 Author: Nathan Parikh
 Author URI: https://ndzynes.com
 Description: Eccles.io's flagship theme.
-Version: 1.1.1
+Version: 1.1.2
 Text Domain: ecclesio
 */
 
@@ -643,6 +643,7 @@ header .top-bar-right.show-for-medium {
 #banner .flex-video,
 #banner .responsive-embed {
 	padding-bottom: 80vh;
+	background: #000;
 }
 
 .tabs-content.sermon {
@@ -691,6 +692,10 @@ header .top-bar-right.show-for-medium {
 
 .ctc_sermon .entry-content {
 	font-size: 1.5em;
+}
+
+.ctc_sermon .article-footer.sermon {
+	height: 83%;
 }
 
 /************

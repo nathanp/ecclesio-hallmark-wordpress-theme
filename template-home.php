@@ -146,7 +146,7 @@ Template Name: Homepage
 							$sermon["post_title"];
 							if( function_exists('get_field') && get_field('subtitle', $sermon["ID"]) ) {
 								echo '<span class="show-for-medium">';
-				    				echo ' - '.get_field('subtitle', $sermon["ID"]);
+				    				echo '<br>'.get_field('subtitle', $sermon["ID"]);
 				    			echo '</span>';
 				    		}
 						echo '</a></h3>';

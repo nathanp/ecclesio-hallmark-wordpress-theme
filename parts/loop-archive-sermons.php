@@ -38,10 +38,6 @@
 				<header class="article-header">
 					<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
 				</header> <!-- end article header -->
-								
-				<section class="entry-content" itemprop="articleBody">
-					<?php the_content('<button class="tiny">' . __( 'Read more...', 'jointswp' ) . '</button>'); ?>
-				</section> <!-- end article section -->
 									
 				<footer class="article-footer sermon">
 

@@ -109,6 +109,12 @@ button.hamburger {
 	}
 }
 
+@media screen and (max-height: 375px) {
+	#banner {
+	    height: 30vw;
+	}
+}
+
 @media screen and (max-height: 720px) {
 	/*Staff*/
 	.single-ctc_person #banner .banner-text .page-title {
@@ -133,8 +139,8 @@ button.hamburger {
 		display: none;
 	}
 	.person-thumb {
-		width: 7vw;
-		height: 7vw;
+		width: 22vw;
+		height: 22vw;
 	}
 }
 
