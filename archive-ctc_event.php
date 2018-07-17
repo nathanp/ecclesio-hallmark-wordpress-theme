@@ -39,7 +39,7 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 
 			if( function_exists('get_customize_partial_events_button') && get_customize_partial_events_button() != "") {
 				$banner_button = get_customize_partial_events_button();
-				$banner_button_link = get_customize_partial_events_button();
+				$banner_button_link = get_customize_partial_events_button_link();
 				echo '<a class="button" href="'. $banner_button_link .'">'. $banner_button .'</a>';
 			}
 		?>
