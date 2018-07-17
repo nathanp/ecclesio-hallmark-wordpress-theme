@@ -2,18 +2,20 @@
 /**
  * Compatibility Functions
  *
- * Require minimum version of WordPress, Church Theme Content plugin, Internet Explorer, etc.
+ * Require minimum version of WordPress, Church Content plugin, Internet Explorer, etc.
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2016, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2018, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
-// No direct access
-if ( ! defined( 'ABSPATH' ) ) exit;
+// No direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /*******************************************
  * WORDPRESS VERSION
@@ -225,8 +227,8 @@ function ctfw_ctc_plugin_notice() {
 	if ( ! ctfw_ctc_plugin_installed() && current_user_can( 'install_plugins' ) ) {
 
 		$notice = sprintf(
-			__( '<b>Plugin Required:</b> Please install and activate the <a href="%s">Church Theme Content</a> plugin to use with the current theme.', 'church-theme-framework' ),
-			network_admin_url( 'plugin-install.php?s=' . urlencode( '"Church Theme Content" churchthemes.com' ) . '&tab=search' )
+			__( '<b>Plugin Required:</b> Please install and activate the <a href="%s">Church Content</a> plugin to use with the current theme.', 'church-theme-framework' ),
+			esc_url( network_admin_url( 'plugin-install.php?s=' . rawurlencode( '"Church Content" ChurchThemes.com' ) . '&tab=search' ) )
 		);
 
 	}
@@ -235,7 +237,7 @@ function ctfw_ctc_plugin_notice() {
 	elseif ( ! ctfw_ctc_plugin_active() && current_user_can( 'activate_plugins' ) ) {
 
 		$notice = sprintf(
-			__( 'Please <a href="%s">activate</a> the <b>Church Theme Content</b> plugin required by the current theme.', 'church-theme-framework' ),
+			__( 'Please <a href="%s">activate</a> the <b>Church Content</b> plugin required by the current theme.', 'church-theme-framework' ),
 			wp_nonce_url( self_admin_url( 'plugins.php?action=activate&plugin=' . ctfw_ctc_plugin_file() ), 'activate-plugin_' . ctfw_ctc_plugin_file() )
 		);
 
@@ -295,7 +297,7 @@ function ctfw_enqueue_ie_unsupported() {
 		}
 
 		// Client-side JS to compare versions, alert and redirect
-		wp_enqueue_script( 'ctfw-ie-unsupported', ctfw_theme_url( CTFW_JS_DIR . '/ie-unsupported.js' ), array( 'jquery' ), CTFW_THEME_VERSION ); // bust cache on theme update
+		wp_enqueue_script( 'ctfw-ie-unsupported', get_theme_file_uri( CTFW_JS_DIR . '/ie-unsupported.js' ), array( 'jquery' ), CTFW_THEME_VERSION ); // bust cache on theme update
 
 		// Pass data
 		wp_localize_script( 'ctfw-ie-unsupported', 'ctfw_ie_unsupported', array( // pass WP data into JS from this point on

@@ -1,15 +1,15 @@
 <?php
 /**
- * churchthemes.com Widget Layer
+ * ChurchThemes.com Widget Layer
  *
  * The framework widgets extend this class which extends WP_Widget.
  * This extra layer adds methods for automatic field output, field filtering, sanitization, updating and front-end display via template.
  *
  * @package    Church_Theme_Framework
  * @subpackage Classes
- * @copyright  Copyright (c) 2013 - 2017, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -88,7 +88,7 @@ class CTFW_Widget extends WP_Widget {
 				// Loop taxonomies
 				foreach ( (array) $fields[$id]['taxonomies'] as $taxonomy_name ) {
 
-					// Taxonomy not supported by theme (or possibly disabled via Church Theme Content)
+					// Taxonomy not supported by theme (or possibly disabled via Church Content)
 					if ( ! ctfw_ctc_taxonomy_supported( $taxonomy_name ) ) { // check show_ui
 						$fields[$id]['hidden'] = true;
 						break; // one strike and you're out
@@ -602,7 +602,14 @@ class CTFW_Widget extends WP_Widget {
 				// Make instance available to other methods used by template (e.g. get_posts())
 				$this->ctfw_instance = $instance;
 
-				// Load template with globals available (unlike locate_template())
+				// Set global to provide widget data inside get_template_part();
+				$GLOBALS['ctfw_current_widget'] = array(
+					'this'		=> $this,
+					'args'		=> $args,
+					'instance'	=> $instance,
+				);
+
+				// Load template with variables available (unlike locate_template())
 				include $template_path;
 
 				// Don't load another template

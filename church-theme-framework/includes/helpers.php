@@ -6,9 +6,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2017, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2018, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -99,36 +99,6 @@ function ctfw_site_path() {
 }
 
 /**
- * Retrieve the url of a file in the theme.
- *
- * Searches in the stylesheet directory before the template directory so themes
- * which inherit from a parent theme can just override one file.
- *
- * This is from here and will likely be part of WordPress core. At that time, move this to deprecated.php.
- * http://core.trac.wordpress.org/attachment/ticket/18302/18302.12.diff
- * http://core.trac.wordpress.org/ticket/18302
- *
- * @since 0.9
- * @param string $file File to search for in the stylesheet directory
- * @return string The URL of the file
- */
-function ctfw_theme_url( $file = '' ) {
-
-	$file = ltrim( $file, '/' );
-
-	if ( empty( $file ) ) {
-		$url = get_stylesheet_directory_uri();
-	} elseif( is_child_theme() && file_exists( get_stylesheet_directory() . "/$file" ) ) {
-		$url = get_stylesheet_directory_uri() . "/$file";
-	} else {
-		$url = get_template_directory_uri() . "/$file";
-	}
-
-	return apply_filters( 'ctfw_theme_url', $url, $file );
-
-}
-
-/**
  * Sanitize URL List
  *
  * Make sure URL is not empty and not invalid.
@@ -189,7 +159,7 @@ function ctfw_sanitize_url_list( $urls, $allowed_strings = array() ) {
 }
 
 /*************************************************
- * Email
+ * EMAIL
  *************************************************/
 
 /**
@@ -382,7 +352,7 @@ function ctfw_address_one_line( $address ) {
 }
 
 /**
- * Make a Church Theme Content post type or taxonomy name friendly
+ * Make a Church Content post type or taxonomy name friendly
  *
  * This is handy for get_template_part( CTFW_THEME_PARTIAL_DIR . '/content', ctfw_make_friendly( get_post_type() ) );
  * which produces content-post-type.php instead of content-ctc_post_type.php
@@ -396,6 +366,408 @@ function ctfw_make_friendly( $string ) {
 	$friendly_string = str_replace( array( 'ctc_', '_'), array( '', '-'), $string );
 
 	return apply_filters( 'ctfw_make_friendly', $friendly_string, $string );
+
+}
+
+/*************************************************
+ * DATES
+ *************************************************/
+
+/**
+ * Abbreviate date format
+ *
+ * Convert common date formats to abbreviated version
+ * by abbreviating month and/or removing year.
+ *
+ * @since 2.0
+ * @param string $date_format Date format to abbreviate; if none given, uses get_option( 'date_format' )
+ * @param array $args Array of bools: abbreviate_month (e.g. convert January to Jan), remove_year (both default true)
+ * @return string Abbreviated date format
+ */
+function ctfw_abbreviate_date_format( $args = array() ) {
+
+	// Default args
+	$args = wp_parse_args( $args, array(
+		'date_format'		=> get_option( 'date_format' ),
+		'abbreviate_month'	=> true, // January => Jan (F => M)
+		'remove_year'		=> true,
+	) );
+	extract( $args );
+
+	// Use format from settings if no abbreviation made
+	$abbreviated_date_format = $date_format;
+
+	// Abbreviate given format based on arguments
+	switch( $date_format ) {
+
+ 		// January 1, 2017
+		case 'F j, Y':
+
+			// Jan 1
+			if ( $abbreviate_month && $remove_year ) {
+				$abbreviated_date_format = 'M j';
+			}
+
+			// Jan 1, 2017
+			elseif ( $abbreviate_month ) {
+				$abbreviated_date_format = 'M j, Y';
+			}
+
+			// January 1
+			elseif ( $remove_year ) {
+				$abbreviated_date_format = 'F j, Y';
+			}
+
+			break;
+
+ 		// Jan 1, 2017
+		case 'M j, Y':
+
+			// Jan 1
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'M j';
+			}
+
+			break;
+
+ 		// January 1st, 2017
+		case 'F jS, Y':
+
+			// Jan 1st
+			if ( $abbreviate_month && $remove_year ) {
+				$abbreviated_date_format = 'M jS';
+			}
+
+			// Jan 1st, 2017
+			elseif ( $abbreviate_month ) {
+				$abbreviated_date_format = 'M jS, Y';
+			}
+
+			// January 1st
+			elseif ( $remove_year ) {
+				$abbreviated_date_format = 'F jS';
+			}
+
+			break;
+
+ 		// Jan 1st, 2017
+		case 'M jS, Y':
+
+			// Jan 1st
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'M jS';
+			}
+
+			break;
+
+ 		// 1 January, 2017
+		case 'j F, Y':
+
+			// 1 Jan
+			if ( $abbreviate_month && $remove_year ) {
+				$abbreviated_date_format = 'j M';
+			}
+
+			// 1 Jan, 2017
+			elseif ( $abbreviate_month ) {
+				$abbreviated_date_format = 'j M, Y';
+			}
+
+			// 1 January
+			elseif ( $remove_year ) {
+				$abbreviated_date_format = 'j F';
+			}
+
+			break;
+
+ 		// 1 Jan, 2017
+		case 'j M, Y':
+
+			// 1 Jan
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'j M';
+			}
+
+			break;
+
+ 		// 1st January, 2017
+		case 'jS F, Y':
+
+			// 1st Jan
+			if ( $abbreviate_month && $remove_year ) {
+				$abbreviated_date_format = 'jS M';
+			}
+
+			// 1st Jan, 2017
+			elseif ( $abbreviate_month ) {
+				$abbreviated_date_format = 'jS M, Y';
+			}
+
+			// 1st January
+			elseif ( $remove_year ) {
+				$abbreviated_date_format = 'jS F';
+			}
+
+			break;
+
+ 		// 1st Jan, 2017
+		case 'jS M, Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'jS M';
+			}
+
+			break;
+
+ 		// January 1 2017
+		case 'F j Y':
+
+			// Jan 1
+			if ( $abbreviate_month && $remove_year ) {
+				$abbreviated_date_format = 'M j';
+			}
+
+			// Jan 1 2017
+			elseif ( $abbreviate_month ) {
+				$abbreviated_date_format = 'M j Y';
+			}
+
+			// January 1
+			elseif ( $remove_year ) {
+				$abbreviated_date_format = 'F j Y';
+			}
+
+			break;
+
+ 		// Jan 1 2017
+		case 'M j Y':
+
+			// Jan 1
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'M j';
+			}
+
+			break;
+
+ 		// January 1st 2017
+		case 'F jS Y':
+
+			// Jan 1st
+			if ( $abbreviate_month && $remove_year ) {
+				$abbreviated_date_format = 'M jS';
+			}
+
+			// Jan 1st 2017
+			elseif ( $abbreviate_month ) {
+				$abbreviated_date_format = 'M jS Y';
+			}
+
+			// January 1st
+			elseif ( $remove_year ) {
+				$abbreviated_date_format = 'F jS';
+			}
+
+			break;
+
+ 		// Jan 1st 2017
+		case 'M jS Y':
+
+			// Jan 1st
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'M jS';
+			}
+
+			break;
+
+ 		// 1 January 2017
+		case 'j F Y':
+
+			// 1 Jan
+			if ( $abbreviate_month && $remove_year ) {
+				$abbreviated_date_format = 'j M';
+			}
+
+			// 1 Jan 2017
+			elseif ( $abbreviate_month ) {
+				$abbreviated_date_format = 'j M Y';
+			}
+
+			// 1 January
+			elseif ( $remove_year ) {
+				$abbreviated_date_format = 'j F';
+			}
+
+			break;
+
+ 		// 1 Jan 2017
+		case 'j M Y':
+
+			// 1 Jan
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'j M';
+			}
+
+			break;
+
+ 		// 1st January 2017
+		case 'jS F Y':
+
+			// 1st Jan
+			if ( $abbreviate_month && $remove_year ) {
+				$abbreviated_date_format = 'jS M';
+			}
+
+			// 1st Jan 2017
+			elseif ( $abbreviate_month ) {
+				$abbreviated_date_format = 'jS M Y';
+			}
+
+			// 1st January
+			elseif ( $remove_year ) {
+				$abbreviated_date_format = 'jS F';
+			}
+
+			break;
+
+ 		// 1st Jan 2017
+		case 'jS M Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'jS M';
+			}
+
+			break;
+
+		// 2017/06/01
+		case 'Y/m/d':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'm/d';
+			}
+
+			break;
+
+		// 2017-06-01 = 06-01
+		case 'Y-m-d':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'm-d';
+			}
+
+			break;
+
+		// 06/01/2017 = 06/01
+		case 'm/d/Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'm/d';
+			}
+
+			break;
+
+		// 06-01-2017 = 06-01
+		case 'm-d-Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'm-d';
+			}
+
+			break;
+
+		// 01/06/2017 = 01/06
+		case 'd/m/Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'd/m';
+			}
+
+			break;
+
+		// 01-06-2017 = 01-06
+		case 'd-m-Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'd-m';
+			}
+
+			break;
+
+		// 1/6/2017 = 1/6
+		case 'j/n/Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'j/n';
+			}
+
+			break;
+
+		// 1-6-2017 = 1-6
+		case 'j-n-Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'j-n';
+			}
+
+			break;
+
+ 		// 2017/6/31 = 6/31
+		case 'Y/n/j':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'n/j';
+			}
+
+			break;
+
+ 		// 2017-6-31 = 6-31
+		case 'Y-n-j':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'n-j';
+			}
+
+			break;
+
+		// 6/31/2017 = 6/31
+		case 'n/j/Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'n/j';
+			}
+
+			break;
+
+		// 6-31-2017 = 6-31
+		case 'n-j-Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'n-j';
+			}
+
+			break;
+
+
+		// 31/6/2017 = 31/6
+		case 'j/n/Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'j/n';
+			}
+
+			break;
+
+		// 31-6-2017 = 31-6
+		case 'j-n-Y':
+
+			if ( $remove_year ) {
+				$abbreviated_date_format = 'j-n';
+			}
+
+			break;
+
+	}
+
+	return apply_filters( 'ctfw_abbreviate_date_format', $abbreviated_date_format, $args );
 
 }
 

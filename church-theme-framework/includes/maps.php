@@ -4,14 +4,16 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2016, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2018, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
-// No direct access
-if ( ! defined( 'ABSPATH' ) ) exit;
+// No direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /*******************************************
  * JAVASCRIPT MAP
@@ -88,7 +90,7 @@ function ctfw_google_map( $options = false ) {
 		// Enqueue map scripts to handle Google Maps init
 		// this way the scripts are loaded only when feature is used, not on every page
 		wp_enqueue_script( 'google-maps', '//maps.googleapis.com/maps/api/js?key=' . ctfw_google_maps_api_key(), false, null ); // no version, generic name to share w/plugins
-		wp_enqueue_script( 'ctfw-maps', ctfw_theme_url( CTFW_JS_DIR . '/maps.js' ), array( 'jquery', 'google-maps' ), CTFW_VERSION ); // bust cache on theme update
+		wp_enqueue_script( 'ctfw-maps', get_theme_file_uri( CTFW_JS_DIR . '/maps.js' ), array( 'jquery', 'google-maps' ), CTFW_VERSION ); // bust cache on theme update
 
 	} elseif ( ! empty( $options['show_error'] ) ) {
 		$html = __( '<p><b>Google Map Error:</b> <i>latitude</i> and <i>longitude</i> attributes are required. See documentation for help.</p>', 'church-theme-framework' );
@@ -142,7 +144,7 @@ function ctfw_google_map_image( $options = array() ) {
 	$map_args['scale'] = $scale; // double for Retina
 	//$map_args['markers'] = 'color:0x' . $marker_color . '|' . $map_args['center'];
 	$map_args['markers'] = 'color:0x' . $marker_color . '%7C' . $map_args['center']; // HTML5-valid: http://bit.ly/1xfv8yA
-	$map_args['key'] = ctfw_google_maps_api_key(); // from Church Theme Content plugin settings
+	$map_args['key'] = ctfw_google_maps_api_key(); // from Church Content plugin settings
 
 	// Have zoom?
 	if ( ! empty( $zoom ) ) {
@@ -204,9 +206,9 @@ function ctfw_directions_url( $address ) {
 }
 
 /**
- * Get API Key from Church Theme Content settings
+ * Get API Key from Church Content settings
  *
- * It's set in Church Theme Content settings because "Get From Address" button needs it.
+ * It's set in Church Content settings because "Get From Address" button needs it.
  * Themes can use the key from the plugin in this way.
  *
  * @since 1.8

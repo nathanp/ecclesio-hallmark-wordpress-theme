@@ -19,63 +19,63 @@
 									if(get_customize_social_fb()) {
 										echo '<li>
 												<a href="'.get_customize_social_fb().'" target="_blank">
-													<i class="fa fa-facebook" aria-hidden="true"></i>
+													<i class="fab fa-facebook" aria-hidden="true"></i>
 												</a>
 											</li>';
 									}
 									if(get_customize_social_insta()) {
 										echo '<li>
 												<a href="'.get_customize_social_insta().'" target="_blank">
-													<i class="fa fa-instagram" aria-hidden="true"></i>
+													<i class="fab fa-instagram" aria-hidden="true"></i>
 												</a>
 											</li>';
 									}
 									if(get_customize_social_twitter()) {
 										echo '<li>
 												<a href="'.get_customize_social_twitter().'" target="_blank">
-													<i class="fa fa-twitter" aria-hidden="true"></i>
+													<i class="fab fa-twitter" aria-hidden="true"></i>
 												</a>
 											</li>';
 									}
 									if(get_customize_social_google()) {
 										echo '<li>
 												<a href="'.get_customize_social_google().'" target="_blank">
-													<i class="fa fa-google-plus" aria-hidden="true"></i>
+													<i class="fab fa-google-plus" aria-hidden="true"></i>
 												</a>
 											</li>';
 									}
 									if(get_customize_social_snap()) {
 										echo '<li>
 												<a href="'.get_customize_social_snap().'" target="_blank">
-													<i class="fa fa-snapchat-ghost" aria-hidden="true"></i>
+													<i class="fab fa-snapchat-ghost" aria-hidden="true"></i>
 												</a>
 											</li>';
 									}
 									if(get_customize_social_itunes()) {
 										echo '<li>
 											<a href="'.get_customize_social_itunes().'" target="_blank">
-												<i class="fa fa-podcast" aria-hidden="true"></i>
+												<i class="fab fa-podcast" aria-hidden="true"></i>
 											</a>
 										</li>';
 									}
 									if(get_customize_social_spotify()) {
 										echo '<li>
 												<a href="'.get_customize_social_spotify().'" target="_blank">
-													<i class="fa fa-spotify" aria-hidden="true"></i>
+													<i class="fab fa-spotify" aria-hidden="true"></i>
 												</a>
 											</li>';
 									}
 									if(get_customize_social_vimeo()) {
 										echo '<li>
 												<a href="'.get_customize_social_vimeo().'" target="_blank">
-													<i class="fa fa-vimeo" aria-hidden="true"></i>
+													<i class="fab fa-vimeo" aria-hidden="true"></i>
 												</a>
 											</li>';
 									}
 									if(get_customize_social_yt()) {
 										echo '<li>
 												<a href="'.get_customize_social_yt().'" target="_blank">
-													<i class="fa fa-youtube-play" aria-hidden="true"></i>
+													<i class="fab fa-youtube-play" aria-hidden="true"></i>
 												</a>
 											</li>';
 									}
@@ -97,12 +97,12 @@
 								?>
 							</a>
 							<p>
-								<i class="fa fa-map-marker" aria-hidden="true"></i> 
+								<i class="fas fa-map-marker-alt" aria-hidden="true"></i> 
 								<a href="https://www.google.com/maps/dir//<?php echo get_option( 'ecclesio_church_address' ); ?>" target="_blank">
 									<span class="ecclesio-part-address"><?php echo get_customize_partial_church_address(); ?></span>
 								</a>
 								<br />
-								<i class="fa fa-phone" aria-hidden="true"></i> 
+								<i class="fas fa-phone" aria-hidden="true"></i> 
 								<a href="tel:<?php echo get_option( 'ecclesio_church_phone' ); ?>">
 									<span class="ecclesio-part-phone"><?php echo get_customize_partial_church_phone(); ?></span>
 								</a>

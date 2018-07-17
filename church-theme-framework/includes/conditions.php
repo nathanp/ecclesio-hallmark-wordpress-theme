@@ -4,9 +4,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2017, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -159,6 +159,43 @@ function ctfw_has_excerpt_or_more() {
 }
 
 /**
+ * Check if theme's "loop after content" used
+ *
+ * This tells if a loop is being output on a  regular page, such as via page templates like Sermons, People, etc.
+ * It helps ctfw_has_loop_multiple() below.
+ *
+ * Usage follows. Second argument is function to call for the check.
+ *
+ * add_theme_support( 'ctfw-loop-after-content-used', 'saved_loop_after_content_used' );
+ *
+ * @since 2.1.1
+ * @return bool True if given function is true
+ */
+function ctfw_loop_after_content_used() {
+
+	$result = false;
+
+	// Check theme support and function to call
+	$support = get_theme_support( 'ctfw-loop-after-content-used' );
+
+	// Function given in theme support?
+	if ( ! empty( $support[0] ) ) {
+
+		// Get function
+		$function = $support[0];
+
+		// Run function if exists
+		if ( function_exists( $function ) ) {
+			$result = call_user_func( $function );
+		}
+
+	}
+
+	return apply_filters( 'ctfw_loop_after_content_used', $result );
+
+}
+
+/**
  * Has loop for multiple entries
  *
  * This page is looping multiple entries
@@ -171,7 +208,8 @@ function ctfw_has_loop_multiple() {
 	$showing = false;
 
 	// Loop being output on regular page, such as via page templates like Sermons, People, etc.
-	if ( saved_loop_after_content_used() ) {
+	// Requires 'ctfw-loop-after-content-used' via add_theme_support()
+	if ( ctfw_loop_after_content_used() ) {
 		$showing = true;
 	}
 
@@ -193,6 +231,79 @@ function ctfw_has_loop_multiple() {
 
 	// Return filterable
 	return apply_filters( 'ctfw_has_loop_multiple', $showing );
+
+}
+
+/**
+ * Is page template used
+ *
+ * An shorter way to determine if page is using a template
+ *
+ * Usage: ctfw_is_page_template( 'homepage' ) // homepage.php in template directory
+ *
+ * @since  1.9.3
+ * @param  $name Filename with or without .php and with or without path
+ * @return bool True if current page is using that template
+ */
+function ctfw_is_page_template( $name ) {
+
+	// Remove path and .php
+	$name = basename( $name, '.php' );
+
+	// Check it
+	$result = is_page_template( CTFW_THEME_PAGE_TPL_DIR . '/' . $name . '.php' ) ? true : false;
+
+	// Return filtered
+	return apply_filters( 'ctfw_is_page_template', $result, $name );
+
+}
+
+/*******************************************
+ * WIDGETS
+ *******************************************/
+
+/**
+ * Determine if inside a particular sidebar / widget area
+ *
+ * This uses global set by saved_set_current_sidebar_id() in sidebars.php.
+ *
+ * @since 2.0
+ * @param string $sidebar_id Sidebar ID / widget area
+ * @return bool True if so
+ */
+function ctfw_is_sidebar( $sidebar_id ) {
+
+	global $ctfw_current_sidebar_id;
+
+	$is = false;
+
+	if ( isset( $ctfw_current_sidebar_id ) && $sidebar_id == $ctfw_current_sidebar_id ) {
+		$is = true;
+	}
+
+	return apply_filters( 'ctfw_is_sidebar', $is, $sidebar_id );
+
+}
+
+/**
+ * Determine if is first widget in sidebar
+ *
+ * This uses global set by ctfw_increment_widget_position() in widgets.php.
+ *
+ * @since 2.0
+ * @return bool True if so
+ */
+function ctfw_is_first_widget() {
+
+	global $ctfw_current_widget_position;
+
+	$is_first = false;
+
+	if ( isset( $ctfw_current_widget_position ) && 1 == $ctfw_current_widget_position ) {
+		$is_first = true;
+	}
+
+	return apply_filters( 'ctfw_is_first_widget', $is_first );
 
 }
 

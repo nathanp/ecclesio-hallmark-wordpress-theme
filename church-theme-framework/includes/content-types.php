@@ -7,9 +7,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2016, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -173,7 +173,7 @@ function ctfw_current_content_type() {
 
 		// Check page template
 		foreach ( $type_data['page_templates'] as $page_template ) {
-			if ( is_page_template( CTFW_THEME_PAGE_TPL_DIR . '/' . basename( $page_template ) ) ) {
+			if ( ctfw_is_page_template( $page_template ) ) {
 				$current_type = $type;
 				break 2;
 			}
@@ -195,6 +195,36 @@ function ctfw_current_content_type() {
 }
 
 /**
+ * Get content type based on post type
+ *
+ * @since 2.0
+ * @param string $post_type Post type to get content type for
+ * @return string Content type
+ */
+function ctfw_content_type_by_post_type( $post_type ) {
+
+	$post_type_content_type = '';
+
+	// Get types
+	$content_types = ctfw_content_types();
+
+	// Loop content types
+	foreach ( $content_types as $content_type => $content_type_data ) {
+
+		// Check for post type
+		if ( in_array( $post_type, $content_type_data['post_types'] ) ) {
+			$post_type_content_type = $content_type;
+			break;
+		}
+
+	}
+
+	// Return filtered
+	return apply_filters( 'ctfw_content_type_by_post_type', $post_type_content_type, $post_type );
+
+}
+
+/**
  * Get content type based on page template
  *
  * @since 0.9
@@ -211,7 +241,7 @@ function ctfw_content_type_by_page_template( $page_template ) {
 	// Get types
 	$content_types = ctfw_content_types();
 
-	// Loop conent types
+	// Loop content types
 	foreach ( $content_types as $content_type => $content_type_data ) {
 
 		// Check for page template

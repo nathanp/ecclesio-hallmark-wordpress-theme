@@ -9,9 +9,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -40,7 +40,7 @@ function ctfw_widgets() {
 			'class'						=> 'CTFW_Widget_Categories',	// widget class name
 			'class_file'				=> 'widget-categories.php',		// filename of class in framework class directory
 			'template_file'				=> 'widget-categories.php',		// filename of template in widget-templates directory
-			'ctc_required'				=> false,						// requires Church Theme Content plugin to be active
+			'ctc_required'				=> false,						// requires Church Content plugin to be active
 			'theme_support'				=> 'ctfw-widget-categories',	// add_theme_support() feature required (can be empty)
 			'theme_support_required'	=> array(),						// additional features theme must support for widget to register
 			'icon'						=> 'dashicons-microphone',
@@ -191,7 +191,7 @@ function ctfw_register_widgets() {
 	// Available widgets
 	$widgets = ctfw_widgets();
 
-	// Church Theme Content plugin is installed and activated?
+	// Church Content plugin is installed and activated?
 	$ctc_active = ctfw_ctc_plugin_active();
 
 	// Loop widgets
@@ -213,7 +213,7 @@ function ctfw_register_widgets() {
 		// Theme support is okay
 		if ( $supported ) {
 
-			// Church Theme Content is active or not required for widget
+			// Church Content is active or not required for widget
 			if ( empty( $widget_data['ctc_required'] ) || $ctc_active ) {
 
 				// Include class if exists
@@ -347,7 +347,7 @@ function ctfw_set_visible_widget_fields( $visible_fields, $widget_id ) {
 		// Make new array out of fields theme supports
 		$visible_fields = $supported_fields;
 
-		// (here could access Church Theme Content plugin settings to override theme's feature support)
+		// (here could access Church Content plugin settings to override theme's feature support)
 
 	}
 
@@ -403,3 +403,48 @@ function ctfw_get_registered_widgets() {
 	return apply_filters( 'ctfw_get_registered_widgets', $widgets );
 
 }
+
+/**
+ * Increment current widget's position in sidebar
+ *
+ * Store widgets position in its sidebar in a global.
+ * Useful for determining if a position is first in a sidebar.
+ *
+ * @since 2.0
+ * @global int $ctfw_current_widget_position Current widget position within its sidebar
+ * @global string $ctfw_last_sidebar_id Last sidebar to match against current sidebar
+ * @param array $sidebar_params Sidebar parameters
+ */
+function ctfw_increment_widget_position( $sidebar_params ) {
+
+	global $ctfw_current_widget_position, $ctfw_last_sidebar_id;
+
+	// Not in admin area
+	if ( ! is_admin() ) {
+
+		// Current sidebar
+		$current_sidebar_id = isset( $sidebar_params[0]['id'] ) ? $sidebar_params[0]['id'] : '';
+
+		// If no position set (first widget on page), start at 0
+		// Or, if starting in new sidebar, restart at 0
+		if (
+			! isset( $ctfw_current_widget_position )
+			||
+			( isset( $ctfw_last_sidebar_id ) && $current_sidebar_id != $ctfw_last_sidebar_id )
+		) {
+			$ctfw_current_widget_position = 0;
+		}
+
+		// Increment position
+		$ctfw_current_widget_position++;
+
+		// Store last sidebar
+		$ctfw_last_sidebar_id = $current_sidebar_id;
+
+	}
+
+	return $sidebar_params;
+
+}
+
+add_filter( 'dynamic_sidebar_params', 'ctfw_increment_widget_position' );

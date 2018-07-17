@@ -4,9 +4,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013, churchthemes.com
+ * @copyright  Copyright (c) 2013, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * If not supported, theme or plugin causes taxonomy to register with show_ui to false
  * This is used in widgets to show and render fields dependent on taxonomies.
  *
- * Note: this is intended for use only after Church Theme Content registers taxonomies since that is when show_ui is available.
+ * Note: this is intended for use only after Church Content registers taxonomies since that is when show_ui is available.
  *
  * @since 0.9
  * @param string $taxonomy_name Taxonomy name
@@ -31,7 +31,7 @@ function ctfw_ctc_taxonomy_supported( $taxonomy_name ) {
 
 	// If show_ui is true, taxonomy is supported by theme and plugin
 	$supported = ! empty( $taxonomy->show_ui ) ? true : false;
-		
+
 	// Return filterable
 	return apply_filters( 'ctfw_ctc_taxonomy_supported', $supported, $taxonomy_name );
 

@@ -4,9 +4,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Admin
- * @copyright  Copyright (c) 2013 - 2015, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2015, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -122,6 +122,6 @@ function ctfw_hide_default_activation_notice() {
 function ctfw_activation_remove_notices() {
 
 	remove_action( 'admin_notices', 'ctfw_edd_license_notice', 7 ); // Theme License
-	remove_action( 'admin_notices', 'ctfw_ctc_plugin_notice' ); // Church Theme Content
+	remove_action( 'admin_notices', 'ctfw_ctc_plugin_notice' ); // Church Content
 
 }

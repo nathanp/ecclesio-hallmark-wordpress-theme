@@ -70,7 +70,7 @@ function ecclesio_scripts() {
   // Hamburgers Navigation
   wp_enqueue_style( 'ecclesio-hamburgers', get_template_directory_uri() . '/css/hamburgers.min.css', array(), '1.0' );
   // Font Awesome
-  wp_enqueue_style('font-awesome', '//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+  wp_enqueue_style('ecclesio-font-awesome', '//use.fontawesome.com/releases/v5.1.0/css/all.css');
 
   // Live preview CSS changes
   wp_add_inline_style( 'ecclesio-responsive', ecclesio_customizer_css() ); //class-ecclesio-hallmark-customizer.php
@@ -119,5 +119,22 @@ function ecclesio_remove_query_strings_2( $src ){
     add_filter( 'script_loader_src', 'ecclesio_remove_query_strings_2', 15, 1 );
     add_filter( 'style_loader_src', 'ecclesio_remove_query_strings_2', 15, 1 );
   }
+
+/**
+ * Keeps bloat/un-used scripts and styles from plugins from loading on the front-end.
+ */
+function ecclesio_remove_scripts() {
+  if (!is_admin()) {
+    wp_dequeue_style('font-awesome');
+    wp_dequeue_style('wpdm-bootstrap');
+    wp_dequeue_style('duplicate-post');
+
+    wp_dequeue_script( 'wpdm-bootstrap' );
+    wp_dequeue_script( 'frontjs' );
+    wp_dequeue_script( 'jquery-choosen' );
+  }
+
+}
+add_action( 'wp_enqueue_scripts', 'ecclesio_remove_scripts', 1000); //1000 places these after the defaults loaded by the parent theme
 
   ?>

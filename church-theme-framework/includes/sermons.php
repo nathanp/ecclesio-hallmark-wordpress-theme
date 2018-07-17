@@ -4,14 +4,72 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2015, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
-// No direct access
-if ( ! defined( 'ABSPATH' ) ) exit;
+// No direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**********************************
+ * SERMON WORDING
+ **********************************/
+
+/**
+ * "Sermon" singular word from post type.
+ *
+ * This will be post type label, English or translated.
+ * It may also be what Church Contet Pro settings dictate.
+ *
+ * When Church Content plugin inactive (post type not registered), a default string is used.
+ *
+ * @since 2.3
+ * @return string Word for "Sermon"
+ */
+function ctfw_sermon_word_singular() {
+
+	// Default in case Church Content plugin is inactive.
+	$word = _x( 'Sermon', 'singular', 'church-theme-framework' );
+
+	// Get registered post type label.
+	$post_type_obj = get_post_type_object( 'ctc_sermon' );
+	if ( ! empty( $post_type_obj->labels->singular_name ) ) { // post type registered.
+		$word = $post_type_obj->labels->singular_name;
+	}
+
+	return apply_filters( 'ctfw_sermon_word_singular', $word );
+
+}
+
+/**
+ * "Sermon" plural word from post type.
+ *
+ * This will be post type label, English or translated.
+ * It may also be what Church Contet Pro settings dictate.
+ *
+ * When Church Content plugin inactive (post type not registered), a default string is used.
+ *
+ * @since 2.3
+ * @return string Word for "Sermons"
+ */
+function ctfw_sermon_word_plural() {
+
+	// Default in case Church Content plugin is inactive.
+	$word = _x( 'Sermons', 'plural', 'church-theme-framework' );
+
+	// Get registered post type label.
+	$post_type_obj = get_post_type_object( 'ctc_sermon' );
+	if ( ! empty( $post_type_obj->labels->name ) ) { // post type registered.
+		$word = $post_type_obj->labels->name;
+	}
+
+	return apply_filters( 'ctfw_sermon_word_plural', $word );
+
+}
 
 /**********************************
  * SERMON ARCHIVES
@@ -412,16 +470,20 @@ function ctfw_sermon_books_by_testament() {
 	);
 
 	// Loop books to add per testament
-	foreach ( $books['items'] as $book ) {
+	if ( ! empty( $books['items'] ) ) {
 
-		$testament = isset( $book->book_data['testament'] ) ? $book->book_data['testament'] : '';
+		foreach ( $books['items'] as $book ) {
 
-		if ( 'old' == $testament ) {
-			$books_by_testament['old']['books'][] = $book;
-		} else if ( 'new' == $testament ) {
-			$books_by_testament['new']['books'][] = $book;
-		} else {
-			$books_by_testament['other']['books'][] = $book;
+			$testament = isset( $book->book_data['testament'] ) ? $book->book_data['testament'] : '';
+
+			if ( 'old' == $testament ) {
+				$books_by_testament['old']['books'][] = $book;
+			} else if ( 'new' == $testament ) {
+				$books_by_testament['new']['books'][] = $book;
+			} else {
+				$books_by_testament['other']['books'][] = $book;
+			}
+
 		}
 
 	}

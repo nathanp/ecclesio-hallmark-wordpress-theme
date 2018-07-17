@@ -4,9 +4,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2016, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2016, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -291,7 +291,7 @@ function ctfw_get_month_archives( $post_type, $args = array() ) {
 }
 
 /**********************************
- * REDIRECTION
+ * POST TYPE ARCHIVES
  **********************************/
 
 /**
@@ -390,3 +390,71 @@ function ctfw_redirect_archives_to_pages() {
 }
 
 add_action( 'template_redirect', 'ctfw_redirect_archives_to_pages' );
+
+/**
+ * Blog page URL
+ *
+ * Get URL of blog page depending on situation.
+ *
+ * @since 2.0
+ * @return string URL of blog page
+ */
+function ctfw_posts_page_url() {
+
+	$show_on_front = get_option( 'show_on_front' );
+	$page_for_posts = get_option( 'page_for_posts' );
+
+	// "Posts page" is set in Settings > Reading
+	if ( 'page' == $show_on_front && $page_for_posts ) {
+		$url = get_permalink( $page_for_posts );
+	}
+
+	// "Your latest posts" is front page setting
+	elseif ( 'posts' == $show_on_front ) {
+		$url = home_url();
+	}
+
+	// Get URL of page using Blog template if settings are incomplete
+	// This will happen if "A static page" is set but no "Posts page" is selected
+	else {
+		$url = ctfw_get_page_url_by_template( ctfw_page_template_by_content_type( 'blog' ) );
+	}
+
+	return apply_filters( 'ctfw_posts_page_url', $url );
+
+}
+
+/**
+ * Post type archive URL
+ *
+ * Get URL of custom post type archive or page depending on situation.
+ *
+ * @since 2.0
+ * @param string $content_type Content type for post type (sermon, event, etc.)
+ * @return string URL of blog page
+ */
+function ctfw_post_type_archive_url( $post_type ) {
+
+	// Blog is special case
+	if ( 'post' == $post_type ) {
+		$url = ctfw_posts_page_url();
+	}
+
+	// Other post types
+	else {
+
+		// Use page having template
+		$content_type = ctfw_content_type_by_post_type( $post_type ); // Get content type based on post type
+		$url = ctfw_get_page_url_by_template( ctfw_page_template_by_content_type( $content_type ) );
+
+		// If no page found, use default archive URL
+		// User may not have set a page template on a page
+		if ( ! $url ) {
+			$url = get_post_type_archive_link( $post_type );
+		}
+
+	}
+
+	return apply_filters( 'ctfw_posts_type_archive_url', $url, $content_type );
+
+}

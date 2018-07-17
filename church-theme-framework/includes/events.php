@@ -4,14 +4,16 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2015, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
-// No direct access
-if ( ! defined( 'ABSPATH' ) ) exit;
+// No direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**********************************
  * EVENTS DATA
@@ -24,70 +26,70 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * May also be used elsewhere (e.g. upcoming events in header)
  *
  * @since 0.9
- * @param array $args Arguments for getting events
+ * @param array $args Arguments for getting events.
  * @return array Event posts
  */
 function ctfw_get_events( $args = array() ) {
 
-	// Defaults
+	// Defaults.
 	$args['timeframe'] = ! empty( $args['timeframe'] ) ? $args['timeframe'] : 'upcoming';
 	$args['category'] = ! empty( $args['category'] ) ? $args['category'] : 'all';
-	$args['limit'] = isset( $args['limit'] ) ? absint( $args['limit'] ) : -1; // default no limit
+	$args['limit'] = isset( $args['limit'] ) ? absint( $args['limit'] ) : -1; // default no limit.
 
-	// Upcoming or past
-	$meta_type = 'DATETIME'; // 0000-00-00 00:00:00
+	// Upcoming or past.
+	$meta_type = 'DATETIME'; // 0000-00-00 00:00:00.
 
 	// Upcoming events
-	$compare = '>=';  // all events with start OR end date today or later
-	$meta_key = '_ctc_event_start_date_start_time'; // order by this; want earliest starting date/time first
-	$order = 'ASC'; // sort from soonest to latest
+	$compare = '>=';  // all events with start OR end date today or later.
+	$meta_key = '_ctc_event_start_date_start_time'; // order by this; want earliest starting date/time first.
+	$order = 'ASC'; // sort from soonest to latest.
 
-	// Past events
-	if ( 'past' == $args['timeframe'] ) {
-		$compare = '<'; // all events with start AND end date BEFORE today
-		$meta_key = '_ctc_event_end_date_start_time'; // order by this; want finish date first (not end time because may be empty)
-		$order = 'DESC'; // sort from most recently past to oldest
+	// Past events.
+	if ( 'past' === $args['timeframe'] ) {
+		$compare = '<'; // all events with start AND end date BEFORE today.
+		$meta_key = '_ctc_event_end_date_start_time'; // order by this; want finish date first (not end time because may be empty).
+		$order = 'DESC'; // sort from most recently past to oldest.
 	}
 
-	// Backwards compatibility
-	// Church Theme Content added rigid time fields in version 1.2
-	// Continue ordering by old field for old versions of plugin
-	if ( defined( 'CTC_VERSION' ) && version_compare( CTC_VERSION, '1.2', '<' ) ) { // CTC plugin is active and old
+	// Backwards compatibility.
+	// Church Content added rigid time fields in version 1.2.
+	// Continue ordering by old field for old versions of plugin.
+	if ( defined( 'CTC_VERSION' ) && version_compare( CTC_VERSION, '1.2', '<' ) ) { // CTC plugin is active and old.
 
-		// Upcoming or past
-		$meta_type = 'DATE'; // 0000-00-00
+		// Upcoming or past.
+		$meta_type = 'DATE'; // 0000-00-00.
 
-		// Upcoming events
-		$meta_key = '_ctc_event_start_date'; // order by this; want earliest starting date/time first
+		// Upcoming events.
+		$meta_key = '_ctc_event_start_date'; // order by this; want earliest starting date/time first.
 
-		// Past events
-		if ( 'past' == $args['timeframe'] ) {
-			$meta_key = '_ctc_event_end_date'; // order by this; want finish date first (not end time because may be empty)
+		// Past events.
+		if ( 'past' === $args['timeframe'] ) {
+			$meta_key = '_ctc_event_end_date'; // order by this; want finish date first (not end time because may be empty).
 		}
 
 	}
 
-	// Arguments
+	// Arguments.
 	$query_args = array(
-		'post_type'			=> 'ctc_event',
-		'numberposts'		=> $args['limit'],
-		'meta_query' 		=> array(
+		'post_type'         => 'ctc_event',
+		'numberposts'       => $args['limit'],
+		'meta_query'        => array(
 			array(
-				'key'			=> '_ctc_event_end_date', // the latest date that the event goes to (could be start date)
-				'value' 		=> date_i18n( 'Y-m-d' ), // today's date, localized
-				'compare' 		=> $compare,
-				'type' 			=> 'DATE'
+				'key'       => '_ctc_event_end_date', // the latest date that the event goes to (could be start date).
+				'value'     => date_i18n( 'Y-m-d' ), // today's date, localized.
+				'compare'   => $compare,
+				'type'      => 'DATE'
 			),
 		),
-		'meta_key' 			=> $meta_key,
-		'meta_type' 		=> $meta_type,
-		'orderby'			=> 'meta_value',
-		'order'				=> $order,
-		'suppress_filters'	=> false // keep WPML from showing posts from all languages: http://bit.ly/I1JIlV + http://bit.ly/1f9GZ7D
+		'meta_key'          => $meta_key,
+		'meta_type'         => $meta_type,
+		'orderby'           => 'meta_value',
+		'order'             => $order,
+		'suppress_filters' => false, // keep WPML from showing posts from all languages: http://bit.ly/I1JIlV + http://bit.ly/1f9GZ7D.
 	);
 
-	// Filter by category
-	if ( 'all' != $args['category'] ) {
+	// Filter by category.
+	if ( 'all' !== $args['category'] ) {
 
 		$category_term = get_term( $args['category'], 'ctc_event_category' );
 
@@ -97,13 +99,14 @@ function ctfw_get_events( $args = array() ) {
 
 	}
 
-	// Filter get post arguments
+	// Filter get post arguments.
 	$query_args = apply_filters( 'ctfw_get_events_query_args', $query_args );
 
-	// Get events
+	// Get events.
+	// To Do: switch this to WP_Query.
 	$posts = get_posts( $query_args );
 
-	// Return filtered
+	// Return filtered.
 	return apply_filters( 'ctfw_get_events', $posts, $args );
 
 }
@@ -112,8 +115,8 @@ function ctfw_get_events( $args = array() ) {
  * Get event data
  *
  * @since 0.9
- * @param array|int $args post_id or array of arguments; If no post ID, current post used
- * @return array Event data
+ * @param array|int $args post_id or array of arguments; If no post ID, current post used.
+ * @return array Event data.
  */
 function ctfw_event_data( $args = array() ) {
 
@@ -124,31 +127,34 @@ function ctfw_event_data( $args = array() ) {
 		);
 	}
 
-	// Default arguments
+	// Default arguments.
 	$args = wp_parse_args( $args, array(
-		'post_id'				=> null, // use current
+		'post_id'              => null, // use current
 		/* translators: time range (%1$s) and description (%2$s) for an event */
-		'time_and_desc_format'	=> __( '%1$s <span>(%2$s)</span>', 'church-theme-framework' ),
-		'abbreviate_month'		=> false, // use Dec instead of December (replaced F with M in date_format setting)
+		'time_and_desc_format' => __( '%1$s <span>(%2$s)</span>', 'church-theme-framework' ),
+		'abbreviate_month'     => false, // use Dec instead of December (replaced F with M in date_format setting).
 	) );
 
-	// Extract arguments to variables
+	// Extract arguments to variables.
 	extract( $args );
 
-	// Get meta values
+	// Get meta values.
 	$meta = ctfw_get_meta_data( array(
 		'start_date',
 		'end_date',
-		'time', // Time Description
+		'time', // Time Description.
 		'start_time',
 		'end_time',
 		'hide_time_range',
 		'recurrence',
 		'recurrence_end_date',
-		'recurrence_weekly_interval',	// Custom Recurring Events add-on
-		'recurrence_monthly_interval',	// Custom Recurring Events add-on
-		'recurrence_monthly_type',		// Custom Recurring Events add-on
-		'recurrence_monthly_week',		// Custom Recurring Events add-on
+		'recurrence_weekly_interval',   // Pro + CRE add-on.
+		'recurrence_weekly_type',       // Pro add-on.
+		'recurrence_weekly_day',        // Pro add-on.
+		'recurrence_monthly_interval',  // Pro + CRE  add-on.
+		'recurrence_monthly_type',      // Pro + CRE  add-on.
+		'recurrence_monthly_week',      // Pro + CRE  add-on.
+		'excluded_dates',               // Pro add-on.
 		'venue',
 		'address',
 		'show_directions_link',
@@ -159,84 +165,115 @@ function ctfw_event_data( $args = array() ) {
 		'registration_url',
 	), $post_id );
 
-	// Empty Custom Recurring Events add-on values if plugin not active
-	// This keeps theme from displaying recurrence data that may be stored but is not effective
-	if ( ! defined( 'CTC_CRE_VERSION' ) ) {
+	// Get event support.
+	$events_support = get_theme_support( 'ctc-events' );
+	$events_support = ! empty( $events_support[0] ) ? $events_support[0] : false;
+
+	// Is recurrence supported?
+	$recurrence_supported = false;
+	if ( ! empty( $events_support['fields'] ) && in_array( '_ctc_event_recurrence', $events_support['fields'], true ) ) {
+		$recurrence_supported = true;
+	}
+
+	// Empty/default Pro and Custom Recurring Event shared add-on values if plugin not active or recurrence not supported.
+	// This keeps theme from displaying recurrence data that may be stored but is not effective.
+	if ( ( ! defined( 'CCP_VERSION' ) && ! defined( 'CTC_CRE_VERSION' ) ) || ! $recurrence_supported ) {
 		$meta['recurrence_weekly_interval'] = 1;
 		$meta['recurrence_monthly_interval'] = 1;
 		$meta['recurrence_monthly_type'] = 'day';
 		$meta['recurrence_monthly_week'] = '';
 	}
 
-	// Timestamps
+	// Empty/default Pro-only add-on values if plugin not active or recurrence not supported.
+	// This keeps theme from displaying recurrence data that may be stored but is not effective.
+	if ( ! defined( 'CCP_VERSION' ) || ! $recurrence_supported ) {
+		$meta['recurrence_weekly_type'] = 'same';
+		$meta['recurrence_weekly_day'] = '';
+		$meta['excluded_dates'] = '';
+	}
+
+	// Empty Recurrence value if not supported.
+	// This keeps theme from displaying recurrence data that may be stored but is not effective.
+	// This relates to non-grandfathered users of basic recurrence.
+	if ( ! $recurrence_supported ) {
+		$meta['recurrence'] = 'none';
+	}
+
+	// Timestamps.
 	$start_date_timestamp = strtotime( $meta['start_date'] );
 	$end_date_timestamp = strtotime( $meta['end_date'] );
 
-	// Date format from settings
+	// Date format from settings.
 	$original_date_format = get_option( 'date_format' );
 	$date_format = $original_date_format;
 
-	// Abbreviate month in date format (e.g. December becomes Dec)
+	// Abbreviate month in date format (e.g. December becomes Dec).
 	if ( $abbreviate_month ) {
-		$date_format = str_replace( 'F', 'M', $date_format );
+
+		$date_format = ctfw_abbreviate_date_format( array(
+			'date_format'      => $date_format,
+			'abbreviate_month' => true,
+			'remove_year'      => false,
+		) );
+
 	}
 
-	// Add friendly date
-	if ( $meta['end_date'] != $meta['start_date'] ) { // date range
+	// Add friendly date.
+	if ( $meta['end_date'] !== $meta['start_date'] ) { // date range.
 
 		// Date formats
-		// Make compact range of "June 1 - 5, 2015 if using "F j, Y" format (month and year removed from start date as not to be redundant)
-		// If year is same but month different, becomes "June 30 - July 1, 2015"
+		// Make compact range of "June 1 - 5, 2015 if using "F j, Y" format (month and year removed from start date as not to be redundant).
+		// If year is same but month different, becomes "June 30 - July 1, 2015".
 		$start_date_format = $date_format;
 		$end_date_format = $date_format;
-		if ( 'F j, Y' == $original_date_format && date_i18n( 'Y', $start_date_timestamp ) == date_i18n( 'Y', $end_date_timestamp ) ) { // Year on both dates must be same
+		if ( 'F j, Y' === $original_date_format && date_i18n( 'Y', $start_date_timestamp ) === date_i18n( 'Y', $end_date_timestamp ) ) { // Year on both dates must be same.
 
-			// Remove year from start date
-			$start_date_format = 'F j';
+			// Remove year from start date.
+			$start_date_format = str_replace( ', Y', '', $start_date_format );
 
-			// Months and year is same
-			// Remove month from end date
-			if ( date_i18n( 'F', $start_date_timestamp ) == date_i18n( 'F', $end_date_timestamp ) ) {
+			// Months and year is same.
+			// Remove month from end date.
+			if ( date_i18n( 'F', $start_date_timestamp ) === date_i18n( 'F', $end_date_timestamp ) ) {
 				$end_date_format = 'j, Y';
 			}
 
 		}
 
-		// Format dates
+		// Format dates.
 		$start_date_formatted = date_i18n( $start_date_format, $start_date_timestamp );
 		$end_date_formatted = date_i18n( $end_date_format, $end_date_timestamp );
 
-		// Build range
-		/* translators: date range */
+		// Build range.
 		$meta['date'] = sprintf(
+			/* translators: %1$s is start date formatted and %2$s is end date (date range) */
 			_x( '%1$s &ndash; %2$s', 'dates', 'church-theme-framework' ),
 			$start_date_formatted,
 			$end_date_formatted
 		);
 
-	} else { // start date only
+	} else { // start date only.
 		$meta['date'] = date_i18n( $date_format, $start_date_timestamp );
 	}
 
-	// Format Start and End Time
+	// Format Start and End Time.
 	$time_format = get_option( 'time_format' );
 	$meta['start_time_formatted'] = $meta['start_time'] ? date_i18n( $time_format, strtotime( $meta['start_time'] ) ) : '';
 	$meta['end_time_formatted'] = $meta['end_time'] ? date_i18n( $time_format, strtotime( $meta['end_time'] ) ) : '';
 
-	// Time Range
-	// Show Start/End Time range (or only Start Time)
+	// Time Range.
+	// Show Start/End Time range (or only Start Time).
 	$meta['time_range'] = '';
 	if ( $meta['start_time_formatted'] ) {
 
-		// Start Time Only
+		// Start Time Only.
 		$meta['time_range'] = $meta['start_time_formatted'];
 
-		// Start and End Time (Range)
+		// Start and End Time (Range).
 		if ( $meta['end_time_formatted'] ) {
 
-			// Time Range
-			/* translators: time range */
+			// Time Range.
 			$meta['time_range'] = sprintf(
+				/* translators: %1$s is start time and %2$s is end time (time range) */
 				_x( '%1$s &ndash; %2$s', 'times', 'church-theme-framework' ),
 				$meta['start_time_formatted'],
 				$meta['end_time_formatted']
@@ -246,22 +283,22 @@ function ctfw_event_data( $args = array() ) {
 
 	}
 
-	// Time and/or Description
-	// Show Start/End Time (if given) and maybe Time Description (if given) in parenthesis
-	// If no Start/End Time (or it is set to hide), show Time Description by itself
-	// This is useful for event post header
+	// Time and/or Description.
+	// Show Start/End Time (if given) and maybe Time Description (if given) in parenthesis.
+	// If no Start/End Time (or it is set to hide), show Time Description by itself.
+	// This is useful for event post header.
 	$meta['time_range_and_description'] = '';
 	$meta['time_range_or_description'] = '';
-	if ( $meta['time_range'] && ! $meta['hide_time_range'] ) { // Show Time Range and maybe Description after it
+	if ( $meta['time_range'] && ! $meta['hide_time_range'] ) { // Show Time Range and maybe Description after it.
 
-		// Definitely show time range
+		// Definitely show time range.
 		$meta['time_range_and_description'] = $meta['time_range'];
 		$meta['time_range_or_description'] = $meta['time_range'];
 
-		// Maybe show description after time range
+		// Maybe show description after time range.
 		if ( $meta['time'] ) {
 
-			// Time and Description
+			// Time and Description.
 			$meta['time_range_and_description'] = sprintf(
 				$time_and_desc_format,
 				$meta['time_range'],
@@ -270,23 +307,26 @@ function ctfw_event_data( $args = array() ) {
 
 		}
 
-	} else { // Show description only
+	} else { // Show description only.
 		$meta['time_range_and_description'] = $meta['time'];
 		$meta['time_range_or_description'] = $meta['time'];
 	}
 
-	// Add directions URL (empty if show_directions_link not set)
+	// Add directions URL (empty if show_directions_link not set).
 	$meta['directions_url'] = $meta['show_directions_link'] ? ctfw_directions_url( $meta['address'] ) : '';
 
-	// Recurrence note
+	// Recurrence note.
 	$recurrence_note = ctfw_event_recurrence_note( false, $meta );
-	$meta['recurrence_note'] = isset( $recurrence_note['full'] ) ? $recurrence_note['full'] : ''; // sentence such as "Every 3 months on the second Wednesday until January 24, 2018"
-	$meta['recurrence_note_short'] = isset( $recurrence_note['short'] ) ? $recurrence_note['short'] : ''; // short version such as "Every 3 Months" (can show this with full on tooltip)
+	$meta['recurrence_note'] = isset( $recurrence_note['full'] ) ? $recurrence_note['full'] : ''; // sentence such as "Every 3 months on the second Wednesday until January 24, 2018".
+	$meta['recurrence_note_short'] = isset( $recurrence_note['short'] ) ? $recurrence_note['short'] : ''; // short version such as "Every 3 Months" (can show this with full on tooltip).
+
+	// Excluded dates note.
+	$meta['excluded_dates_note'] = ctfw_event_excluded_dates_note( false, $meta );
 
 	// Map has coordinates?
 	$meta['map_has_coordinates'] = ( $meta['map_lat'] && $meta['map_lng'] ) ? true : false;
 
-	// Return filtered
+	// Return filtered.
 	return apply_filters( 'ctfw_event_data', $meta, $post_id );
 
 }
@@ -301,10 +341,10 @@ function ctfw_event_data( $args = array() ) {
  * Order by event date, not publish date
  *
  * Use add_theme_support( 'ctfw-event-category-query' ) to enable.
- * Must have support for Church Theme Content event category taxonomy
+ * Must have support for Church Content event category taxonomy
  *
  * @since 1.5
- * @param object $query WP_Query
+ * @param object $query WP_Query.
  */
 function ctfw_event_category_query( $query ) {
 
@@ -313,31 +353,31 @@ function ctfw_event_category_query( $query ) {
 		return;
 	}
 
-	// Don't manipulate feed
+	// Don't manipulate feed.
 	if ( $query->is_feed ) {
 		return;
 	}
 
-	// Only manipulate event category taxonomy archive query
+	// Only manipulate event category taxonomy archive query.
 	if ( ! $query->is_archive || ! $query->is_tax || empty( $query->query_vars['ctc_event_category'] ) ) {
 		return;
 	}
 
-	// Modify query to show upcoming events soonest to latest
-	$query->query_vars['meta_query'] 	= array(
-			array( // only get upcoming events (ending today or in future)
-				'key'		=> '_ctc_event_end_date', // the latest date that the event goes to (could be same as start date)
-				'value' 	=> date_i18n( 'Y-m-d' ), // today's date, localized
-				'compare' 	=> '>=', // all events with start OR end date today or later
-				'type' 		=> 'DATE'
-			),
-		);
-	$query->query_vars['meta_key'] 		= '_ctc_event_start_date_start_time'; // want earliest start date/time first
-	$query->query_vars['meta_type'] 	= 'DATETIME'; // 0000-00-00 00:00:00
-	$query->query_vars['orderby']		= 'meta_value';
-	$query->query_vars['order']			= 'ASC'; // sort from soonest to latest
+	// Modify query to show upcoming events soonest to latest.
+	$query->query_vars['meta_query'] = array(
+		array( // only get upcoming events (ending today or in future).
+			'key'     => '_ctc_event_end_date', // the latest date that the event goes to (could be same as start date).
+			'value'   => date_i18n( 'Y-m-d' ), // today's date, localized.
+			'compare' => '>=', // all events with start OR end date today or later.
+			'type'    => 'DATE',
+		),
+	);
+	$query->query_vars['meta_key']  = '_ctc_event_start_date_start_time'; // want earliest start date/time first.
+	$query->query_vars['meta_type'] = 'DATETIME'; // 0000-00-00 00:00:00.
+	$query->query_vars['orderby']   = 'meta_value';
+	$query->query_vars['order']     = 'ASC'; // sort from soonest to latest.
 
-	// Backwards compatibility not needed for time fields because category taxonomy introduced after new time fields
+	// Backwards compatibility not needed for time fields because category taxonomy introduced after new time fields.
 
 }
 
@@ -353,24 +393,24 @@ add_action( 'pre_get_posts', 'ctfw_event_category_query' );
  * Take in YYYY-MM and convert it to a valid year, month and month timestamp.
  * If missing or invalid, use current year/month.
  *
- * @param string $year_month YYYY-MM such as 2015-01 for January, 2015
- * @return array Year, month (no leading 0) and month timestamp
+ * @param string $year_month YYYY-MM such as 2015-01 for January, 2015.
+ * @return array Year, month (no leading 0) and month timestamp.
  */
 function ctfw_event_calendar_month_data( $year_month ) {
 
 	$data = array();
 
-	// Year/month given and valid
+	// Year/month given and valid.
 	if ( ! empty( $year_month ) && preg_match( '/^[0-9]{4}-[0-9]{2}$/', $year_month ) ) {
 
-		// Get year and month
+		// Get year and month.
 		list( $year, $month ) = explode( '-', $year_month );
 
-		// Remove preceding 0 from month
+		// Remove preceding 0 from month.
 		$month = ltrim( $month, '0' );
 
 		// Invalid month and year?
-		// Unset to use default
+		// Unset to use default.
 		if ( ! checkdate( $month, 1, $year ) ) {
 			unset( $year );
 			unset( $month );
@@ -378,28 +418,28 @@ function ctfw_event_calendar_month_data( $year_month ) {
 
 	}
 
-	// Set defaults
+	// Set defaults.
 	if ( ! isset( $year ) || ! isset( $month ) ) {
 		$year = date_i18n( 'Y' );
 		$month = date_i18n( 'n' );
 	}
 
-	// Make timestamp for year/month
+	// Make timestamp for year/month.
 	$month_ts = mktime( 0, 0, 0, $month, 1, $year );
 
-	// Set $year_month in case was empty or invalid
+	// Set $year_month in case was empty or invalid.
 	$year_month = date_i18n( 'Y-m', $month_ts );
 
-	// First day of month
+	// First day of month.
 	$first_of_month = date_i18n( 'Y-m-d', $month_ts );
 
-	// Prev and next months
+	// Prev and next months.
 	$prev_month = date_i18n( 'Y-m', ( $month_ts - 1 ) );
 	$prev_month_ts = strtotime( $prev_month );
 	$next_month = date_i18n( 'Y-m', ( $month_ts + ( DAY_IN_SECONDS * 32 ) ) );
 	$next_month_ts = strtotime( $next_month );
 
-	// Data in array
+	// Data in array.
 	$data['year_month'] = $year_month;
 	$data['year'] = $year;
 	$data['month'] = $month;
@@ -410,7 +450,7 @@ function ctfw_event_calendar_month_data( $year_month ) {
 	$data['next_month'] = $next_month;
 	$data['next_month_ts'] = $next_month_ts;
 
-	// Filter the data
+	// Filter the data.
 	$data = apply_filters( 'ctfw_event_calendar_month_data', $data, $year_month );
 
 	return $data;
@@ -428,81 +468,86 @@ function ctfw_event_calendar_month_data( $year_month ) {
  */
 function ctfw_event_calendar_data( $args ) {
 
-	// Arguments
+	// Arguments.
 	$args = wp_parse_args( $args, array(
-		'year_month' 		=> '', // YYYY-MM (e.g. 2015-01 for January, 2015)
-		'get_events'		=> true, // get events for each day in array
-		'category'			=> '', // category term slug or empty for all
-		'recurrence_limit'	=> 160, // max number of future event occurences to calculate (160 will cover 3 years of weekly recurrence)
+		'year_month'       => '', // YYYY-MM (e.g. 2015-01 for January, 2015).
+		'get_events'       => true, // get events for each day in array.
+		'category'         => '', // category term slug or empty for all.
+		'recurrence_limit' => 160, // max number of future event occurences to calculate (160 will cover 3 years of weekly recurrence).
 	) );
 
-	// Extract arguments for easy use
+	// Extract arguments for easy use.
 	extract( $args );
 
 	// Date format
 	$date_format = get_option( 'date_format' );
+	$date_format_abbreviated = ctfw_abbreviate_date_format( array(
+		'date_format'      => $date_format,
+		'abbreviate_month' => true, // December = Dec.
+		'remove_year'      => false,
+	) );
 
-	// Start calendar data array
+	// Start calendar data array.
 	$calendar = array();
 
-	// Get $year, $month and $month_ts, validated
-	// If invalid date passed, current month/year used
-	// This also removed preceding 0 from month
+	// Get $year, $month and $month_ts, validated.
+	// If invalid date passed, current month/year used.
+	// This also removed preceding 0 from month.
 	$calendar['month_data'] = ctfw_event_calendar_month_data( $year_month );
 	extract( $calendar['month_data'] );
 
-	// Get today
+	// Get today.
 	$today = date_i18n( 'Y-m-d' );
 	$today_ts = strtotime( $today );
 
-	// Days in the month
+	// Days in the month.
 	$days_in_month = date_i18n( 't', $month_ts );
 
-	// Get day of week for first day of month (0 - 6 representing Sunday - Saturday)
-	// This is useful for determining where to start the calendar
+	// Get day of week for first day of month (0 - 6 representing Sunday - Saturday).
+	// This is useful for determining where to start the calendar.
 	$first_day_in_month_ts = mktime( 0, 0, 0, $month, 1, $year );
 	$first_day_in_month_info = getdate( $first_day_in_month_ts );
 	$first_day_in_month_day_of_week = $first_day_in_month_info['wday'];
 
-	// Previous month
+	// Previous month.
 	$previous_month_days = date_i18n( 't', ( $first_day_in_month_ts - DAY_IN_SECONDS ) );
 
-	// Build days of week array
-	// Make start of week first in array
+	// Build days of week array.
+	// Make start of week first in array.
 	$days_of_week = array();
 
-		// Place days of week in array
-		// Using first week of month specifically so can determine localized day of week names
+		// Place days of week in array.
+		// Using first week of month specifically so can determine localized day of week names.
 		for ( $day_in_month = 1; $day_in_month <= 7; $day_in_month++ ) {
 
-			// This day's info
+			// This day's info.
 			$day_in_month_ts = mktime( 0, 0, 0, $month, $day_in_month, $year );
 			$day_in_month_info = getdate( $day_in_month_ts );
 			$day_in_month_day_of_week = $day_in_month_info['wday'];
 
-			// Numeric day of week
-			$days_of_week[$day_in_month_day_of_week]['numeric'] = $day_in_month_day_of_week; // on 0 - 6 scake
-			$days_of_week[$day_in_month_day_of_week]['numeric_friendly'] = $day_in_month_day_of_week + 1; // on 1 - 7 scale
+			// Numeric day of week.
+			$days_of_week[ $day_in_month_day_of_week ]['numeric'] = $day_in_month_day_of_week; // on 0 - 6 scale.
+			$days_of_week[ $day_in_month_day_of_week ]['numeric_friendly'] = $day_in_month_day_of_week + 1; // on 1 - 7 scale.
 
-			// Localized names
-			$days_of_week[$day_in_month_day_of_week]['name'] = date_i18n( 'l', $day_in_month_ts );
-			$days_of_week[$day_in_month_day_of_week]['name_short'] = date_i18n( 'D', $day_in_month_ts );
+			// Localized names.
+			$days_of_week[ $day_in_month_day_of_week ]['name'] = date_i18n( 'l', $day_in_month_ts );
+			$days_of_week[ $day_in_month_day_of_week ]['name_short'] = date_i18n( 'D', $day_in_month_ts );
 
 		}
 
-		// Sort by day of week 0 - 6
+		// Sort by day of week 0 - 6.
 		ksort( $days_of_week );
 
-		// Change start of week (e.g. Monday instead of Sunday)
-		// Settings > General controls this
-		$start_of_week = get_option( 'start_of_week' ); // Day week starts on; numeric (0 - 6 representing Sunday - Saturday)
-		$removed_days = array_splice( $days_of_week, $start_of_week ); // remove days before new first day from front
-		$days_of_week = array_merge( $removed_days, $days_of_week ); // move them to end to effect new first day of week
+		// Change start of week (e.g. Monday instead of Sunday).
+		// Settings > General controls this.
+		$start_of_week = get_option( 'start_of_week' ); // Day week starts on; numeric (0 - 6 representing Sunday - Saturday).
+		$removed_days = array_splice( $days_of_week, $start_of_week ); // remove days before new first day from front.
+		$days_of_week = array_merge( $removed_days, $days_of_week ); // move them to end to effect new first day of week.
 
-		// Add to calendar array
+		// Add to calendar array.
 		$calendar['days_of_week'] = $days_of_week;
 
-	// Loop days of month to build rows
+	// Loop days of month to build rows.
 	$day = 1;
 	$week = 0;
 	$day_of_week = $first_day_in_month_day_of_week;
@@ -512,7 +557,7 @@ function ctfw_event_calendar_data( $args ) {
 	}
 	while ( $day <= $days_in_month ) {
 
-		// Add day to array
+		// Add day to array.
 		$calendar['weeks'][$week]['days'][$day_of_week] = array(
 			'day'			=> $day,
 			'month'			=> $month,
@@ -603,11 +648,13 @@ function ctfw_event_calendar_data( $args ) {
 			$date = date_i18n( 'Y-m-d', mktime( 0, 0, 0, $day['month'], $day['day'], $day['year'] ) );
 			$date_ts = strtotime( $date );
 			$date_formatted = date_i18n( $date_format, $date_ts );
+			$date_formatted = date_i18n( $date_format, $date_ts );
+			$date_formatted_abbreviated = date_i18n( $date_format_abbreviated, $date_ts );
 
 			$calendar['weeks'][$week_key]['days'][$day_key]['date'] = $date;
 			$calendar['weeks'][$week_key]['days'][$day_key]['date_ts'] = $date_ts;
 			$calendar['weeks'][$week_key]['days'][$day_key]['date_formatted'] = $date_formatted;
-
+			$calendar['weeks'][$week_key]['days'][$day_key]['date_formatted_abbreviated'] = $date_formatted_abbreviated; // abbreviate month (use Dec instead of December by replacing F with M in date_format setting)
 
 			$last_of_previous_month = false;
 			if ( $day['other_month'] && $previous_month_days == $day['day'] ) {
@@ -645,7 +692,7 @@ function ctfw_event_calendar_data( $args ) {
 		// We don't need events beyond that because nothing is calculated backwards
 
 		// Backwards compatibility
-		// Church Theme Content added rigid time fields in version 1.2
+		// Church Content added rigid time fields in version 1.2
 		// Continue ordering by old field for old versions of plugin
 		$meta_type = 'DATETIME'; // 0000-00-00 00:00:00
 		$meta_key = '_ctc_event_start_date_start_time'; // order by this
@@ -681,7 +728,7 @@ function ctfw_event_calendar_data( $args ) {
 		// Get events
 		$events = get_posts( $query_args );
 
-		// Prepare for recurrence calculations
+		// Prepare for recurrence calculations.
 		$ctfw_recurrence = new CT_Recurrence();
 
 		// Loop events
@@ -719,23 +766,31 @@ function ctfw_event_calendar_data( $args ) {
 
 				// Calculate future occurences of Start Date
 				$recurrence_args = array(
-					'start_date'	=> $event_data['start_date'],				// first day of event, YYYY-mm-dd (ie. 2015-07-20 for July 15, 2015)
-					'until_date'	=> $until_date,						 		// date recurrence should not extend beyond (has no effect on calc_* functions)
-					'frequency'		=> $event_data['recurrence'], 				// weekly, monthly, yearly
-					'interval'		=> $interval, 								// every 1, 2 or 3, etc. weeks, months or years
-					'monthly_type'	=> $event_data['recurrence_monthly_type'], 	// day (same day of month) or week (on a specific week); if recurrence is monthly (day is default)
-					'monthly_week'	=> $event_data['recurrence_monthly_week'], 	// 1 - 4 or 'last'; if recurrence is monthly and monthly_type is 'week'
-					'limit'			=> $recurrence_limit, 						// maximum dates to return (if no until_date, default is 100 to prevent infinite loop)
+					'start_date'     => $event_data['start_date'],				// first day of event, YYYY-mm-dd (ie. 2015-07-20 for July 15, 2015).
+					'until_date'     => $until_date,						 	// date recurrence should not extend beyond (has no effect on calc_next_future_date method).
+					'frequency'      => $event_data['recurrence'], 				// weekly, monthly, yearly
+					'interval'       => $interval, 								// every X weeks, months or years.
+					'weekly_type'    => $event_data['recurrence_weekly_type'], 	// 'same' (same day of week) or 'day' (on specific days(s)); if recurrence is weekly ('same' is default).
+					'weekly_day'     => $event_data['recurrence_weekly_day'],	// single value, array or JSON-encoded array of day of week in 2-letter format (SU, MO, TU, etc.). If empty, uses same day of week.
+					'monthly_type'   => $event_data['recurrence_monthly_type'],	// 'day' (same day of month) or 'week' (on specific week(s)); if recurrence is monthly ('day' is default).
+					'monthly_week'   => $event_data['recurrence_monthly_week'], // single value, array or JSON-encoded array of numeric week(s) of month (or 'last') (e.g. 1, 2, 3, 4, 5 or last).
+					'excluded_dates' => $event_data['excluded_dates'],			// dates to exclude in YYYY-mm-dd format, separated by comma, as array or JSON-encoded array.
+					'limit'          => $recurrence_limit, 						// maximum dates to return (if no until_date, default is 1000 to prevent infinite loop)
 				);
 				$calculated_dates = $ctfw_recurrence->get_dates( $recurrence_args );
 
 				// Add calculated dates to array
-				$event_dates = array_merge( $event_dates, $calculated_dates );
+				if ( $calculated_dates ) {
+					$event_dates = array_merge( $event_dates, $calculated_dates );
+				}
 
 			}
 
 			// Event is on multiple days
 			if ( $event_data['start_date'] != $event_data['end_date'] ) {
+
+				// Excluded dates array
+				$excluded_dates_array = $event_data['excluded_dates'] ? explode( ',', $event_data['excluded_dates'] ) : array();
 
 				// Loop all occurences of Start Date
 				foreach ( $event_dates as $date ) {
@@ -746,9 +801,14 @@ function ctfw_event_calendar_data( $args ) {
 					$DateTime = new DateTime( $date );
 					while ( $while_date <= $event_data['end_date'] ) { // loop dates in original range
 
-						// Add date to array if today or future
-						// And is not beyond event's recur until date
-						if ( strtotime( $date ) >= $today_ts && ( ! $event_data['recurrence_end_date'] || strtotime( $date ) <= strtotime( $event_data['recurrence_end_date'] ) ) ) {
+						// Add date to array if today or future.
+						// And is not beyond event's recur until date.
+						// And is not an excluded date.
+						if (
+							strtotime( $date ) >= $today_ts // today or future.
+							&& ( ! $event_data['recurrence_end_date'] || strtotime( $date ) <= strtotime( $event_data['recurrence_end_date'] ) ) // not beyond event's recur until date.
+							&& ( ! $excluded_dates_array || ! in_array( $date, $excluded_dates_array, true ) ) // not excluded
+						) {
 							$event_dates[] = $date;
 						}
 
@@ -835,9 +895,6 @@ function ctfw_event_calendar_data( $args ) {
 
 	}
 
-	// DEBUG
-	//ctfw_print_array( $calendar );
-
 	// Filter
 	$calendar = apply_filters( 'ctfw_event_calendar_data', $calendar, $args );
 
@@ -882,7 +939,7 @@ function ctfw_event_calendar_redirection() {
 	) );
 
 	// Only on event calendar page template
-	if ( ! is_page_template( CTFW_THEME_PAGE_TPL_DIR . '/' . $args['page_template'] ) ) {
+	if ( ! ctfw_is_page_template( $args['page_template'] ) ) {
 		return;
 	}
 
@@ -965,114 +1022,460 @@ function ctfw_event_calendar_redirection() {
 add_action( 'template_redirect', 'ctfw_event_calendar_redirection' );
 
 /**********************************
- * EVENT RECURRENCE
+ * EVENT RECURRENCE & EXCLUSIONS
  **********************************/
+
+/**
+ * Grandfather recurring events functionality for early users.
+ *
+ * ChurchThemes.com themes no longer support basic recurrence in the free Church Content plugin.
+ * This grandfathers basic recurrence for original users. New users need to install Church Content Pro.
+ *
+ * Example usage:
+ *
+ * add_theme_support( 'ctfw-grandfather-recurring-events', '2017-10-09' ); // release date of theme version removing basic recurrence support
+ *
+ * To detect an early user, this checks for Church Content posts of any type on or before the date specified.
+ * If they already had Church Content data in database, then they must be an early user. These users will
+ * have basic recurrence automatically enabled. An option is saved so the database is queried just once.
+ *
+ * Theme makers are now asked to support the free Church Content plugin by leaving _ctc_event_recurrence and
+ * _ctc_event_recurrence_end_date disabled so that users upgrade to Pro for recurrence. This feature can assist.
+ *
+ * @since 2.2
+ * @global $wpdb
+ */
+function ctfw_grandfather_recurring_events() {
+
+	global $wpdb;
+
+	// Only if Church Content plugin is active.
+	if ( ! ctfw_ctc_plugin_active() ) {
+		return; // avoid throwing an error.
+	}
+
+	// Only if theme supports grandfathering and has date set.
+	$support = get_theme_support( 'ctfw-grandfather-recurring-events' );
+	if ( ! empty( $support[0] ) ) {
+		$grandfather_date = $support[0]; // set grandfathering date cutoff.
+		$grandfather_date .= ' 23:59:59'; // allow up to last second of day
+	} else {
+		return; // stop, grandfathering not supported.
+	}
+
+	// Get status of grandfathering.
+	$checked = get_option( 'ctfw_grandfather_recurring_events_checked' );
+	$grandfather = get_option( 'ctfw_grandfather_recurring_events' );
+
+	// Check if should grandfather. This runs one time.
+	if ( ! $checked ) {
+
+		// Are there Church Content plugin posts of any type in database before the cut off date?
+		// If so, the website owner is an early user we should grandfather basic recurrence.
+		// Note: This check is only be run once ever then result saved as option.
+		$query = "
+			SELECT COUNT( * )
+			FROM {$wpdb->posts}
+			WHERE
+				post_type IN( '%s', '%s', '%s', '%s' )
+				AND post_date <= '%s'
+		";
+
+		// Run the query.
+		$ctc_post_count = $wpdb->get_var(
+			$wpdb->prepare(
+				$query,
+				'ctc_sermon', // these four post types existed at time of change so no newer ones need to be counted
+				'ctc_event',
+				'ctc_person',
+				'ctc_location',
+				$grandfather_date
+			)
+		);
+
+		// Do grandfathering basic recurrence for this site.
+		// Older posts from Church Content plugin were found.
+		if ( $ctc_post_count ) {
+			$grandfather = true;
+			update_option( 'ctfw_grandfather_recurring_events', $grandfather );
+		}
+
+		// Save option to indicate this check has been run, so don't run it again.
+		update_option( 'ctfw_grandfather_recurring_events_checked', true );
+
+	}
+
+	// Grandfather recurring events.
+	if ( $grandfather ) {
+
+		// Only if events feature supported.
+		if ( ! current_theme_supports( 'ctc-events' ) ) {
+			return;
+		}
+
+		// Get event fields that are supported by theme.
+		$supported_fields = ctc_get_theme_support( 'ctc-events', 'fields' );
+
+		// Only if specific fields are supported.
+		// Because, if no fields specified, all are automatically supported (including the extra recurrence fields).
+		if ( ! isset( $supported_fields ) ) {
+			return;
+		}
+
+		// Basic recurrence fields to be supported.
+		$fields = array(
+			'_ctc_event_recurrence',
+			'_ctc_event_recurrence_end_date',
+		);
+
+		// Add support for basic recurrence fields.
+		$modified_fields = (array) $supported_fields; // ensure value provided for fields is array.
+		$modified_fields = array_merge( $modified_fields, $fields ); // add them.
+		$modified_fields = array_unique( $modified_fields ); // no duplicates (Pro or Pro might be doing this too).
+
+		// Modify theme support data.
+		$events_support = ctc_get_theme_support( 'ctc-events' );
+		$events_support_modified = $events_support;
+		$events_support_modified['fields'] = $modified_fields;
+
+		// Update theme support.
+		remove_theme_support( 'ctc-events' );
+		add_theme_support( 'ctc-events', $events_support_modified );
+
+	}
+
+}
+
+// Init 1.5 is right after ctc_set_default_theme_support at 1 in Church Content, but before ctc_cre_set_fields_theme_support.
+// This priority keeps Custom Recurring Events add-on working when grandfathering used on new theme.
+add_action( 'init', 'ctfw_grandfather_recurring_events', 1.5 );
 
 /**
  * Recurrence note
  *
  * This describes the recurrence pattern.
- * It considers the Custom Recurring Events add-on.
+ * It considers the Pro and Custom Recurring Events add-on.
  *
  * Returns array with short and full keys.
  * short - "Every 3 Months"
  * full - "Every 3 months on second Tuesday until January 14, 2018"
  *
- * Tip: Show the short version with full in tooltip
+ * Tip: Show the short version with full in tooltip.
+ *
+ * To Do: Consider making this into a human-readable class or method in CT Recurrence
+ * for plugin and theme framework to share. Could pass-in text strings so that the
+ * class itself does not need to contain a textdomain string.
  *
  * @since 1.5
- * @param object|int $post Post object or post ID for event
- * @return array Keys are full and short
+ * @param object|int $post Post object or post ID for event.
+ * @return array Keys are full and short.
  */
 function ctfw_event_recurrence_note( $post_id = false, $data = false ) {
 
 	$note = array();
 
-	// Get event data if not provided
+	// Get event data if not provided.
 	if ( empty( $data ) ) {
 		$data = ctfw_event_data( $post_id );
 	}
 
 	// Is this a recurring event?
 	$recurrence = $data['recurrence'];
-	if ( $recurrence && $recurrence != 'none' ) {
+	if ( $recurrence && 'none' !== $recurrence ) {
 
 		$note['full'] = '';
 		$note['short'] = '';
 
-		// Get recurrence data
+		// Get recurrence data.
 		$recurrence_end_date = $data['recurrence_end_date'];
 		$weekly_interval = $data['recurrence_weekly_interval'];
+		$weekly_type = $data['recurrence_weekly_type'];
+		$weekly_day = $data['recurrence_weekly_day'];
 		$monthly_interval = $data['recurrence_monthly_interval'];
 		$monthly_type = $data['recurrence_monthly_type'];
 		$monthly_week = $data['recurrence_monthly_week'];
+		$excluded_dates = $data['excluded_dates'];
 
-		// Localized end date
+		// Get date format.
+		$date_format = get_option( 'date_format' );
+
+		// Localized end date.
 		$recurrence_end_date_localized = '';
 		if ( $recurrence_end_date ) {
-			$date_format = get_option( 'date_format' );
 			$end_date_ts = strtotime( $recurrence_end_date );
 			$recurrence_end_date_localized = date_i18n( $date_format, $end_date_ts );
 		}
 
-		// Get day of week for start date
+		// Get day of week for start date.
 		$start_date = $data['start_date'];
 		$start_day_of_week = ! empty( $start_date ) ? date_i18n( 'l', strtotime( $start_date ) ) : '';
 
-		// Words for week of month
-		$monthly_week_word = '';
-		if ( $monthly_week ) {
+		// Wording for day(s) of week.
+		// e.g. "Monday, Tuesday and Friday".
+		$weekly_day_wording = '';
+		if ( 'day' === $weekly_type && $weekly_day ) {
 
-			$monthly_week_words = array(
-				'1'		=> _x( 'first', 'week of month', 'church-theme-framework' ),
-				'2'		=> _x( 'second', 'week of month', 'church-theme-framework' ),
-				'3'		=> _x( 'third', 'week of month', 'church-theme-framework' ),
-				'4'		=> _x( 'fourth', 'week of month', 'church-theme-framework' ),
-				'last'	=> _x( 'last', 'week of month', 'church-theme-framework' ),
+			// Map day value to word.
+			$weekly_day_words = array(
+				'SU' => date_i18n( 'l', strtotime( 'next Sunday' ) ), // this will translate day of week automatically.
+				'MO' => date_i18n( 'l', strtotime( 'next Monday' ) ),
+				'TU' => date_i18n( 'l', strtotime( 'next Tuesday' ) ),
+				'WE' => date_i18n( 'l', strtotime( 'next Wednesday' ) ),
+				'TH' => date_i18n( 'l', strtotime( 'next Thursday' ) ),
+				'FR' => date_i18n( 'l', strtotime( 'next Friday' ) ),
+				'SA' => date_i18n( 'l', strtotime( 'next Saturday' ) ),
 			);
 
-			$monthly_week_word = $monthly_week_words[$monthly_week];
+			// Convert comma-separated list of days into array.
+			$weekly_day_array = explode( ',', $weekly_day );
+			$weekly_day_count = count( $weekly_day_array );
+
+			// Loop day(s).
+			foreach ( $weekly_day_array as $day_key => $day_value ) {
+
+				// Separator between items (comma or and).
+				if ( $weekly_day_wording ) {
+
+					if ( $day_key < ($weekly_day_count - 1) ) {
+						/* translators: separator between items in list (e.g. "Monday, Tuesday and Friday") */
+						$weekly_day_wording .= _x( ', ', 'item list', 'church-theme-framework' );
+					} else { // "and" before last item.
+						/* translators: separator to use instead of comma before last item in a list (e.g. "Monday, Tuesday and Friday") */
+						$weekly_day_wording .= _x( ' and ', 'item list', 'church-theme-framework' );
+					}
+
+				}
+
+				// Append week to list.
+				$weekly_day_wording .= $weekly_day_words[ $day_value ];
+
+			}
 
 		}
 
-		// Frequency
+		// Wording for week(s) of month.
+		// e.g. "first and third Tuesday".
+		$monthly_week_wording = '';
+		if ( 'week' === $monthly_type && $monthly_week ) {
+
+			// Map week value to word.
+			$monthly_week_words = array(
+				'1'    => esc_html_x( 'first', 'week of month', 'church-theme-framework' ),
+				'2'    => esc_html_x( 'second', 'week of month', 'church-theme-framework' ),
+				'3'    => esc_html_x( 'third', 'week of month', 'church-theme-framework' ),
+				'4'    => esc_html_x( 'fourth', 'week of month', 'church-theme-framework' ),
+				'5'    => esc_html_x( 'fifth', 'week of month', 'church-theme-framework' ),
+				'last' => esc_html_x( 'last', 'week of month', 'church-theme-framework' ),
+			);
+
+			// Convert comma-separated list of weeks into array.
+			$monthly_week_array = explode( ',', $monthly_week );
+			$monthly_week_count = count( $monthly_week_array );
+
+			// Loop week(s).
+			foreach ( $monthly_week_array as $week_key => $week_value ) {
+
+				// Separator between items (comma or and).
+				if ( $monthly_week_wording ) {
+
+					if ( $week_key < ($monthly_week_count - 1) ) {
+						/* translators: separator between items in list (e.g. "first, second, third and last tuesday") */
+						$monthly_week_wording .= _x( ', ', 'item list', 'church-theme-framework' );
+					} else { // "and" before last item.
+						/* translators: separator to use instead of comma before last item in a list (e.g. "first, second, third and last tuesday") */
+						$monthly_week_wording .= _x( ' and ', 'item list', 'church-theme-framework' );
+					}
+
+				}
+
+				// Append week to list.
+				$monthly_week_wording .= $monthly_week_words[ $week_value ];
+
+			}
+
+		}
+
+		// Wording for excluded dates.
+		$excluded_dates_wording = ctfw_event_excluded_dates_note( false, $data );
+
+		// Frequency.
 		switch ( $recurrence ) {
 
-			case 'weekly' :
+			case 'weekly':
 
-				// Full
-				if ( $recurrence_end_date ) {
+				// On specific day(s) of week.
+				if ( 'day' === $weekly_type && $weekly_day_wording && $start_day_of_week ) { // only if start date is present.
 
-					/* translators: %1$s is interval, %2$s is recurrence end date */
-					$note['full'] = sprintf(
-						_n(
-							'Every week until %2$s',
-							'Every %1$s weeks until %2$s',
-							$weekly_interval,
-							'church-theme-framework'
-						),
-						$weekly_interval,
-						$recurrence_end_date_localized
-					);
+					// Has recurrence end date.
+					if ( $recurrence_end_date ) {
 
-				} else {
+						// Has excluded dates.
+						if ( $excluded_dates_wording ) {
 
-					/* translators: %1$s is interval */
-					$note['full'] = sprintf(
-						_n(
-							'Every week',
-							'Every %1$s weeks',
-							$weekly_interval,
-							'church-theme-framework'
-						),
-						$weekly_interval
-					);
+							$note['full'] = sprintf(
+								/* translators: %1$s is weekly interval, %2$s is specific day(s) of week, %3$s is recurrence end date localized, %4$s is list of excluded dates */
+								_n(
+									'Every week on %2$s until %3$s (excluding %4$s)',
+									'Every %1$s weeks on %2$s until %3$s (excluding %4$s)',
+									$weekly_interval,
+									'church-theme-framework'
+								),
+								$weekly_interval,
+								$weekly_day_wording,
+								$recurrence_end_date_localized,
+								$excluded_dates_wording
+							);
+
+						}
+
+						// No excluded dates.
+						else {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is weekly interval, %2$s is specific day(s) of week, %3$s is recurrence end date localized */
+								_n(
+									'Every week on %2$s until %3$s',
+									'Every %1$s weeks on %2$s until %3$s',
+									$weekly_interval,
+									'church-theme-framework'
+								),
+								$weekly_interval,
+								$weekly_day_wording,
+								$recurrence_end_date_localized
+							);
+
+						}
+
+					}
+
+					// No recurrence end date.
+					else {
+
+						// Has excluded dates.
+						if ( $excluded_dates_wording ) {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is weekly interval, %2$s is day(s) of week, %3$s is list of excluded dates */
+								_n(
+									'Every week on %2$s (excluding %3$s)',
+									'Every %1$s weeks on %2$s (excluding %3$s)',
+									$weekly_interval,
+									'church-theme-framework'
+								),
+								$weekly_interval,
+								$weekly_day_wording ,
+								$excluded_dates_wording
+							);
+
+						}
+
+						// No excluded dates.
+						else {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is weekly interval, %2$s is day(s) of week */
+								_n(
+									'Every week on %2$s',
+									'Every %1$s weeks on %2$s',
+									$weekly_interval,
+									'church-theme-framework'
+								),
+								$weekly_interval,
+								$weekly_day_wording
+							);
+
+						}
+
+					}
+
+				}
+
+				// On same day of week.
+				else {
+
+					// Has recurrence end date.
+					if ( $recurrence_end_date ) {
+
+						// Has excluded dates.
+						if ( $excluded_dates_wording ) {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is weekly interval, %2$s is recurrence end date localized, %3$s is list of excluded dates */
+								_n(
+									'Every week until %2$s (excluding %3$s)',
+									'Every %1$s weeks until %2$s (excluding %3$s)',
+									$weekly_interval,
+									'church-theme-framework'
+								),
+								$weekly_interval,
+								$recurrence_end_date_localized,
+								$excluded_dates_wording
+							);
+
+						}
+
+						// No excluded dates.
+						else {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is weekly interval, %2$s is recurrence end date localized */
+								_n(
+									'Every week until %2$s',
+									'Every %1$s weeks until %2$s',
+									$weekly_interval,
+									'church-theme-framework'
+								),
+								$weekly_interval,
+								$recurrence_end_date_localized
+							);
+
+						}
+
+					}
+
+					// No recurrence end date.
+					else {
+
+						// Has excluded dates.
+						if ( $excluded_dates_wording ) {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is weekly interval, %2$s is list of excluded dates */
+								_n(
+									'Every week (excluding %2$s)',
+									'Every %1$s weeks (excluding %2$s)',
+									$weekly_interval,
+									'church-theme-framework'
+								),
+								$weekly_interval,
+								$excluded_dates_wording
+							);
+
+						}
+
+						// No excluded dates.
+						else {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is weekly interval */
+								_n(
+									'Every week',
+									'Every %1$s weeks',
+									$weekly_interval,
+									'church-theme-framework'
+								),
+								$weekly_interval
+							);
+
+						}
+
+					}
 
 				}
 
 				// Short
-				/* translators: %1$s is interval */
 				$note['short'] = sprintf(
+					/* translators: %1$s is weekly interval (e.g. 1, 2, 3, etc.) */
 					_n(
 						'Every Week',
 						'Every %1$s Weeks',
@@ -1084,88 +1487,183 @@ function ctfw_event_recurrence_note( $post_id = false, $data = false ) {
 
 				break;
 
-			case 'monthly' :
+			case 'monthly':
 
-				// On specific week
-				if ( 'week' == $monthly_type && $start_day_of_week ) { // only if start date is present
+				// On specific week(s) of month.
+				if ( 'week' === $monthly_type && $monthly_week_wording && $start_day_of_week ) { // only if start date is present.
 
-					// Has recurrence end date
+					// Has recurrence end date.
 					if ( $recurrence_end_date ) {
 
-						/* translators: %1$s is interval, %2$s is week of month, %3$s is day of week, %4$s is recurrence end date */
-						$note['full'] = sprintf(
-							_n(
-								'Every month on the %2$s %3$s until %4$s',
-								'Every %1$s months on the %2$s %3$s until %4$s',
+						// Has excluded dates.
+						if ( $excluded_dates_wording ) {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is interval, %2$s is week of month, %3$s is day of week, %4$s is recurrence end date, $5$s is list of excluded dates */
+								_n(
+									'Every month on the %2$s %3$s until %4$s (excluding %5$s)',
+									'Every %1$s months on the %2$s %3$s until %4$s (excluding %5$s)',
+									$monthly_interval,
+									'church-theme-framework'
+								),
 								$monthly_interval,
-								'church-theme-framework'
-							),
-							$monthly_interval,
-							$monthly_week_word,
-							$start_day_of_week,
-							$recurrence_end_date_localized
-						);
+								$monthly_week_wording,
+								$start_day_of_week,
+								$recurrence_end_date_localized,
+								$excluded_dates_wording
+							);
+
+						}
+
+						// No excluded dates.
+						else {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is interval, %2$s is week of month, %3$s is day of week, %4$s is recurrence end date */
+								_n(
+									'Every month on the %2$s %3$s until %4$s',
+									'Every %1$s months on the %2$s %3$s until %4$s',
+									$monthly_interval,
+									'church-theme-framework'
+								),
+								$monthly_interval,
+								$monthly_week_wording,
+								$start_day_of_week,
+								$recurrence_end_date_localized
+							);
+
+						}
 
 					}
 
-					// No recurrence end date
+					// No recurrence end date.
 					else {
 
-						/* translators: %1$s is interval, %2$s is week of month, %3$s is day of week */
-						$note['full'] = sprintf(
-							_n(
-								'Every month on the %2$s %3$s',
-								'Every %1$s months on the %2$s %3$s',
+						// Has excluded dates.
+						if ( $excluded_dates_wording ) {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is interval, %2$s is week of month, %3$s is day of week, %4$s is list of excluded dates */
+								_n(
+									'Every month on the %2$s %3$s (excluding %4$s)',
+									'Every %1$s months on the %2$s %3$s (excluding %4$s)',
+									$monthly_interval,
+									'church-theme-framework'
+								),
 								$monthly_interval,
-								'church-theme-framework'
-							),
-							$monthly_interval,
-							$monthly_week_word,
-							$start_day_of_week
-						);
+								$monthly_week_wording,
+								$start_day_of_week,
+								$excluded_dates_wording
+							);
+
+						}
+
+						// No excluded dates.
+						else {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is interval, %2$s is week of month, %3$s is day of week */
+								_n(
+									'Every month on the %2$s %3$s',
+									'Every %1$s months on the %2$s %3$s',
+									$monthly_interval,
+									'church-theme-framework'
+								),
+								$monthly_interval,
+								$monthly_week_wording,
+								$start_day_of_week
+							);
+
+						}
 
 					}
 
-				// On same day of month
+				// On same day of month.
 				} else {
 
-					// Has recurrence end date
+					// Has recurrence end date.
 					if ( $recurrence_end_date ) {
 
-						/* translators: %1$s is interval, %2$s is recurrence end date */
-						$note['full'] = sprintf(
-							_n(
-								'Every month until %2$s',
-								'Every %1$s months until %2$s',
+						// Has excluded dates.
+						if ( $excluded_dates_wording ) {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is interval, %2$s is recurrence end date, %3$s is list of exclude dates */
+								_n(
+									'Every month until %2$s (excluding %3$s)',
+									'Every %1$s months until %2$s (excluding %3$s)',
+									$monthly_interval,
+									'church-theme-framework'
+								),
 								$monthly_interval,
-								'church-theme-framework'
-							),
-							$monthly_interval,
-							$recurrence_end_date_localized
-						);
+								$recurrence_end_date_localized,
+								$excluded_dates_wording
+							);
+
+						}
+
+						// No excluded dates.
+						else {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is interval, %2$s is recurrence end date */
+								_n(
+									'Every month until %2$s',
+									'Every %1$s months until %2$s',
+									$monthly_interval,
+									'church-theme-framework'
+								),
+								$monthly_interval,
+								$recurrence_end_date_localized
+							);
+
+						}
 
 					}
 
-					// No recurrence end date
+					// No recurrence end date.
 					else {
 
-						/* translators: %1$s is interval */
-						$note['full'] = sprintf(
-							_n(
-								'Every month',
-								'Every %1$s months',
+						// Has excluded dates.
+						if ( $excluded_dates_wording ) {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is interval, %2$s is list of excluded dates */
+								_n(
+									'Every month (excluding %2$s)',
+									'Every %1$s months (excluding %2$s)',
+									$monthly_interval,
+									'church-theme-framework'
+								),
 								$monthly_interval,
-								'church-theme-framework'
-							),
-							$monthly_interval
-						);
+								$excluded_dates_wording
+							);
+
+						}
+
+						// No excluded dates.
+						else {
+
+							$note['full'] = sprintf(
+								/* translators: %1$s is interval */
+								_n(
+									'Every month',
+									'Every %1$s months',
+									$monthly_interval,
+									'church-theme-framework'
+								),
+								$monthly_interval
+							);
+
+						}
 
 					}
 
 				}
 
-				/* translators: %1$s is interval */
+				// Short.
 				$note['short'] = sprintf(
+					/* translators: %1$s is interval */
 					_n(
 						'Every Month',
 						'Every %1$s Months',
@@ -1177,22 +1675,58 @@ function ctfw_event_recurrence_note( $post_id = false, $data = false ) {
 
 				break;
 
-			case 'yearly' :
+			case 'yearly':
 
-				// Full
+				// Has recurrence end date.
 				if ( $recurrence_end_date ) {
 
-					/* translators: %1$s is recurrence end date */
-					$note['full'] = sprintf(
-						__( 'Every year until %1$s', 'church-theme-framework' ),
-						$recurrence_end_date_localized
-					);
+					// Has excluded dates.
+					if ( $excluded_dates_wording ) {
 
-				} else {
-					$note['full'] = __( 'Every year', 'church-theme-framework' );
+						$note['full'] = sprintf(
+							/* translators: %1$s is recurrence end date, %2$s is list of excluded dates */
+							__( 'Every year until %1$s (excluding %2$s)', 'church-theme-framework' ),
+							$recurrence_end_date_localized,
+							$excluded_dates_wording
+						);
+
+					}
+
+					// No excluded dates.
+					else {
+
+						$note['full'] = sprintf(
+							/* translators: %1$s is recurrence end date */
+							__( 'Every year until %1$s', 'church-theme-framework' ),
+							$recurrence_end_date_localized
+						);
+
+					}
+
 				}
 
-				// Short
+				// No recurrence end date.
+				else {
+
+					// Has excluded dates.
+					if ( $excluded_dates_wording ) {
+
+						/* translators: %1$s is list of excluded dates */
+						$note['full'] = sprintf(
+							__( 'Every year (excluding %1$s)', 'church-theme-framework' ),
+							$excluded_dates_wording
+						);
+
+					}
+
+					// No excluded dates.
+					else {
+						$note['full'] = __( 'Every year', 'church-theme-framework' );
+					}
+
+				}
+
+				// Short.
 				$note['short'] = __( 'Every Year', 'church-theme-framework' );
 
 				break;
@@ -1204,6 +1738,85 @@ function ctfw_event_recurrence_note( $post_id = false, $data = false ) {
 	// Filter
 	$note = apply_filters( 'ctfw_event_recurrence_note', $note, $post_id, $data );
 
+	return $note;
+
+}
+
+/**
+ * Excluded dates note
+ *
+ * A sentence describing excluded dates, when Pro add-on used.
+ *
+ * @since 2.2
+ * @param object|int $post Post object or post ID for event.
+ * @param array $data Data to use (instead of giving $post_id).
+ * @return string List of excluded dates (e.g. "September 12, October 17 and October 30, 2017")
+ */
+function ctfw_event_excluded_dates_note( $post_id = false, $data = false ) {
+
+	$note = '';
+
+	// Get event data if not provided.
+	if ( empty( $data ) ) {
+		$data = ctfw_event_data( $post_id );
+	}
+
+	// Get excluded dates.
+	$excluded_dates = isset( $data['excluded_dates'] ) ? $data['excluded_dates'] : '';
+
+	// Do we have excluded dates?
+	if ( $excluded_dates ) {
+
+		// Ger date format.
+		$date_format = get_option( 'date_format' );
+
+		// Convert comma-separated list of weeks into array.
+		$excluded_dates_array = explode( ',', $excluded_dates );
+		$excluded_dates_count = count( $excluded_dates_array );
+
+		// Loop dates(s).
+		$date_years = array();
+		foreach ( $excluded_dates_array as $date_key => $date_value ) {
+
+			// Separator between items (comma or and).
+			if ( $note ) {
+
+				if ( $date_key < ($excluded_dates_count - 1) ) {
+					/* translators: separator between items in list (e.g. "first, second, third and last tuesday") */
+					$note .= _x( ', ', 'item list', 'church-theme-framework' );
+				} else { // "and" before last item.
+					/* translators: separator to use instead of comma before last item in a list (e.g. "first, second, third and last tuesday") */
+					$note .= _x( ' and ', 'item list', 'church-theme-framework' );
+				}
+
+			}
+
+			// Append date to list.
+			$note .= date_i18n( $date_format, strtotime( $date_value ) );
+
+			// Log date years.
+			$year = date_i18n( 'Y', strtotime( $date_value ) );
+			$date_years[$year] = $year;
+
+		}
+
+		// If dates all have same year, only mention year on last date.
+		// This is done only for the most common format of "F, j, Y".
+		if ( $excluded_dates_count > 1 && count( $date_years ) === 1 && 'F j, Y' === $date_format ) {
+
+			// Replace all years but last.
+			$year = reset( $date_years );
+			$replace = ', ' . $year;
+			$note = preg_replace( '/' . $replace . '/', '', $note, preg_match_all( '/' . $replace . '/', $note ) - 1 );
+
+		}
+
+	}
+
+	// Filter.
+	$note = apply_filters( 'ctfw_event_excluded_dates_note', $note, $post_id, $data );
+
+	// Return.
 	return $note;
 
 }
@@ -1312,7 +1925,7 @@ function ctfw_previous_next_event_sorting() {
 		return;
 	}
 
-	// While on single event, if theme supports Events from Church Theme Content
+	// While on single event, if theme supports Events from Church Content
 	// IMPORTANT: Without ! is_page(), is_singular() runs, somehow causing /page/#/ URL's on static front page to break
 	if ( ! is_page() && is_singular( 'ctc_event' ) && current_theme_supports( 'ctc-events' ) ) {
 

@@ -4,14 +4,16 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013, churchthemes.com
+ * @copyright  Copyright (c) 2013 -2018, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
-// No direct access
-if ( ! defined( 'ABSPATH' ) ) exit;
+// No direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /***********************************************
  * GALLERIES
@@ -123,7 +125,7 @@ add_filter( 'wp', 'ctfw_remove_prepend_attachment' ); // conditionals like is_at
 /**
  * Get post's gallery data
  *
- * Extract gallery shortcode data from content  (unique image IDs, total count, shortcode attribures, etc.).
+ * Extract gallery shortcode (or Gutenberg block) data from content (unique image IDs, total count, shortcode attribures, etc.).
  *
  * @since 0.9
  * @param object $post Post object
@@ -139,13 +141,15 @@ function ctfw_post_galleries_data( $post, $options = array() ) {
 		'galleries'		=> array(),
 	);
 
-	// Gather IDs from all gallery shortcodes in content
-	// This is based on the core get_content_galleries() function but slimmed down to do only what is needed
-	if ( preg_match_all( '/' . get_shortcode_regex() . '/s', $post->post_content, $matches, PREG_SET_ORDER ) && ! empty( $matches ) ) {
+	// Default values.
+	$galleries_image_ids = array();
+	$galleries_data = array();
+	$get_attached_images = false;
 
-		$galleries_data = array();
-		$galleries_image_ids = array();
-		$got_attached_images = false;
+	// Shortcode.
+	// Gather IDs from all gallery shortcodes in content.
+	// This is based on the core get_content_galleries() function but slimmed down to do only what is needed.
+	if ( preg_match_all( '/' . get_shortcode_regex() . '/s', $post->post_content, $matches, PREG_SET_ORDER ) && ! empty( $matches ) ) {
 
 		// Loop matching shortcodes
 		foreach ( $matches as $shortcode ) {
@@ -177,49 +181,104 @@ function ctfw_post_galleries_data( $post, $options = array() ) {
 				}
 
 				// No ID attributes, in which case all attached images shown - get 'em
-				elseif ( ! $got_attached_images ) {
-
-					// Don't run more than once per post
-					$got_attached_images = true;
-
-					// Get all attached images for this post
-					$images = get_children( array(
-						'post_parent' => $post->ID,
-						'post_type' => 'attachment',
-						'post_status' => 'inherit', // for attachments
-						'post_mime_type' => 'image',
-						'numberposts' => -1, // all
-						'orderby' => 'menu_order', // want first manually ordered ('Add Media > Uploaded to this page' lets drag order)
-						'order' => 'ASC'
-					) ) ;
-
-					// Found some?
-					if ( ! empty( $images ) ) {
-
-						// Add to array containing image IDs from all galleries in post
-						$attached_image_ids = array_keys( $images );
-						$galleries_image_ids = array_merge( $galleries_image_ids, $attached_image_ids );
-
-					}
-
+				else {
+					$get_attached_images = true;
 				}
 
 			}
 
 		}
 
-		// Did we find some images?
-		if ( $galleries_image_ids ) {
+	}
 
-			// Remove duplicates
-			$galleries_image_ids = array_unique( $galleries_image_ids );
+	// Gutenberg block.
+	if ( preg_match( '/wp-block-gallery/', $post->post_content ) ) {
 
-			// Build array of data
-			$data['image_ids'] = $galleries_image_ids;
-			$data['image_count'] = count( $galleries_image_ids );
-			$data['galleries'] = $galleries_data;
+		// DOM.
+		$dom = new domDocument;
+		libxml_use_internal_errors( true ); // suppress errors caused by domDocument not recognizing HTML5.
+		$dom->loadHTML( $post->post_content );
+		libxml_clear_errors();
+
+		// Get gallery blocks.
+		$finder = new DomXPath( $dom );
+		$gallery_blocks = $finder->query( "//*[contains(@class, 'wp-block-gallery')]" );
+
+		// Loop gallery blocks.
+		foreach ( $gallery_blocks as $gallery_block ) {
+
+			$gallery_image_ids = array();
+
+			// Get images.
+   			$gallery_images = $gallery_block->getElementsByTagName( 'img' );
+
+   			// Have gallery images.
+   			if ( $gallery_images ) {
+
+	   			// Loop images.
+	   			foreach ( $gallery_images as $gallery_image ) {
+
+	   				// Get ID attribute.
+					$gallery_image_id = $gallery_image->getAttribute( 'data-id' );
+
+					// Add ID to array.
+					if ( $gallery_image_id ) {
+						$gallery_image_ids[] = $gallery_image_id;
+					}
+
+				}
+
+				// Have gallery image IDs.
+				if ( $gallery_image_ids ) {
+					$galleries_image_ids = array_merge( $galleries_image_ids, $gallery_image_ids );
+				}
+
+				// No ID attributes, in which case all attached images shown - get 'em
+				else {
+					$get_attached_images = true;
+				}
+
+			}
 
 		}
+
+	}
+
+	// Get all attached images because at least one gallery had no IDs, which means to use all attached to the page.
+	if ( $get_attached_images ) {
+
+		// Get all attached images for this post
+		$images = get_children( array(
+			'post_parent' => $post->ID,
+			'post_type' => 'attachment',
+			'post_status' => 'inherit', // for attachments
+			'post_mime_type' => 'image',
+			'numberposts' => -1, // all
+			'orderby' => 'menu_order', // want first manually ordered ('Add Media > Uploaded to this page' lets drag order)
+			'order' => 'ASC'
+		) ) ;
+
+		// Found some?
+		if ( ! empty( $images ) ) {
+
+			// Add to array containing image IDs from all galleries in post
+			$attached_image_ids = array_keys( $images );
+			$galleries_image_ids = array_merge( $galleries_image_ids, $attached_image_ids );
+
+		}
+
+	}
+
+	// Did we find some images?
+	if ( $galleries_image_ids ) {
+
+		// Remove duplicates
+		$galleries_image_ids = array_unique( $galleries_image_ids );
+
+		// Build array of data
+		$data['image_ids'] = $galleries_image_ids;
+		$data['image_count'] = count( $galleries_image_ids );
+		$data['galleries'] = $galleries_data;
 
 	}
 
@@ -241,20 +300,20 @@ function ctfw_gallery_posts( $options = array() ) {
 
 	$gallery_posts = array();
 
-	// Defaults
+	// Defaults.
 	$options = wp_parse_args( $options, array(
 		'orderby'		=> 'modified',
 		'order'			=> 'desc',
-		'limit'			=> -1, // no limit
-		'extract_data'	=> true, // false to skip that for optimization
-		'exclude_empty'	=> true, // works only when 'extract_data' is true
+		'limit'			=> -1, // no limit.
+		'extract_data'	=> true, // false to skip that for optimization.
+		'exclude_empty'	=> true, // works only when 'extract_data' is true.
 		'post_id'		=> ''
 	) );
 
-	// If no extract_data, force exclude_empty false (since it is not possible)
+	// If no extract_data, force exclude_empty false (since it is not possible).
 	$options['exclude_empty'] = ! $options['extract_data'] ? false : $options['exclude_empty'];
 
-	// Query arguments
+	// Query arguments.
 	$args = array(
 		'p'					=> $options['post_id'], // if getting one
 		'post_type'			=> array( 'page', 'post', 'ctc_sermon', 'ctc_event', 'ctc_person', 'ctc_location' ),
@@ -300,7 +359,7 @@ function ctfw_gallery_posts( $options = array() ) {
 }
 
 /**
- * Filter gallery posts query to get only those with [gallery] shortcode
+ * Filter gallery posts query to get only those with [gallery] shortcode or Gallery blocks.
  *
  * This way not all posts are gotten; only post with galleries.
  *
@@ -312,10 +371,17 @@ function ctfw_gallery_posts_where( $where ) {
 
 	global $wpdb;
 
-	// Append search for gallery shortcode
+	// Append search for gallery shortcode or Gutenberg gallery block.
+	/*
 	$where .= $wpdb->prepare(
 		" AND $wpdb->posts.post_content LIKE %s",
 		'%[gallery%'
+	);
+	*/
+	$where .= $wpdb->prepare(
+		" AND ( $wpdb->posts.post_content LIKE %s OR $wpdb->posts.post_content LIKE %s )",
+		'%[gallery%', // shortcode.
+		'%wp-block-gallery%' // Gutenberg block.
 	);
 
 	return $where;
@@ -352,6 +418,9 @@ function ctfw_gallery_posts_ids( $options = array() ) {
  *
  * Show X rows of thumbnails from post content with gallery shortcode(s).
  * The shortcode column attribute from the first gallery will be used.
+ *
+ * Note: This does not consider Gutenberg block galleries, but not sure any themes use this (CT themes don't).
+ * The reason is that ctfw_post_galleries_data() only gets $galleries_data for shortcode galleries. A Gutenberg equivilent could possibly be made.
  *
  * @since 0.9
  * @param object $post Post to make gallery preview for

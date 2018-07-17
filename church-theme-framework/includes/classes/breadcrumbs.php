@@ -6,9 +6,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Classes
- * @copyright  Copyright (c) 2013 - 2015, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2018, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -425,8 +425,16 @@ class CTFW_Breadcrumbs {
 
 						// Show taxonomy before if has one
 						// Use primary taxonomy's first term
-						$taxonomies = get_object_taxonomies( $post_type );
-						$taxonomy = isset( $taxonomies[0] ) ? $taxonomies[0] : false;
+						//$taxonomies = get_object_taxonomies( $post_type );
+						//$taxonomy = isset( $taxonomies[0] ) ? $taxonomies[0] : false;
+						$taxonomies = get_object_taxonomies( $post_type, 'objects' );
+						$taxonomy = '';
+						foreach ( $taxonomies as $taxonomy_data ) {
+							if ( ! empty( $taxonomy_data->public ) ) { // get first public taxonomy (avoid issue with Yoast Premium Prominent Words - HS 16064)
+								$taxonomy = $taxonomy_data->name;
+								break;
+							}
+						}
 						if ( $taxonomy ) {
 							$taxonomy_terms = get_the_terms( $post_id, $taxonomy );
 							$taxonomy_term = is_array( $taxonomy_terms ) ? current( $taxonomy_terms ) : $taxonomy_terms; // use first term in list

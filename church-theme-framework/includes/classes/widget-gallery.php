@@ -4,9 +4,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Classes
- * @copyright  Copyright (c) 2013 - 2016, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2016, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -333,6 +333,9 @@ class CTFW_Widget_Gallery extends CTFW_Widget {
 			}
 
 		}
+
+		// Filter arguments
+		$args = apply_filters( 'ctfw_widget_gallery_get_posts_args', $args );
 
 		// Get gallery images
 		if ( ! empty( $args['post_parent__in'] ) || ! empty( $args['post__in'] ) ) { // if have something to search for

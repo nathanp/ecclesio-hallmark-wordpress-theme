@@ -4,9 +4,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2014, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Get sidebar/widget restrictions
  *
  * Theme passes this data in via appropriate filter (see theme's includes/sidebars.php)
- * 
+ *
  * @since 0.9
  * @param string $which 'sidebar_widget' or 'widget_sidebar'
  */
@@ -42,7 +42,7 @@ function ctfw_get_sidebar_widget_restrictions( $which = 'sidebar_widget' ) {
  *
  * See the ctfw_sidebar_widget_restrictions and ctfw_widget_sidebar_restrictions filters.
  * Both are necessary in consideration of third party widgets and sidebars (via plugin or child theme).
- * 
+ *
  * @since 0.9
  * @param string $sidebar_id Sidebar ID
  * @param string $widget_ID Widget ID
@@ -159,3 +159,50 @@ function ctfw_restrict_sidebars_widgets( $sidebars_widgets ) {
 }
 
 add_filter( 'sidebars_widgets', 'ctfw_restrict_sidebars_widgets', 5 );
+
+/**********************************
+ * SIDEBAR DATA
+ **********************************/
+
+/**
+ * Set current sidebar ID
+ *
+ * See ctfw_is_sidebar() in conditions.php which uses this global.
+ *
+ * @since 2.0
+ * @param  string $index Sidebar ID
+ */
+
+function saved_set_current_sidebar_id( $index ) {
+
+	global $ctfw_current_sidebar_id;
+
+	if ( ! empty( $index ) ) {
+		$ctfw_current_sidebar_id = $index;
+	}
+
+}
+
+add_action( 'dynamic_sidebar_before', 'saved_set_current_sidebar_id' );
+
+/**
+ * Unset current sidebar ID
+ *
+ * We unset so that this bool is not true even after leave the sidebar.
+ *
+ * See saved_set_current_sidebar_id() above for more.
+ *
+ * @since 2.0
+ * @param  string $index Sidebar ID
+ */
+function saved_unset_current_sidebar_id() {
+
+	global $ctfw_current_sidebar_id;
+
+	if ( isset( $ctfw_current_sidebar_id ) ) {
+		unset( $ctfw_current_sidebar_id );
+	}
+
+}
+
+add_action( 'dynamic_sidebar_after', 'saved_unset_current_sidebar_id' );

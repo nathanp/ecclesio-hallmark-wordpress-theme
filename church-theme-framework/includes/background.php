@@ -6,14 +6,16 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2015, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2018, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
-// No direct access
-if ( ! defined( 'ABSPATH' ) ) exit;
+// No direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /*********************************************
  * PRESET BACKGROUNDS
@@ -42,21 +44,13 @@ function ctfw_background_image_presets() {
 
 			if ( ! empty( $data['thumb'] ) ) {
 
+				// Thumbnail
 				$backgrounds_clean[$file]['thumb'] 		= $data['thumb'];
 
-				$backgrounds_clean[$file]['fullscreen'] = ! empty( $data['fullscreen'] ) ? true : false;
-				if ( $backgrounds_clean[$file]['fullscreen'] ) {
-					$data['repeat'] = 'no-repeat';
-					$data['attachment'] = 'fixed';
-					$data['position'] = 'left';
-				}
+				// WordPress core "Presets" <select> option
+				$backgrounds_clean[$file]['preset'] 	= isset( $data['preset'] ) && in_array( $data['preset'], array( 'default', 'fill', 'fit', 'repeat', 'custom' ) ) ? $data['preset'] : '';
 
-				$backgrounds_clean[$file]['repeat'] 	= isset( $data['repeat'] ) && in_array( $data['repeat'], array( 'no-repeat', 'repeat', 'repeat-x', 'repeat-y' ) ) ? $data['repeat'] : 'no-repeat';
-
-				$backgrounds_clean[$file]['attachment'] = isset( $data['attachment'] ) && in_array( $data['attachment'], array( 'scroll', 'fixed' ) ) ? $data['attachment'] : 'scroll';
-
-				$backgrounds_clean[$file]['position'] 	= isset( $data['position'] ) && in_array( $data['position'], array( 'left', 'center', 'right' ) ) ? $data['position'] : '';
-
+				// Is it colorable?
 				$backgrounds_clean[$file]['colorable'] 	= ! empty( $data['colorable'] ) ? true : false;
 
 				// Also add absolute URL's (theme customizer uses)
@@ -113,7 +107,7 @@ function ctfw_background_image_preset_urls() {
  */
 function ctfw_background_image_preset_url( $filename ) {
 
-	$url = ctfw_theme_url( CTFW_THEME_BG_DIR . '/' . $filename );
+	$url = get_theme_file_uri( CTFW_THEME_BG_DIR . '/' . $filename );
 
 	return apply_filters( 'ctfw_background_image_preset_url', $url );
 

@@ -6,9 +6,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2015, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2015, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -57,7 +57,7 @@ function ctfw_event_calendar_head_title( $title, $sep, $seplocation ) {
 		) );
 
 		// Only on event calendar page template
-		if ( is_page_template( CTFW_THEME_PAGE_TPL_DIR . '/' . $args['page_template'] ) ) {
+		if ( ctfw_is_page_template( $args['page_template'] ) ) {
 
 			$parts = array();
 

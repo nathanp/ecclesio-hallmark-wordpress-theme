@@ -26,9 +26,9 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Admin
- * @copyright  Copyright (c) 2013 - 2014, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
@@ -114,23 +114,80 @@ function ctfw_edd_license_updater() {
 	// Theme supports updates?
 	if ( current_theme_supports( 'ctfw-edd-license' ) && ctfw_edd_license_config( 'updates' ) ) {
 
-		// Include updater class
-		locate_template( CTFW_CLASS_DIR . '/CTFW_EDD_SL_Theme_Updater.php', true );
+		// Include updater class.
+		locate_template( CTFW_CLASS_DIR . '/ctfw-theme-updater-class.php', true );
 
-		// Activate updates
-		$edd_updater = new CTFW_EDD_SL_Theme_Updater( array(
-			'remote_api_url' 	=> ctfw_edd_license_config( 'store_url' ), 		// Store URL running EDD with Software Licensing extension
-			'version' 			=> ctfw_edd_license_config( 'version' ), 		// Current version of theme
-			'license' 			=> ctfw_edd_license_key(), 						// The license key entered by user
-			'item_name' 		=> ctfw_edd_license_config( 'item_name' ),		// The name of this theme
-			'author'			=> ctfw_edd_license_config( 'author' )			// The author's name
-		) );
+		// Strings.
+		$strings = array(
+			'update-notice'    => __( 'If you have modified theme files directly (not common), your changes will be overwritten (make a child theme instead). Click "Cancel" to stop or "OK" to update the theme.', 'church-theme-framework' ),
+			'update-available' => __( '<strong>%1$s %2$s</strong> is available. <a href="%3$s" target="_blank">Check out what\'s new</a> or <a href="%5$s"%6$s>update now</a>.', 'church-theme-framework' ),
+		);
+
+		// Use custom changelog URL.
+		$changelog_url = 'https://churchthemes.com/go/changelog/' . CTFW_THEME_SLUG . '/';
+		$strings['update-available'] = str_replace( '%3$s', $changelog_url, $strings['update-available'] );
+
+		// Activate updates.
+		new CTFW_EDD_Theme_Updater(
+			array(
+				'remote_api_url' => ctfw_edd_license_config( 'store_url' ), // Store URL running EDD with Software Licensing extension.
+				'version'        => ctfw_edd_license_config( 'version' ), // Current version of theme.
+				'license'        => ctfw_edd_license_key(), // The license key entered by user.
+				'item_name'      => ctfw_edd_license_config( 'item_name' ), // The name of this theme.
+				'author'         => ctfw_edd_license_config( 'author' ), // The author's name.
+				'beta'           => false,
+			),
+			$strings
+		);
 
 	}
 
 }
 
 add_action( 'after_setup_theme', 'ctfw_edd_license_updater', 99 ); // after any use of add_theme_support() at 10
+
+
+/**
+ * Prevent updating theme with another having same name on WordPress.org
+ *
+ * This code is from Easy Digital Downloads theme-updater-admin.php
+ * This appears to be the source: https://wptheming.com/2014/06/disable-theme-update-checks/
+ *
+ * @since 2.1
+ * @param array  $r Request data.
+ * @param string $url Request URL.
+ * @return array Modified request.
+ */
+function ctfw_prevent_wporg_theme_update( $r, $url ) {
+
+	// Stop if theme is not using EDD Software Licensing.
+	// The theme may use the framework and be hosted on WordPress.org.
+	if ( ! ( current_theme_supports( 'ctfw-edd-license' ) && ctfw_edd_license_config( 'updates' ) ) ) {
+		return $r;
+	}
+
+	// Stop if it's not a theme update request.
+	if ( 0 !== strpos( $url, 'https://api.wordpress.org/themes/update-check/1.1/' ) ) {
+		return $r;
+	}
+
+	// Decode the JSON response.
+	$themes = json_decode( $r['body']['themes'] );
+
+	// Remove the active parent and child themes from the check.
+	$parent = get_option( 'template' );
+	$child = get_option( 'stylesheet' );
+	unset( $themes->themes->$parent );
+	unset( $themes->themes->$child );
+
+	// Encode the updated JSON response.
+	$r['body']['themes'] = wp_json_encode( $themes );
+
+	return $r;
+
+}
+
+add_filter( 'http_request_args', 'ctfw_prevent_wporg_theme_update', 5, 2 );
 
 /*******************************************
  * OPTIONS DATA (LOCAL)
@@ -779,11 +836,11 @@ function ctfw_edd_license_notice() {
 
 					printf(
 						ctfw_edd_license_config( $notice ),
-						admin_url( 'themes.php?page=theme-license' ),
-						CTFW_THEME_NAME,
-						$expiration_data['expiration_date'],
-						ctfw_edd_license_renewal_url(),
-						ctfw_edd_license_config( 'renewal_info_url' )
+						esc_url( admin_url( 'themes.php?page=theme-license' ) ),
+						esc_html( CTFW_THEME_NAME ),
+						esc_html( $expiration_data['expiration_date'] ),
+						esc_url( ctfw_edd_license_renewal_url() ),
+						esc_url( ctfw_edd_license_config( 'renewal_info_url' ) )
 					);
 
 					?>

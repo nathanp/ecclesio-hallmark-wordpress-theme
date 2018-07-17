@@ -6,14 +6,16 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2017, churchthemes.com
+ * @copyright  Copyright (c) 2013 - 2018, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
- * @license    http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license    GPLv2 or later
  * @since      0.9
  */
 
-// No direct access
-if ( ! defined( 'ABSPATH' ) ) exit;
+// No direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /*******************************************
  * VALUES
@@ -170,19 +172,19 @@ function ctfw_unset_customization( $option ) {
  */
 function ctfw_customize_defaults() {
 
-	// Get cached defaults
+	// Get cached defaults.
 	// Customization settings are gotten dozens of times per pageload
 	// Caching them is a good idea in case default values every come from a function or query
-	$transient = 'ctfw_customize_defaults';
+	$transient = CTFW_THEME_SLUG . '_customize_defaults';
 	$defaults = get_transient( $transient );
 
-	// No cache; get defaults from theme, then cache
-	if ( false === $defaults ) {
+	// No cache; get defaults from theme, then cache.
+	if ( empty( $defaults ) ) {
 
 		// Get defaults from theme
 		$defaults = apply_filters( 'ctfw_customize_defaults', array() );
 
-		// Cache defaults
+		// Cache defaults (if have them and not live preview)
 		// 10 seconds good enough for one page load
 		set_transient( $transient, $defaults, 10 );
 
@@ -326,7 +328,7 @@ function ctfw_customize_enqueue_scripts() {
 	wp_enqueue_media();
 
 	// Main widgets script
-	wp_enqueue_script( 'ctfw-admin-widgets', ctfw_theme_url( CTFW_JS_DIR . '/admin-widgets.js' ), array( 'jquery' ), CTFW_THEME_VERSION ); // bust cache on update
+	wp_enqueue_script( 'ctfw-admin-widgets', get_theme_file_uri( CTFW_JS_DIR . '/admin-widgets.js' ), array( 'jquery' ), CTFW_THEME_VERSION ); // bust cache on update
 	wp_localize_script( 'ctfw-admin-widgets', 'ctfw_widgets', ctfw_admin_widgets_js_data() ); // see admin-widgets.php
 
 }
@@ -342,7 +344,7 @@ function ctfw_customize_enqueue_styles() {
 
 	// Admin widgets
 	// Same stylesheet used for Appearance > Widgets
-	wp_enqueue_style( 'ctfw-widgets', ctfw_theme_url( CTFW_CSS_DIR . '/admin-widgets.css' ), false, CTFW_THEME_VERSION ); // bust cache on update
+	wp_enqueue_style( 'ctfw-widgets', get_theme_file_uri( CTFW_CSS_DIR . '/admin-widgets.css' ), false, CTFW_THEME_VERSION ); // bust cache on update
 
 }
 

@@ -3,16 +3,18 @@
  * Church Theme Framework
  *
  * The framework provides code and assets common to multiple themes for more organized and efficient development/updates.
- * It is intended for use in themes that use the Church Theme Content plugin.
+ * It is intended for use in themes that use the Church Content plugin.
  *
  * @package   Church_Theme_Framework
- * @copyright Copyright (c) 2013 - 2017, churchthemes.com
+ * @copyright Copyright (c) 2013 - 2018, ChurchThemes.com
  * @link      https://github.com/churchthemes/church-theme-framework
- * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @license   GPLv2 or later
  */
 
 // No direct access
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /********************************************
  * CONSTANTS
@@ -29,7 +31,7 @@ $theme_data = is_child_theme() ? wp_get_theme( $theme_data->template ) : $theme_
 /**
  * Framework constants
  */
-if ( ! defined( 'CTFW_VERSION' ) )				define( 'CTFW_VERSION', 			'1.9.2' );
+if ( ! defined( 'CTFW_VERSION' ) )				define( 'CTFW_VERSION', 			'2.4.3' );
 
 /**
  * Theme constants
@@ -124,9 +126,11 @@ $ctfw_includes = array(
 		CTFW_INC_DIR . '/widgets.php',
 
 		// Classes
-		CTFW_CLASS_DIR . '/ct-recurrence.php',
 		CTFW_CLASS_DIR . '/customize-controls.php',
 		CTFW_CLASS_DIR . '/widget.php',
+
+		// Libraries
+		CTFW_LIB_DIR . '/ct-recurrence/ct-recurrence-load.php', // don't load ct-recurrence.php directly.
 
 	),
 
