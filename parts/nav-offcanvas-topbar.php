@@ -19,10 +19,10 @@
 			</li>
 		</ul>
 	</div>
-	<div class="top-bar-right show-for-medium">
+	<div class="top-bar-right show-for-large desktop">
 		<?php joints_top_nav(); ?>	
 	</div>
-	<div class="top-bar-right float-right show-for-small-only">
+	<div class="top-bar-right float-right hide-for-large mobile">
 		<ul class="menu">
 			<!-- <li><button class="menu-icon" type="button" data-toggle="off-canvas"></button></li> -->
 			<li>

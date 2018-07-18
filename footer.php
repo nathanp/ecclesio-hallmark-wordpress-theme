@@ -54,7 +54,7 @@
 									if(get_customize_social_itunes()) {
 										echo '<li>
 											<a href="'.get_customize_social_itunes().'" target="_blank">
-												<i class="fab fa-podcast" aria-hidden="true"></i>
+												<i class="fas fa-podcast" aria-hidden="true"></i>
 											</a>
 										</li>';
 									}
@@ -75,7 +75,7 @@
 									if(get_customize_social_yt()) {
 										echo '<li>
 												<a href="'.get_customize_social_yt().'" target="_blank">
-													<i class="fab fa-youtube-play" aria-hidden="true"></i>
+													<i class="fab fa-youtube" aria-hidden="true"></i>
 												</a>
 											</li>';
 									}

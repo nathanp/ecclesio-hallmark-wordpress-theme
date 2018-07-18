@@ -63,6 +63,13 @@ button.hamburger {
 }
 
 @media screen and (max-width: 1024px) {
+	/*Header*/
+	header.header {
+		position: relative;
+	}
+	#banner {
+		margin-top: 0px;
+	}
 	/*Page*/
 	#banner {
 		height: 30vh;
@@ -96,6 +103,14 @@ button.hamburger {
 }
 
 @media screen and (max-width: 768px) {
+	/*Headings*/
+	h1 {
+		font-size: 2rem;
+	}
+	h3 {
+		font-size: 1.5rem;
+	}
+
 	h1.site-title {
 		height: auto;
 		font-size: 1.5em;
@@ -145,13 +160,7 @@ button.hamburger {
 }
 
 @media screen and (max-width: 640px) {
-	/*Header*/
-	header.header {
-		position: relative;
-	}
-	#banner {
-		margin-top: 0px;
-	}
+	
 }
 
 @media screen and (max-width: 420px) {
@@ -167,6 +176,15 @@ button.hamburger {
 		.home #banner .button-group li a.button {
 			font-size: 1rem;
 		}
+
+	/*Banner*/
+	#banner .banner-text .page-title,
+	.content-banner .banner-text .page-title {
+		font-size: 1.75rem;
+	}
+	#banner .banner-text .page-byline {
+		font-size: 1.33rem;
+	}
 	
 	#purpose {
 		margin-top: 0;
@@ -210,6 +228,7 @@ button.hamburger {
 }
 
 @media screen and (max-width: 375px) {
+
 	#logo-primary {
     	width: 180px;
     }
@@ -219,6 +238,22 @@ button.hamburger {
 
     #bottom-footer p {
 		font-size: 1em;
+	}
+}
+
+@media screen and (max-height: 360px) { /*Phone Landsacape*/
+	#banner {
+		height: 80vh;
+	}
+		#banner .banner-text .page-title,
+		.content-banner .banner-text .page-title {
+			font-size: 1.75rem;
+		}
+		#banner .banner-text .page-byline {
+			font-size: 1.25rem;
+		}
+	#sermon-latest .text-container h3 {
+		font-size: 2em;
 	}
 }
 

@@ -74,6 +74,17 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 						<?php } ?>
 					</ul>
 
+					<?php
+						$sermon_series = get_the_terms( $post, 'ctc_sermon_series');
+						if($sermon_series) {
+							echo '<p class="series"><a href="'.get_post_type_archive_link( "ctc_sermon" ).'">Sermons</a> / Series: ';
+							foreach($sermon_series as $series) {
+								echo '<a href="'.get_term_link($series).'">'.$series->name,'</a>';
+							}
+							echo '</p>';
+						}
+					?>
+
 					<header class="article-header text-center">	
 						<h1 class="entry-title single-title" itemprop="headline"><?php the_title(); ?></h1>
 						<?php if(get_field('subtitle')) { echo '<h2 class="subtitle">'.get_field('subtitle').'</h2>'; } ?>
@@ -91,16 +102,6 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 								echo " |";
 							}
 				    	?> <?php echo get_the_date(); ?>
-				    	
-				    	<?php
-				    		$sermon_series = get_the_terms( $post, 'ctc_sermon_series');
-				    		if($sermon_series) {
-				    			echo '<br>Series: ';
-					    		foreach($sermon_series as $series) {
-									echo '<a href="'.get_term_link($series).'">'.$series->name,'</a>';
-								}
-							}
-				    	?>
 				    	
 				    	<?php
 				    		$sermon_books = get_the_terms( $post, 'ctc_sermon_book');
