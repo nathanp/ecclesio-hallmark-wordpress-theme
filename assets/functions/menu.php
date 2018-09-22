@@ -31,7 +31,7 @@ function ecclesio_top_nav() {
         'theme_location'    => 'main-nav',        			            // Where it's located in the theme
         'container'         => false,
         'container_class'	=> 'collapse navbar-collapse',
-        'container_id'		=> 'bs-example-navbar-collapse-1',
+        'container_id'		=> '',
         'menu_class'		=> 'nav',
         'items_wrap'        => '<ul id="%1$s" class="%2$s">%3$s</ul>',
         'depth'             => 5,                                       // Limit the depth of the nav
@@ -46,7 +46,7 @@ function ecclesio_top_mobile_nav() {
         'theme_location'    => 'main-nav',        			            // Where it's located in the theme
         'container'         => 'nav',
         'container_class'	=> 'navbar navbar-expand-lg',
-	    'container_id'		=> 'bs-example-navbar-collapse-1',
+	    'container_id'		=> '',
         'menu_class'		=> 'navbar-nav mr-auto',
         'items_wrap'        => '<div class="navbar-collapse"><ul id="%1$s" class="%2$s">%3$s</ul></div>',
         'depth'             => 5,                                       // Limit the depth of the nav

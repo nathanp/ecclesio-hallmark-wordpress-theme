@@ -11,9 +11,9 @@ Template Name: Homepage
 	<div id="content">
 		<div id="inner-content" class="container">
 
-			<div class="row">
+			<div class="row justify-content-md-center">
 			<?php if( function_exists('get_field') && get_field( 'purpose_statement' ) ) { ?>
-				<div id="purpose" class="large-8 medium-10 small-centered columns">
+				<div id="purpose" class="col-lg-8 col-md-10 col-sm-12">
 					<h2 class="statement"><?php the_field( 'purpose_statement' ); ?></h2>
 				</div><!-- #purpose -->
 			</div><!-- .row -->
@@ -64,26 +64,28 @@ Template Name: Homepage
 								</a>
 							</div><!-- .thumb -->
 							<div class="card">
+			
 								<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
-												
+								
 								<div class="card-body">
 									<?php
 										if($event_date) { echo '<span class="date">'.$event_date.'</span>'; }
 
-										if($event_time_desc) { echo '<span class="time">'.$event_time_desc.'</span>'; }
-										elseif($event_time_range && !$event_hide_time_range) { echo '<span class="time">'.$event_time_range.'</span>'; }
-									
-										if($event_venue) { echo '<span class="venue">'.$event_venue.'</span>'; }
+										echo '<a href="'.get_the_permalink().'" class="btn">Learn More</a> ';
+										if($event_has_coord == 1) {
+											echo '<a href="'.$event_directions.'" target="_blank" class="btn">Directions</a>';
+										}
 									?>
 								</div><!-- .card-body -->
 								<div class="card-footer">
-									<a href="<?php the_permalink() ?>" class="btn">Learn More</a> 
-									<?php
-									if($event_has_coord == 1) {
-										echo '<a href="'.$event_directions.'" target="_blank" class="btn">Directions</a>';
-									}
+									<?php 
+										if($event_time_desc) { echo '<span class="time"><i class="far fa-clock"></i> '.$event_time_desc.'</span>'; }
+										elseif($event_time_range && !$event_hide_time_range) { echo '<span class="time"><i class="far fa-clock"></i> '.$event_time_range.'</span>'; }
+									
+										if($event_venue) { echo '<span class="venue"><i class="fas fa-map-marker-alt"></i> '.$event_venue.'</span>'; }
 									?>
 								</div> <!-- .card-footer -->
+
 							</div><!-- .card -->			
 						</article> <!-- end article -->
 				    

@@ -12,7 +12,7 @@ Template Name: Narrow Single Column Content
 	
 		<div id="inner-content" class="container">
 			<div class="row justify-content-md-center">
-				<main id="main" class="col-lg-8 col-md-10 col-sm-12 small-centered" role="main">
+				<main id="main" class="col-lg-8 col-md-10 col-sm-12" role="main">
 					
 					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 

@@ -50,14 +50,13 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 </div><!-- #banner -->
 			
 <div id="content">
+	<div id="inner-content" class="container">
 
-	<div id="inner-content" class="row">
-
-		<main id="main" class="medium-8 small-12 small-centered columns" role="main">
+		<main id="main" class="row justify-content-md-center events" role="main">
 		
 		    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 		
-		    	<article id="post-<?php the_ID(); ?>" <?php post_class(''); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
+		    	<article <?php post_class('col-lg-8 col-md-10 col-sm-12'); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
 									
 				    <section class="entry-content" itemprop="articleBody">
 				    	<ul class="event-meta">

@@ -27,7 +27,7 @@ button,
 .button,
 .btn,
 #menu-main-menu-1 li,
-#menu-main-menu.vertical,
+#menu-main-menu,
 #breadcrumbs,
 #sermon-latest .text-container .meta,
 .tabs-sermon .tabs-title,
@@ -100,8 +100,8 @@ header.header {
 }
 
 /* Logo Area */
-.top-bar-left .menu > li > a {
-  padding: 0;
+.navbar-brand {
+  margin-left: 0.5rem;
 }
 #logo-primary {
   width: 240px;
@@ -169,6 +169,15 @@ header.header.scroll h1.site-title {
   -webkit-transform: translate(0);
   transform: translate(0);
 }
+.off-canvas.is-open:after {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 1px;
+  box-shadow: 0 0 10px hsla(0, 0%, 4%, 0.7);
+  content: " ";
+}
 .off-canvas-content {
   -webkit-transition: -webkit-transform 0.5s ease;
   transition: -webkit-transform 0.5s ease;
@@ -193,7 +202,7 @@ header .top-bar-right.desktop {
   transform: translateY(-50%);
 }
 #menu-main-menu-1 li a,
-#menu-main-menu.vertical li a {
+#menu-main-menu li a {
   text-transform: uppercase;
 }
 #menu-main-menu-1 li a {
@@ -250,7 +259,7 @@ header .top-bar-right.desktop {
   height: 50vh;
   display: block;
   width: 100%;
-  margin-top: 96px;
+  margin-top: 86px;
 }
 .content-banner {
   margin-top: 0;
@@ -353,6 +362,7 @@ header .top-bar-right.desktop {
   margin-bottom: 2em;
 }
 #purpose .statement {
+  font-size: 2.5em;
 }
 
 #sermon-latest {

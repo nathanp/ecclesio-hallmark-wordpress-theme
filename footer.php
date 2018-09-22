@@ -1,20 +1,20 @@
 				<footer class="footer" role="contentinfo">
 					<div class="footer-top">
-						<div class="container">
+						<div class="container-fluid">
 						<div class="row">
 
-							<div class="col-lg-4 col-md-5 col-sm-12">
+							<div class="col-lg-4 col-md-4 col-sm-12">
 								<h5> <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="ecclesio-part-services-heading"><?php echo get_customize_partial_church_services_heading(); ?></span></h5>
 								<p class="ecclesio-part-service-times">
 									<?php echo get_customize_partial_church_service_times(); ?>
 								</p>
 							</div><!-- .columns -->
 
-							<div class="col-lg-4 col-md-5 col-sm-12 text-center">
+							<div class="col-lg-4 col-md-4 col-sm-12 text-center">
 								<a href="<?php echo get_customize_church_footer_cta_url(); ?>" class="btn btn-outline-light ecclesio-part-cta-text"><?php echo get_customize_partial_church_footer_cta_text(); ?></a>
 							</div><!-- .columns -->
 
-							<div class="col-lg-4 col-md-5 col-sm-12 columns social">
+							<div class="col-lg-4 col-md-4 col-sm-12 social">
 								<ul class="inline-menu">
 									<?php
 									if(get_customize_social_fb()) {
