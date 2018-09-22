@@ -35,24 +35,7 @@ require_once(get_template_directory().'/assets/functions/menu.php');
 /**
  * Register Menus
  * http://codex.wordpress.org/Function_Reference/register_nav_menus#Examples
- 
-
-/* The Top Menu
- * Added data-close-on-click-inside to fix touch-screen dropdown issue
- * See http://foundation.zurb.com/forum/posts/49787-problem-with-dropdown-menu-on-ipad
  */
-function ecclesio_top_nav() {
-	 wp_nav_menu(array(
-        'container' => false,                           // Remove nav container
-        'menu_class' => 'vertical medium-horizontal menu',       // Adding custom nav class
-        'items_wrap' => '<ul id="%1$s" class="%2$s" data-responsive-menu="accordion medium-dropdown">%3$s</ul>',
-        'theme_location' => 'main-nav',        			// Where it's located in the theme
-        'depth' => 5,                                   // Limit the depth of the nav
-        'fallback_cb' => false,                         // Fallback function (see below)
-        'walker' => new Topbar_Menu_Walker()
-    ));
-} 
-
 
 /* Google Fonts for the Customizer
  * For now, rely on Ultimate Fonts plugin - https://wordpress.org/plugins/ultimate-fonts

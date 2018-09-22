@@ -7,19 +7,6 @@ register_nav_menus(
 	)
 );
 
-// The Top Menu
-function joints_top_nav() {
-	 wp_nav_menu(array(
-        'container' => false,                           // Remove nav container
-        'menu_class' => 'vertical medium-horizontal menu',       // Adding custom nav class
-        'items_wrap' => '<ul id="%1$s" class="%2$s" data-responsive-menu="accordion medium-dropdown">%3$s</ul>',
-        'theme_location' => 'main-nav',        			// Where it's located in the theme
-        'depth' => 5,                                   // Limit the depth of the nav
-        'fallback_cb' => false,                         // Fallback function (see below)
-        'walker' => new Topbar_Menu_Walker()
-    ));
-} 
-
 // Big thanks to Brett Mason (https://github.com/brettsmason) for the awesome walker
 class Topbar_Menu_Walker extends Walker_Nav_Menu {
     function start_lvl(&$output, $depth = 0, $args = Array() ) {
@@ -28,18 +15,45 @@ class Topbar_Menu_Walker extends Walker_Nav_Menu {
     }
 }
 
-// The Off Canvas Menu
-function joints_off_canvas_nav() {
-	 wp_nav_menu(array(
-        'container' => false,                           // Remove nav container
-        'menu_class' => 'vertical menu',       // Adding custom nav class
-        'items_wrap' => '<ul id="%1$s" class="%2$s" data-accordion-menu>%3$s</ul>',
-        'theme_location' => 'main-nav',        			// Where it's located in the theme
-        'depth' => 5,                                   // Limit the depth of the nav
-        'fallback_cb' => false,                         // Fallback function (see below)
-        'walker' => new Off_Canvas_Menu_Walker()
-    ));
-} 
+// WP Bootstrap Navwalker
+if ( ! file_exists( get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php' ) ) {
+	// file does not exist... return an error.
+	return new WP_Error( 'class-wp-bootstrap-navwalker-missing', __( 'It appears the class-wp-bootstrap-navwalker.php file may be missing.', 'wp-bootstrap-navwalker' ) );
+} else {
+	// file exists... require it.
+    require_once( get_template_directory() . '/inc/class-wp-bootstrap-navwalker.php' );
+}
+
+
+// The Top Desktop Menu
+function ecclesio_top_nav() {
+    wp_nav_menu(array(
+        'theme_location'    => 'main-nav',        			            // Where it's located in the theme
+        'container'         => false,
+        'container_class'	=> 'collapse navbar-collapse',
+        'container_id'		=> 'bs-example-navbar-collapse-1',
+        'menu_class'		=> 'nav',
+        'items_wrap'        => '<ul id="%1$s" class="%2$s">%3$s</ul>',
+        'depth'             => 5,                                       // Limit the depth of the nav
+        'fallback_cb'       => 'WP_Bootstrap_Navwalker::fallback',      // Fallback function (see below)
+        'walker'            => new WP_Bootstrap_Navwalker()
+   ));
+}
+
+// The Off-Canvas Mobile Menu
+function ecclesio_top_mobile_nav() {
+    wp_nav_menu(array(
+        'theme_location'    => 'main-nav',        			            // Where it's located in the theme
+        'container'         => 'nav',
+        'container_class'	=> 'navbar navbar-expand-lg',
+	    'container_id'		=> 'bs-example-navbar-collapse-1',
+        'menu_class'		=> 'navbar-nav mr-auto',
+        'items_wrap'        => '<div class="navbar-collapse"><ul id="%1$s" class="%2$s">%3$s</ul></div>',
+        'depth'             => 5,                                       // Limit the depth of the nav
+        'fallback_cb'       => 'WP_Bootstrap_Navwalker::fallback',      // Fallback function (see below)
+        'walker'            => new WP_Bootstrap_Navwalker()
+   ));
+}
 
 class Off_Canvas_Menu_Walker extends Walker_Nav_Menu {
     function start_lvl(&$output, $depth = 0, $args = Array() ) {
@@ -60,23 +74,6 @@ function joints_footer_links() {
 	));
 } /* End Footer Menu */
 
-// Header Fallback Menu
-function joints_main_nav_fallback() {
-	wp_page_menu( array(
-		'show_home' => true,
-    	'menu_class' => '',      						// Adding custom nav class
-		'include'     => '',
-		'exclude'     => '',
-		'echo'        => true,
-        'link_before' => '',                           // Before each link
-        'link_after' => ''                             // After each link
-	) );
-}
-
-// Footer Fallback Menu
-function joints_footer_links_fallback() {
-	/* You can put a default here if you like */
-}
 
 // Add Foundation active class to menu
 function required_active_nav_class( $classes, $item ) {

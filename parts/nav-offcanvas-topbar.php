@@ -19,12 +19,11 @@
 			</li>
 		</ul>
 	</div>
-	<div class="top-bar-right show-for-large desktop">
-		<?php joints_top_nav(); ?>	
+	<div class="top-bar-right d-none d-lg-block desktop">
+		<?php ecclesio_top_nav(); ?>	
 	</div>
-	<div class="top-bar-right float-right d-none d-md-block d-lg-none mobile">
+	<div class="top-bar-right float-right d-block d-lg-none mobile">
 		<ul class="menu">
-			<!-- <li><button class="menu-icon" type="button" data-toggle="off-canvas"></button></li> -->
 			<li>
 				<button class="hamburger hamburger--collapse" type="button" data-toggle="off-canvas">
 				  <span class="hamburger-box">

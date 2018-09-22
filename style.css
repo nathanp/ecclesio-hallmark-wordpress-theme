@@ -178,6 +178,11 @@ header.header.scroll h1.site-title {
   backface-visibility: hidden;
 }
 
+.position-right.is-open ~ .off-canvas-content {
+  -webkit-transform: translateX(-250px);
+  transform: translateX(-250px);
+}
+
 /* Menu Area */
 header .top-bar-right.desktop {
   position: absolute;
