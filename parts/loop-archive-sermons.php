@@ -1,5 +1,3 @@
-<main id="listing" class="sermons small-12 columns" role="main">
-	<div class="row large-up-3 medium-up-2 small-up-1" data-equalizer data-equalize-on="medium">
     <?php if (have_posts()) : while (have_posts()) : the_post();
     	$sermon_video_url	= ctfw_sermon_data()['video'];
     	$sermon_audio_embed = ctfw_sermon_data()['audio_player'];
@@ -15,7 +13,7 @@
     		$verb = "View";
     	}
     ?>
-		<article id="post-<?php the_ID(); ?>" <?php post_class('column'); ?> role="article">
+		<article <?php post_class('col-sm-12 col-md-6 col-lg-4'); ?> role="article">
 			<div class="thumb">
 				<a href="<?php the_permalink() ?>">
 					<span class="overlay">
@@ -34,64 +32,62 @@
 					?>
 				</a>
 			</div><!-- .thumb -->
-			<div class="card" data-equalizer-watch>
-				<header class="article-header">
-					<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
-				</header> <!-- end article header -->
-									
-				<footer class="article-footer sermon">
+			<div class="card">
+				<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+				
+				<div class="card-body">
+					<?php echo '<div class="date">'.get_the_date().'</div>'; ?>
 
-			    	<?php echo '<span class="date">'.get_the_date().'</span>'; ?>
-			    	
-			    	<span class="meta sermon">
-				    	<?php
-				    		// Sermon Speakers
-				    		$speakers = get_the_terms( $post, 'ctc_sermon_speaker');
-				    		if (class_exists('WPSEO_Primary_Term') && $speakers) { //YoastSEO
-								$primary_speaker = new WPSEO_Primary_Term('ctc_sermon_speaker', $post->ID);
-								$primary_speaker = $primary_speaker->get_primary_term();
-								$term = get_term( $primary_speaker );
-									$primary_speaker_name = $term->name;
-							}
-								elseif( !empty($speakers) ) {
-										$primary_speaker = $speakers[0]->term_id;
-										$primary_speaker_name = $speakers[0]->name;
-								}
-							if($speakers) {
-								echo '<span class="speaker"><label>Speaker:</label><a href="'.get_term_link($primary_speaker).'">'.$primary_speaker_name.'</a></span>';
-							}
+					<a href="<?php the_permalink() ?>" class="btn"><?php echo $verb; ?> Sermon</a>
+				</div><!-- .card-body -->
 
-							// Sermon Series
-				    		$sermon_series = get_the_terms( $post, 'ctc_sermon_series');
-				    		if($sermon_series) {
-				    			echo '<span class="series"><label>Series:</label>';
-					    		foreach($sermon_series as $series) {
-									echo '<a href="'.get_term_link($series).'">'.$series->name,'</a>';
-								}
-								echo '</span>';
+				<div class="card-footer">
+					<?php
+						// Sermon Speakers
+						$speakers = get_the_terms( $post, 'ctc_sermon_speaker');
+						if (class_exists('WPSEO_Primary_Term') && $speakers) { //YoastSEO
+							$primary_speaker = new WPSEO_Primary_Term('ctc_sermon_speaker', $post->ID);
+							$primary_speaker = $primary_speaker->get_primary_term();
+							$term = get_term( $primary_speaker );
+								$primary_speaker_name = $term->name;
+						}
+							elseif( !empty($speakers) ) {
+									$primary_speaker = $speakers[0]->term_id;
+									$primary_speaker_name = $speakers[0]->name;
 							}
+						if($speakers) {
+							echo '<span><i class="fas fa-user"></i> Speaker: <a href="'.get_term_link($primary_speaker).'">'.$primary_speaker_name.'</a></span>';
+						}
 
-							// Sermon Books
-							$sermon_books = get_the_terms( $post, 'ctc_sermon_book');
-				    		if (class_exists('WPSEO_Primary_Term') && $sermon_books) { //YoastSEO
-								$primary_book = new WPSEO_Primary_Term('ctc_sermon_book', $post->ID);
-								$primary_book = $primary_book->get_primary_term();
-								$term = get_term( $primary_book );
-									$primary_book_name = $term->name;
+						// Sermon Series
+						$sermon_series = get_the_terms( $post, 'ctc_sermon_series');
+						if($sermon_series) {
+							echo '<span><i class="fas fa-caret-square-right"></i> Series: ';
+							foreach($sermon_series as $series) {
+								echo '<a href="'.get_term_link($series).'">'.$series->name,'</a>';
 							}
-								elseif( !empty($sermon_books) ) {
-									$primary_book = $sermon_books[0]->term_id;
-									$primary_book_name = $sermon_books[0]->name;
-								}
-							if($primary_book) {
-								$primary_book = get_term($primary_book);
-								echo '<span class="book"><label>Book:</label><a href="'.get_term_link($primary_book).'">'.$primary_book_name.'</a></span>';	
-							}
-				    	?>
-			    	</span><!-- .meta -->
+							echo '</span>';
+						}
 
-			    	<a href="<?php the_permalink() ?>" class="button"><?php echo $verb; ?> Sermon</a>
-				</footer> <!-- end article footer -->
+						// Sermon Books
+						$sermon_books = get_the_terms( $post, 'ctc_sermon_book');
+						if (class_exists('WPSEO_Primary_Term') && $sermon_books) { //YoastSEO
+							$primary_book = new WPSEO_Primary_Term('ctc_sermon_book', $post->ID);
+							$primary_book = $primary_book->get_primary_term();
+							$term = get_term( $primary_book );
+								$primary_book_name = $term->name;
+						}
+							elseif( !empty($sermon_books) ) {
+								$primary_book = $sermon_books[0]->term_id;
+								$primary_book_name = $sermon_books[0]->name;
+							}
+						if($primary_book) {
+							$primary_book = get_term($primary_book);
+							echo '<span><i class="fas fa-bible"></i> Book: <a href="'.get_term_link($primary_book).'">'.$primary_book_name.'</a></span>';
+						}
+					?>
+				</div><!-- .card--footer -->
+
 			</div><!-- .card -->	    						
 		</article> <!-- end article -->
 	    
@@ -104,5 +100,3 @@
 		<?php get_template_part( 'parts/content', 'missing' ); ?>
 			
 	<?php endif; ?>
-	</div><!-- .row -->
-</main> <!-- end #main -->

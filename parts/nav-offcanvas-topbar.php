@@ -22,7 +22,7 @@
 	<div class="top-bar-right show-for-large desktop">
 		<?php joints_top_nav(); ?>	
 	</div>
-	<div class="top-bar-right float-right hide-for-large mobile">
+	<div class="top-bar-right float-right d-none d-md-block d-lg-none mobile">
 		<ul class="menu">
 			<!-- <li><button class="menu-icon" type="button" data-toggle="off-canvas"></button></li> -->
 			<li>

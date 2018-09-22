@@ -1,4 +1,12 @@
 <?php
+
+add_filter('next_posts_link_attributes', 'posts_link_attributes');
+add_filter('previous_posts_link_attributes', 'posts_link_attributes');
+
+function posts_link_attributes() {
+    return 'class="page-link"';
+}
+
 // Numeric Page Navi (built into the theme by default)
 function joints_page_navi($before = '', $after = '') {
 	global $wpdb, $wp_query;
@@ -30,27 +38,27 @@ function joints_page_navi($before = '', $after = '') {
 	if($start_page <= 0) {
 		$start_page = 1;
 	}
-	echo $before.'<nav class="page-navigation"><ul class="pagination">'."";
+	echo $before.'<nav aria-label="Page navigation" class="pagination-container"><ul class="pagination justify-content-center">'."";
 	if ($start_page >= 2 && $pages_to_show < $max_page) {
 		$first_page_text = __( 'First', 'jointswp' );
-		echo '<li><a href="'.get_pagenum_link().'" title="'.$first_page_text.'">'.$first_page_text.'</a></li>';
+		echo '<li class="page-item"><a class="page-link" href="'.get_pagenum_link().'" title="'.$first_page_text.'">'.$first_page_text.'</a></li>';
 	}
-	echo '<li>';
+	echo '<li class="page-item">';
 	previous_posts_link( __('Previous', 'jointswp') );
 	echo '</li>';
 	for($i = $start_page; $i  <= $end_page; $i++) {
 		if($i == $paged) {
-			echo '<li class="current"> '.$i.' </li>';
+			echo '<li class="page-item active"><span class="page-link"> '.$i.' </span></li>';
 		} else {
-			echo '<li><a href="'.get_pagenum_link($i).'">'.$i.'</a></li>';
+			echo '<li class="page-item"><a class="page-link" href="'.get_pagenum_link($i).'">'.$i.'</a></li>';
 		}
 	}
-	echo '<li>';
+	echo '<li class="page-item">';
 	next_posts_link( __('Next', 'jointswp'), 0 );
 	echo '</li>';
 	if ($end_page < $max_page) {
 		$last_page_text = __( 'Last', 'jointswp' );
-		echo '<li><a href="'.get_pagenum_link($max_page).'" title="'.$last_page_text.'">'.$last_page_text.'</a></li>';
+		echo '<li class="page-item"><a class="page-link" href="'.get_pagenum_link($max_page).'" title="'.$last_page_text.'">'.$last_page_text.'</a></li>';
 	}
 	echo '</ul></nav>'.$after."";
 } /* End page navi */

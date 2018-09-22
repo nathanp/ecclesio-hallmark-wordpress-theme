@@ -1,5 +1,7 @@
 <div id="banner">
+
 	<span class="overlay"></span>
+
 	<?php
 		if( function_exists('get_field') && get_field('header_image') != '' ) {
 			$banner_img_src = get_field('header_image');
@@ -13,7 +15,6 @@
 		echo "<img class='banner-bg' src='$banner_img_src' alt=''>";	
 	?>
 	<div class="banner-text">
-		
 		<?php
 			if ( is_404() ) {
 				$banner_heading = "Whoops! That page isn't here.";
@@ -36,7 +37,6 @@
 				$banner_byline = get_field('header_byline');
 			}
 			
-			
 			if($banner_heading) {
 				echo "<h1 class='page-title'>$banner_heading</h1>";	
 			}
@@ -45,7 +45,7 @@
 			}
 
 			if( have_rows('header_buttons') ):
-		    	echo '<ul class="button-group">';
+		    	echo '<div class="btn-group" role="group">';
 		    	while( have_rows('header_buttons') ): the_row();
 		    		$link = get_sub_field('button_link');
 		    		$text = get_sub_field('button_text');
@@ -56,15 +56,17 @@
 		    				$target = '';
 		    			}
 
-		    		echo '<li><a href="'.$link.'" class="button" '.$target.'>'.$text.'</a></li>';
+		    		echo '<a class="btn btn-outline-light" href="'.$link.'" target="'.$target.'">'.$text.'</a>';
 			    endwhile;
-			    echo '</ul>';
+			    echo '</div>';
 			endif;
 		?>
 	</div><!-- .banner-text -->
+
 	<?php
 		if ( function_exists('yoast_breadcrumb') && !is_front_page() ) {
 			yoast_breadcrumb('<p id="breadcrumbs">','</p>');
 		}
-		?>
+	?>
+
 </div><!-- #banner -->

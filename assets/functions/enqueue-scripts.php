@@ -33,18 +33,17 @@ function ecclesio_google_fonts_url() {
 function site_scripts() {
   global $wp_styles; // Call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
     
-    // Load What-Input files in footer
-    wp_enqueue_script( 'what-input', get_template_directory_uri() . '/vendor/what-input/dist/what-input.min.js', array(), '', true );
-    
     // Adding Foundation scripts file in the footer
-    wp_enqueue_script( 'foundation-js', get_template_directory_uri() . '/vendor/foundation-sites/dist/js/foundation.min.js', array( 'jquery' ), '6.2.3', true );
+    wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/dependencies/bootstrap/js/bootstrap.min.js', array( 'jquery' ), '4.1.3', true );
     
     // Adding scripts file in the footer
     wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/scripts.js', array( 'jquery' ), '', true );
 	
-	// Select which grid system you want to use (Foundation Grid by default)
-    wp_enqueue_style( 'foundation-css', get_template_directory_uri() . '/vendor/foundation-sites/dist/css/foundation.min.css', array(), '', 'all' );
-     //wp_enqueue_style( 'foundation-css', get_template_directory_uri()() . '/vendor/foundation-sites/dist/foundation-flex.min.css', array(), '', 'all' );
+	  // Select which grid system you want to use (Foundation Grid by default)
+    wp_enqueue_style( 'boostrap-css', get_template_directory_uri() . '/dependencies/bootstrap/css/bootstrap.min.css', array(), '', 'all' );
+
+    // Custom Bootstrap Helpers
+    wp_enqueue_style( 'ecclesio-boostrap-css', get_template_directory_uri() . '/assets/css/frontend/ecclesio-hallmark-bootstrap.css', array(), '', 'all' );
 
     // Register main stylesheet
     wp_enqueue_style( 'site-css', get_template_directory_uri() . '/assets/css/style.css', array(), '', 'all' );
@@ -66,17 +65,17 @@ function ecclesio_scripts() {
   // Primary CSS
   wp_enqueue_style( 'ecclesio-primary', get_template_directory_uri() . '/style.css', array(), '1.0' );
   // Responsive
-  wp_enqueue_style( 'ecclesio-responsive', get_template_directory_uri() . '/css/responsive.css', array(), '1.0' );
+  wp_enqueue_style( 'ecclesio-responsive', get_template_directory_uri() . '/assets/css/responsive.css', array(), '1.0' );
   // Hamburgers Navigation
-  wp_enqueue_style( 'ecclesio-hamburgers', get_template_directory_uri() . '/css/hamburgers.min.css', array(), '1.0' );
+  wp_enqueue_style( 'ecclesio-hamburgers', get_template_directory_uri() . '/assets/css/hamburgers.min.css', array(), '1.0' );
   // Font Awesome
-  wp_enqueue_style('ecclesio-font-awesome', '//use.fontawesome.com/releases/v5.1.0/css/all.css');
+  wp_enqueue_style('ecclesio-font-awesome', '//use.fontawesome.com/releases/v5.3.1/css/all.css');
 
   // Live preview CSS changes
   wp_add_inline_style( 'ecclesio-responsive', ecclesio_customizer_css() ); //class-ecclesio-hallmark-customizer.php
 
   // Hallmark - Custom JS
-  wp_enqueue_script( 'ecclesio-app-js', get_template_directory_uri() . '/js/ecclesio.js', array( 'jquery' ), '6.0', true );
+  wp_enqueue_script( 'ecclesio-app-js', get_template_directory_uri() . '/assets/js/ecclesio.js', array( 'jquery' ), '6.0', true );
 
 }
 add_action( 'wp_enqueue_scripts', 'ecclesio_scripts', 1000); //1000 places these after the defaults loaded by the parent theme
@@ -84,7 +83,7 @@ add_action( 'wp_enqueue_scripts', 'ecclesio_scripts', 1000); //1000 places these
 function ecclesio_customizer_preview() {
     wp_enqueue_script( 
           'ecclesio-customizer',
-          get_template_directory_uri().'/js/ecclesio-customizer.js',
+          get_template_directory_uri().'/assets/js/ecclesio-customizer.js',
           array( 'jquery','customize-preview' )
     );
 }

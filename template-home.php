@@ -9,12 +9,15 @@ Template Name: Homepage
 	<?php get_template_part( 'parts/header', 'banner' ); ?>
 
 	<div id="content">
-	
-		<div id="inner-content" class="row">
+		<div id="inner-content" class="container">
+
+			<div class="row">
 			<?php if( function_exists('get_field') && get_field( 'purpose_statement' ) ) { ?>
 				<div id="purpose" class="large-8 medium-10 small-centered columns">
 					<h2 class="statement"><?php the_field( 'purpose_statement' ); ?></h2>
-				</div>
+				</div><!-- #purpose -->
+			</div><!-- .row -->
+
 			<?php }
 	    	// Event Category Option
 	    	if( function_exists('get_field') && get_field( 'event_category' ) ) {
@@ -26,8 +29,7 @@ Template Name: Homepage
 	    	$events_array = ctfw_get_events($args);
 	    		$events_array_count = count($events_array);
 	    	?>
-	    	<div id="listing" class="events small-12 columns">
-				<div class="row large-up-<?php echo $events_array_count; ?>" data-equalizer data-equalize-on="medium">
+	    	<div id="listing" class="row events">
 				<?php
 			    	if($events_array) {
 			    	foreach($events_array as $post) {
@@ -45,7 +47,7 @@ Template Name: Homepage
 						$event_lng 				= ctfw_event_data()['map_lng'];
 						$event_registration 	= ctfw_event_data()['registration_url'];
 		    		?>
-						<article id="post-<?php the_ID(); ?>" <?php post_class('columns'); ?> role="article">
+						<article <?php post_class('col-sm-12 col-md-6 col-lg-4'); ?> role="article">
 							<div class="thumb">
 								<a href="<?php the_permalink() ?>">
 									<span class="overlay">
@@ -61,27 +63,27 @@ Template Name: Homepage
 									?>
 								</a>
 							</div><!-- .thumb -->
-							<div class="card" data-equalizer-watch>
-								<header class="article-header">
-									<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
-								</header> <!-- end article header -->
+							<div class="card">
+								<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
 												
-								<footer class="article-footer event">
-							    	<?php
-							    		if($event_date) { echo '<span class="date">'.$event_date.'</span>'; }
+								<div class="card-body">
+									<?php
+										if($event_date) { echo '<span class="date">'.$event_date.'</span>'; }
 
-							    		if($event_time_desc) { echo '<span class="time">'.$event_time_desc.'</span>'; }
-							    		elseif($event_time_range && !$event_hide_time_range) { echo '<span class="time">'.$event_time_range.'</span>'; }
-							    	
-							    		if($event_venue) { echo '<span class="venue">'.$event_venue.'</span>'; }
-							    	?>
-							    	<a href="<?php the_permalink() ?>" class="button">Learn More</a> 
+										if($event_time_desc) { echo '<span class="time">'.$event_time_desc.'</span>'; }
+										elseif($event_time_range && !$event_hide_time_range) { echo '<span class="time">'.$event_time_range.'</span>'; }
+									
+										if($event_venue) { echo '<span class="venue">'.$event_venue.'</span>'; }
+									?>
+								</div><!-- .card-body -->
+								<div class="card-footer">
+									<a href="<?php the_permalink() ?>" class="btn">Learn More</a> 
 									<?php
 									if($event_has_coord == 1) {
-											echo '<a href="'.$event_directions.'" target="_blank" class="button">Directions</a>';
+										echo '<a href="'.$event_directions.'" target="_blank" class="btn">Directions</a>';
 									}
 									?>
-								</footer> <!-- end article footer -->
+								</div> <!-- .card-footer -->
 							</div><!-- .card -->			
 						</article> <!-- end article -->
 				    
@@ -89,10 +91,8 @@ Template Name: Homepage
 					wp_reset_query();
 					} //endif
 					else { }
-			?>
-				</div><!-- .row -->															
+			?>													
 		    </div> <!-- #listing -->
-		    
 		</div> <!-- #inner-content -->
 
 		<?php

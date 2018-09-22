@@ -16,7 +16,7 @@
  *			'inactive_notice'			=> __( 'Your message', 'theme' ),	// optional notice to override default with license is inactive
  *			'expired_notice'			=> __( 'Your message', 'theme' ),	// optional notice to override default with when license is expired
  *			'expiring_soon_notice'		=> __( 'Your message', 'theme' ),	// optional notice to override default with when license expires soon
- *			'expiring_soon_days'		=> 30,								// days before expiration to consider a license "expiring soon"
+ *			'expiring_soon_days'		=> 7,								// days before expiration to consider a license "expiring soon"
  *			'renewal_url'				=> '',								// optional URL for renewal links (ie. EDD checkout); {license_key} will be replaced with key
  *			'renewal_info_url'			=> '',								// optional URL for renewal information
  *    	) );
@@ -26,14 +26,16 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Admin
- * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
+ * @copyright  Copyright (c) 2013 - 2018, ChurchThemes.com
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      0.9
  */
 
-// No direct access
-if ( ! defined( 'ABSPATH' ) ) exit;
+// No direct access.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /*******************************************
  * CONFIGURATION
@@ -61,23 +63,24 @@ function ctfw_edd_license_config( $arg = false ) {
 		$config = $support[0];
 	}
 
-	// Use defaults or values passed in via theme supprt
+	// Use defaults or values passed in via theme support.
 	$config = wp_parse_args( $config, array(
-		'store_url'					=> '',						// URL of store running EDD with Software Licensing extension
-		'version'					=> CTFW_THEME_VERSION,		// default is to auto-determine from theme
-		'license'					=> ctfw_edd_license_key(),	// default is to use '{theme}_license_key' option
-		'item_name'					=> CTFW_THEME_NAME,			// default is to use theme name; must match download name in EDD
-		'author'					=> CTFW_THEME_AUTHOR,		// default is to auto-determine from theme
-		'updates'					=> true,					// default true; enable automatic updates
-		'options_page'				=> true,					// default true; provide options page for license entry/activaton
-		'options_page_message'		=> '',						// optional message to show on options page
-		'activation_error_notice'	=> __( '<strong>License key could not be activated.</strong>', 'church-theme-framework' ),
-		'inactive_notice'			=> __( '<strong>Theme License Inactive:</strong> <a href="%1$s">Activate Your Theme License</a> to enable updates for the <strong>%2$s</strong> theme.', 'church-theme-framework' ),	// optional notice to override default with license is inactive
-		'expired_notice'			=> __( '<strong>Theme License Expired:</strong> <a href="%1$s">Renew Your Theme License</a> to re-enable updates for the <strong>%2$s</strong> theme (expired on <strong>%3$s</strong>).', 'church-theme-framework' ),	// optional notice to override default with when license is expired
-		'expiring_soon_notice'		=> __( '<strong>Theme License Expiring Soon:</strong> <a href="%1$s">Renew Your Theme License</a> to continue receiving updates for the <strong>%2$s</strong> theme (expires on <strong>%3$s</strong>).', 'church-theme-framework' ),	// optional notice to override default with when license expires soon
-		'expiring_soon_days'		=> 30,						// days before expiration to consider a license "expiring soon"
-		'renewal_url'				=> '',						// optional URL for renewal links (ie. EDD checkout); {license_key} will be replaced with key
-		'renewal_info_url'			=> '',						// optional URL for renewal information
+		'store_url'						=> '',						// URL of store running EDD with Software Licensing extension
+		'version'						=> CTFW_THEME_VERSION,		// default is to auto-determine from theme
+		'license'						=> ctfw_edd_license_key(),	// default is to use '{theme}_license_key' option
+		'item_name'						=> CTFW_THEME_NAME,			// default is to use theme name; must match download name in EDD
+		'author'						=> CTFW_THEME_AUTHOR,		// default is to auto-determine from theme
+		'updates'						=> true,					// default true; enable automatic updates
+		'options_page'					=> true,					// default true; provide options page for license entry/activaton
+		'options_page_message'			=> '',						// optional message to show on options page
+		'activation_error_notice'		=> __( '<strong>License key could not be activated.</strong>', 'church-theme-framework' ),
+		'inactive_notice'				=> __( '<strong>Theme License Inactive:</strong> <a href="%1$s">Activate Your Theme License</a> to enable updates for the <strong>%2$s</strong> theme.', 'church-theme-framework' ),	// optional notice to override default with license is inactive
+		'expired_notice'				=> __( '<strong>Theme License Expired:</strong> <a href="%1$s">Renew Your Theme License</a> to re-enable updates for the <strong>%2$s</strong> theme (expired on <strong>%3$s</strong>).', 'church-theme-framework' ),	// optional notice to override default with when license is expired
+		'expired_notice_agency_mode'	=> __( '<strong>Theme License Expired:</strong> Ask %6$s to renew their <a href="%1$s">Theme License</a> for <strong>%2$s</strong> to re-enable updates for your site (expired <strong>%3$s</strong>).', 'church-theme-framework' ),	// optional notice to override default with when license is expired
+		'expiring_soon_notice'			=> __( '<strong>Theme License Expiring Soon:</strong> <a href="%1$s">Renew Your Theme License</a> to continue receiving updates for the <strong>%2$s</strong> theme (expires on <strong>%3$s</strong>).', 'church-theme-framework' ),	// optional notice to override default with when license expires soon
+		'expiring_soon_days'			=> 7,						// days before expiration to consider a license "expiring soon"
+		'renewal_url'					=> '',						// optional URL for renewal links (ie. EDD checkout); {license_key} will be replaced with key
+		'renewal_info_url'				=> '',						// optional URL for renewal information
 	) );
 
 	// Get specific argument?
@@ -447,7 +450,7 @@ function ctfw_edd_license_page() {
 	$status 	= ctfw_edd_license_key( 'status' ); // local status
 
 	?>
-	<div class="wrap">
+	<div id="ctf-license-settings" class="wrap">
 
 		<h2><?php _ex( 'Theme License', 'page title', 'church-theme-framework' ); ?></h2>
 
@@ -480,6 +483,7 @@ function ctfw_edd_license_page() {
 
 						<td>
 							<input id="<?php echo esc_attr( ctfw_edd_license_key_option() ); ?>" name="<?php echo esc_attr( ctfw_edd_license_key_option() ); ?>" type="text" class="regular-text" value="<?php echo esc_attr( $license ); ?>" />
+							<?php do_action( 'ctf_after_license_key_input' ); ?>
 						</td>
 
 					</tr>
@@ -548,7 +552,7 @@ function ctfw_edd_license_page() {
 
 			</table>
 
-			<p class="submit">
+			<p style="padding-top: 8px">
 
 				<?php if ( ! ctfw_edd_license_expired() ) : // only show renew button if expired ?>
 
@@ -574,6 +578,27 @@ function ctfw_edd_license_page() {
 
 
 		</form>
+
+		<?php
+
+		$agency_mode_note = '';
+
+		// Get generic note about Agency Mode (used on CC plugin on add-on license settings screen).
+		if ( function_exists( 'ctc_agency_mode_note' ) ) {
+			$agency_mode_note = ctc_agency_mode_note();
+		}
+
+		// Make note filterable so Pro can change it to an "Enabled" message.
+		$agency_mode_note = apply_filters( 'ctf_license_page_agency_mode_note', $agency_mode_note );
+
+		// Show note if have it.
+		if ( $agency_mode_note ) {
+			echo '<p id="ctf-agency-mode-theme-license-note" style="margin-top: 40px">' . $agency_mode_note . '</p>';
+		}
+
+		?>
+
+		<?php do_action( 'ctf_license_page_bottom' ); ?>
 
 	</div>
 	<?php
@@ -803,32 +828,42 @@ function ctfw_edd_license_notice() {
 	// Get expiration data
 	$expiration_data = ctfw_edd_license_expiration_data();
 
-
 	// Active But Expiring Soon
 	// Show a reminder notice 30 days before expiration
 	if ( ctfw_edd_license_active() && $expiration_data['expiring_soon'] ) {
-		$class = 'notice-warning';
+		$class = 'notice-warning ctf-license-notice-expiring-soon';
 		$notice = 'expiring_soon_notice';
 	}
 
 	// Expired
 	elseif ( ctfw_edd_license_expired() ) {
-		$class = "notice-error";
+		$class = "notice-error ctf-license-notice-expired";
 		$notice = 'expired_notice';
 	}
 
 	// Inactive
 	elseif ( ! ctfw_edd_license_active() ) {
-		$class = "notice-error";
+		$class = "notice-error ctf-license-notice-inactive";
 		$notice = 'inactive_notice';
 	}
+
+	// Filter notice key.
+	// This lets Pro change to _agency_mode.
+	$notice = apply_filters( 'ctfw_edd_license_notice_key', $notice );
 
 	// Show the notice
 	if ( ! empty( $notice ) && ctfw_edd_license_config( $notice ) && ! empty( $class ) ) {
 
+		// Agency name.
+		/* translators: This is used in place of agency name for Agency Mode when no agency name available */
+		$agency_name = __( 'your website provider', 'church-theme-framework');
+		if ( function_exists( 'ccp_agency_mode_name_linked' ) ) {
+			$agency_name = ccp_agency_mode_name_linked();
+		}
+
 		?>
 
-			<div id="ctfw-license-notice" class="notice <?php echo $class; ?>">
+			<div id="ctfw-license-notice" class="notice <?php echo esc_attr( $class ); ?>">
 
 				<p>
 
@@ -840,7 +875,8 @@ function ctfw_edd_license_notice() {
 						esc_html( CTFW_THEME_NAME ),
 						esc_html( $expiration_data['expiration_date'] ),
 						esc_url( ctfw_edd_license_renewal_url() ),
-						esc_url( ctfw_edd_license_config( 'renewal_info_url' ) )
+						esc_url( ctfw_edd_license_config( 'renewal_info_url' ) ),
+						$agency_name
 					);
 
 					?>
@@ -883,7 +919,7 @@ function ctfw_edd_license_renewal_url() {
 }
 
 /**
- * Redirect to rewal URL when "Renew License" clicked on Theme License page
+ * Redirect to renewal URL when "Renew License" clicked on Theme License page
  *
  * @since 1.3
  */
