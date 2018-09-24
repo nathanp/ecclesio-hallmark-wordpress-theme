@@ -19,65 +19,47 @@
 									<?php
 									if(get_customize_social_fb()) {
 										echo '<li>
-												<a href="'.get_customize_social_fb().'" target="_blank">
-													<i class="fab fa-facebook" aria-hidden="true"></i>
-												</a>
+												<a href="'.get_customize_social_fb().'" target="_blank"><i class="fab fa-facebook" aria-hidden="true"></i></a>
 											</li>';
 									}
 									if(get_customize_social_insta()) {
 										echo '<li>
-												<a href="'.get_customize_social_insta().'" target="_blank">
-													<i class="fab fa-instagram" aria-hidden="true"></i>
-												</a>
+												<a href="'.get_customize_social_insta().'" target="_blank"><i class="fab fa-instagram" aria-hidden="true"></i></a>
 											</li>';
 									}
 									if(get_customize_social_twitter()) {
 										echo '<li>
-												<a href="'.get_customize_social_twitter().'" target="_blank">
-													<i class="fab fa-twitter" aria-hidden="true"></i>
-												</a>
+												<a href="'.get_customize_social_twitter().'" target="_blank"><i class="fab fa-twitter" aria-hidden="true"></i></a>
 											</li>';
 									}
 									if(get_customize_social_google()) {
 										echo '<li>
-												<a href="'.get_customize_social_google().'" target="_blank">
-													<i class="fab fa-google-plus" aria-hidden="true"></i>
-												</a>
+												<a href="'.get_customize_social_google().'" target="_blank"><i class="fab fa-google-plus" aria-hidden="true"></i></a>
 											</li>';
 									}
 									if(get_customize_social_snap()) {
 										echo '<li>
-												<a href="'.get_customize_social_snap().'" target="_blank">
-													<i class="fab fa-snapchat-ghost" aria-hidden="true"></i>
-												</a>
+												<a href="'.get_customize_social_snap().'" target="_blank"><i class="fab fa-snapchat-ghost" aria-hidden="true"></i></a>
 											</li>';
 									}
 									if(get_customize_social_itunes()) {
 										echo '<li>
-											<a href="'.get_customize_social_itunes().'" target="_blank">
-												<i class="fas fa-podcast" aria-hidden="true"></i>
-											</a>
+											<a href="'.get_customize_social_itunes().'" target="_blank"><i class="fas fa-podcast" aria-hidden="true"></i></a>
 										</li>';
 									}
 									if(get_customize_social_spotify()) {
 										echo '<li>
-												<a href="'.get_customize_social_spotify().'" target="_blank">
-													<i class="fab fa-spotify" aria-hidden="true"></i>
-												</a>
+												<a href="'.get_customize_social_spotify().'" target="_blank"><i class="fab fa-spotify" aria-hidden="true"></i></a>
 											</li>';
 									}
 									if(get_customize_social_vimeo()) {
 										echo '<li>
-												<a href="'.get_customize_social_vimeo().'" target="_blank">
-													<i class="fab fa-vimeo" aria-hidden="true"></i>
-												</a>
+												<a href="'.get_customize_social_vimeo().'" target="_blank"><i class="fab fa-vimeo" aria-hidden="true"></i></a>
 											</li>';
 									}
 									if(get_customize_social_yt()) {
 										echo '<li>
-												<a href="'.get_customize_social_yt().'" target="_blank">
-													<i class="fab fa-youtube" aria-hidden="true"></i>
-												</a>
+												<a href="'.get_customize_social_yt().'" target="_blank"><i class="fab fa-youtube" aria-hidden="true"></i></a>
 											</li>';
 									}
 									?>

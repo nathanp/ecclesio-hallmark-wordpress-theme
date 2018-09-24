@@ -31,8 +31,8 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 			
 	<div id="content">
 	
-		<div id="inner-content" class="row">
-	
+	<div id="inner-content" class="container">
+			<main id="listing" class="row sermons" role="main">
 		    <?php get_template_part( 'parts/loop', 'archive-sermons' ); ?>
 		    
 		</div> <!-- end #inner-content -->

@@ -42,8 +42,16 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 </div><!-- #banner -->
 			
 	<div id="content">
-	
 		<div id="inner-content" class="container">
+
+			<?php if(has_action('show_beautiful_filters')) { ?>
+				<div class="row filter-taxonomy">
+					<div class="col-sm-12">
+						<?php do_action('show_beautiful_filters'); ?>  
+					</div>
+				</div><!-- .filter-taxonomy -->
+			<?php } ?>
+
 			<main id="listing" class="row sermons" role="main">
 
 		    <?php get_template_part( 'parts/loop', 'archive-sermons' ); ?>

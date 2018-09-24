@@ -148,7 +148,7 @@ Template Name: Homepage
 							$sermon["post_title"];
 							if( function_exists('get_field') && get_field('subtitle', $sermon["ID"]) ) {
 								echo '<span class="show-for-medium">';
-				    				echo '<br>'.get_field('subtitle', $sermon["ID"]);
+				    				echo ''.get_field('subtitle', $sermon["ID"]);
 				    			echo '</span>';
 				    		}
 						echo '</a></h3>';
@@ -177,7 +177,7 @@ Template Name: Homepage
 							echo '<span class="date">'.get_the_time('F j, Y', $sermon['ID']).'</span>';
 						echo "</span>";
 						
-				        echo '<a href="' . get_permalink($sermon["ID"]) . '" title="Watch '.esc_attr($sermon["post_title"]).'" class="button">'. $verb .' Now</a>';
+				        echo '<a href="' . get_permalink($sermon["ID"]) . '" title="Watch '.esc_attr($sermon["post_title"]).'" class="btn">'. $verb .' Now</a>';
 				    echo "</span>";
 			    	} //foreach
 		    } //if

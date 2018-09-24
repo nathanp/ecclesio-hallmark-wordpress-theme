@@ -30,8 +30,8 @@ Based on the Church Theme Framework and  custom post type.
 			
 	<div id="content">
 	
-		<div id="inner-content" class="row">
-	
+	<div id="inner-content" class="container">
+			<main id="listing" class="row sermons" role="main">
 		    <?php get_template_part( 'parts/loop', 'archive-sermons' ); ?>
 		    
 		</div> <!-- end #inner-content -->

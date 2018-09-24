@@ -18,15 +18,15 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 ?>
 
 <div id="banner">
-	<div class="tabs-content sermon" data-tabs-content="sermon-tabs">
+	<div class="tab-content sermon" data-tabs-content="sermon-tabs">
 		<?php
 			if($sermon_video_embed) { ?>
-				<div class="tabs-panel is-active" id="watch">
+				<div class="tab-pane fade show active" id="watch" role="tabpanel" aria-labelledby="watch-tab">
 					<?php echo $sermon_video_embed; ?>
 				</div><!-- .tabs-panel -->
 		<?php }
 			if($sermon_audio_embed) { ?>
-				<div class="tabs-panel <?php if(!$sermon_video_embed) echo 'is-active'; ?>" id="listen">
+				<div class="tab-pane fade <?php if(!$sermon_video_embed) echo 'show active'; ?>" id="listen" role="tabpanel" aria-labelledby="watch-listen">
 					<?php echo $sermon_audio_embed; ?>
 				</div><!-- .tabs-panel -->
 		<?php } ?>
@@ -35,40 +35,39 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 			
 <div id="content">
 
-	<div id="inner-content" class="row">
-
-		<main id="main" class="large-12 medium-12 columns" role="main">
+	<div id="inner-content" class="container">
+		<main id="main" class="row justify-content-md-center" role="main">
 		
 		    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 		
-		    	<article id="post-<?php the_ID(); ?>" <?php post_class(''); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
+		    	<article id="post-<?php the_ID(); ?>" <?php post_class('col-lg-8 col-md-10 col-sm-12'); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
 					
-					<ul class="tabs tabs-sermon" data-tabs id="sermon-tabs">
+					<ul class="nav nav-tabs tabs-sermon" role="tablist">
 						<?php
 							if($sermon_video_embed) { ?>
-							  <li class="tabs-title is-active">
-							  	<a href="#watch" aria-selected="true">
-							  		<i class="fa fa-video-camera" aria-hidden="true"></i> Watch
+							  <li class="nav-item link-title">
+							  	<a class="nav-link active" id="watch-tab" data-toggle="tab" href="#watch" role="tab" aria-controls="watch" aria-selected="true">
+								  <i class="fas fa-video"></i> Watch
 							  	</a>
 							  </li>
 						<?php }
 							if($sermon_audio_embed) { ?>
-							  <li class="tabs-title <?php if(!$sermon_video_embed) echo 'is-active'; ?>" id="tab-listen">
-							  	<a href="#listen">
+							  <li class="nav-item link-title" id="tab-listen">
+							  <a class="nav-link <?php if(!$sermon_video_embed) echo 'active'; ?>" id="listen-tab" data-toggle="tab" href="#listen" role="tab" aria-controls="listen" aria-selected="true">
 							  		<i class="fa fa-headphones" aria-hidden="true"></i> Listen
 							  	</a>
 							  </li>
 							  <?php if(strpos($sermon_audio_dl, '.mp3') !== false) { ?>
 								  <li class="link-title">
 								  	<a href="<?php echo $sermon_audio_dl; ?>" target="_blank">
-								  		<i class="fa fa-cloud-download" aria-hidden="true"></i> Download Audio
+									  <i class="fas fa-cloud-download-alt"></i> Download Audio
 								  	</a>
 								  </li>
 						<?php } } 
 							if($sermon_pdf) { ?>
 							  <li class="link-title">
 							  	<a href="<?php echo $sermon_pdf; ?>" target="_blank">
-							  		<i class="fa fa-file-pdf-o" aria-hidden="true"></i> Download PDF
+								  <i class="far fa-file-pdf"></i> Download PDF
 							  	</a>
 							  </li>
 						<?php } ?>

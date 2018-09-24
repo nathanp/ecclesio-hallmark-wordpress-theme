@@ -1,4 +1,4 @@
-    <?php if (have_posts()) : while (have_posts()) : the_post();
+	<?php if (have_posts()) : while (have_posts()) : the_post();
     	$sermon_video_url	= ctfw_sermon_data()['video'];
     	$sermon_audio_embed = ctfw_sermon_data()['audio_player'];
     	$sermon_audio_dl 	= ctfw_sermon_data()['audio_download_url'];
@@ -97,6 +97,6 @@
 		
 	<?php else : ?>
 								
-		<?php get_template_part( 'parts/content', 'missing' ); ?>
+		<?php get_template_part( 'parts/content', 'missing-sermon' ); ?>
 			
 	<?php endif; ?>

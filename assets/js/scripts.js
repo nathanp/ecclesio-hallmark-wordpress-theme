@@ -16,9 +16,11 @@ jQuery(document).ready(function() {
   jQuery('iframe[src*="youtube.com"], iframe[src*="vimeo.com"]').each(
     function() {
       if (jQuery(this).innerWidth() / jQuery(this).innerHeight() > 1.5) {
-        jQuery(this).wrap("<div class='widescreen flex-video'/>");
+        jQuery(this).wrap(
+          "<div class='embed-responsive embed-responsive-16by9'/>"
+        );
       } else {
-        jQuery(this).wrap("<div class='flex-video'/>");
+        jQuery(this).wrap("<div class='embed-responsive'/>");
       }
     }
   );

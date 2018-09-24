@@ -38,7 +38,7 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 			echo "<h3 class='page-byline'>$event_date</h3>";
 
 			if($event_registration) {
-				echo '<a href="'.$event_registration.'" target="_blank" class="button">Register</a>';
+				echo '<a href="'.$event_registration.'" target="_blank" class="btn btn-outline-light">Register</a>';
 			}
 		?>
 	</div><!-- .banner-text -->
@@ -63,13 +63,13 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 				    		<?php
 				    			if($event_date) { ?>
 						    		<li>
-						    			<span class="label">Date</span>
+						    			<span class="label"><i class="far fa-calendar-alt"></i> Date</span>
 						    			<span class="info"><?php echo $event_date; ?></span>
 						    		</li>
 					    	<?php }
 					    		if($event_time_range)  { ?>
 						    		<li>
-						    			<span class="label">Time</span>
+						    			<span class="label"><i class="far fa-clock"></i> Time</span>
 						    			<span class="info"><?php echo $event_time_range; ?></span>
 						    		</li>
 				    		<?php }

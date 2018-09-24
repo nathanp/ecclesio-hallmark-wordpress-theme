@@ -24,7 +24,7 @@ If you need to see all potential data, use something like print_r(ctfw_person_da
 	<div class="banner-text">
 		<?php
 			if ( has_post_thumbnail() ) {
-				echo '<span class="thumbnail person-thumb">';
+				echo '<span class="img-thumbnail person-thumb">';
 					the_post_thumbnail('full');
 				echo '</span>';
 			}
@@ -80,7 +80,7 @@ If you need to see all potential data, use something like print_r(ctfw_person_da
 									$fa_icon_class = 'fas fa-link';
 								}
 								echo '<a href="'.$url.'" target="_blank">';
-									echo '<i class="'.$fa_icon_class.'" aria-hidden="true"></i> ';
+									echo '<i class="'.$fa_icon_class.'" aria-hidden="true"></i>';
 								echo '</a>';
 							}//end foreach
 						echo '</span><!-- .person-profiles-->';
