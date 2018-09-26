@@ -59,8 +59,8 @@ jQuery(function() {
   });
 
   /*
-     * Hamburgers navigation
-     */
+  ** Hamburgers navigation
+  **/
   var $hamburger = jQuery(".hamburger");
   var $offCanvasMenu = jQuery("#off-canvas");
 
@@ -71,4 +71,54 @@ jQuery(function() {
   jQuery(".js-off-canvas-overlay").on("click", function(e) {
     $hamburger.toggleClass("is-active");
   });
+
+  /*
+  ** Timeline
+  **/
+  function isOnScreen(elem) {
+    // if the element doesn't exist, abort
+    if (elem.length == 0) {
+      return;
+    }
+    var $window = jQuery(window);
+    var viewport_top = $window.scrollTop();
+    var viewport_height = $window.height();
+    var viewport_bottom = viewport_top + viewport_height - 320;
+    var $elem = jQuery(elem);
+    var top = $elem.offset().top;
+    var height = $elem.height();
+    var bottom = top + height;
+
+    return (
+      (top >= viewport_top && top < viewport_bottom) ||
+      (bottom > viewport_top && bottom <= viewport_bottom) ||
+      (height > viewport_height &&
+        top <= viewport_top &&
+        bottom >= viewport_bottom)
+    );
+  }
+
+  (function($) {
+    $.fn.timeline = function() {
+      var selectors = {
+        id: $(this),
+        item: $(this).find(".timeline-item"),
+        activeClass: "timeline-item--active",
+        img: ".timeline__img"
+      };
+
+      window.addEventListener("scroll", function(e) {
+        selectors.item.each(function(i) {
+          if (isOnScreen(jQuery($(this)))) {
+            /* Pass element id/class you want to check */
+            $(this).addClass(selectors.activeClass);
+          } else {
+            $(this).removeClass(selectors.activeClass);
+          }
+        });
+      });
+    };
+  })(jQuery);
+
+  //jQuery(".timeline-container").timeline();
 });
