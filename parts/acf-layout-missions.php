@@ -24,9 +24,9 @@ if( have_rows('advanced_content') ) {
 
         	//Output
         	echo '<div class="row">';
-        		echo '<div class="'.$columns_classes.'">'. $text_col_1 .'</div>';
-        		if($text_col_2) { echo '<div class="'.$columns_classes.'">'. $text_col_2 .'</div>'; }
-        		if($text_col_3) { echo '<div class="'.$columns_classes.'">'. $text_col_3 .'</div>'; }
+        		echo '<div class="'.$columns_classes.'"><div class="card"><div class="card-body">'. $text_col_1 .'</div></div></div>';
+        		if($text_col_2) { echo '<div class="'.$columns_classes.'"><div class="card"><div class="card-body">'. $text_col_2 .'</div></div></div>'; }
+        		if($text_col_3) { echo '<div class="'.$columns_classes.'"><div class="card"><div class="card-body">'. $text_col_3 .'</div></div></div>'; }
         	echo '</div>';
         }
         elseif( get_row_layout() == 'text_sidebar' ) {

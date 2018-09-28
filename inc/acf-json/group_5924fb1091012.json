@@ -305,6 +305,13 @@
                 "operator": "==",
                 "value": "template-advanced.php"
             }
+        ],
+        [
+            {
+                "param": "page_template",
+                "operator": "==",
+                "value": "template-advanced-missions.php"
+            }
         ]
     ],
     "menu_order": 2,
@@ -315,5 +322,5 @@
     "hide_on_screen": "",
     "active": 1,
     "description": "",
-    "modified": 1496697971
+    "modified": 1538153815
 }
