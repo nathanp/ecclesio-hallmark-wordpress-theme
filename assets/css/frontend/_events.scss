@@ -1,0 +1,54 @@
+#banner .banner-text .btn {
+  background: none;
+  border: 2px solid $white;
+  a {
+    color: $white;
+  }
+  &:hover {
+    background: $white;
+    color: $black;
+    a {
+      color: $black;
+    }
+  }
+}
+
+.event-meta {
+  text-align: center;
+  margin: 0 0px 20px 0px;
+  padding: 0px 0px 20px 0px;
+  border-bottom: 1px solid $accent-light;
+  li {
+    list-style-type: none;
+    display: inline-block;
+    text-align: center;
+    margin-right: 30px;
+    &:last-child {
+      margin-right: 0;
+    }
+    .label {
+      background: none;
+      color: $accent-dark;
+      display: inline;
+      padding: 0;
+    }
+    .info {
+      display: block;
+    }
+  }
+}
+
+#main.events {
+  .btn-group {
+    display: block;
+    .btn:not(:last-child) {
+      margin-right: 3px;
+    }
+  }
+}
+
+#event-map {
+  display: block;
+  width: 100%;
+  height: 400px;
+}

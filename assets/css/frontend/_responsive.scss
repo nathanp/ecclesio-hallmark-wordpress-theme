@@ -1,63 +1,70 @@
 header.header.menu-opened {
   position: relative;
 }
+
 button.hamburger {
   position: absolute;
   right: 0;
   z-index: 9999;
-
   top: 50%;
   -webkit-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   transform: translateY(-50%);
-}
-button.hamburger .hamburger-inner,
-button.hamburger .hamburger-inner:after,
-button.hamburger .hamburger-inner:before {
-  background-color: #358fcd;
-}
-button.hamburger:hover .hamburger-inner,
-button.hamburger:hover .hamburger-inner:after,
-button.hamburger:hover .hamburger-inner:before {
-  background-color: #358fcd;
+  .hamburger-inner {
+    background-color: $brand-color-primary;
+    &:after,
+    &:before {
+      background-color: $brand-color-primary;
+    }
+  }
+  &:hover .hamburger-inner {
+    background-color: $brand-color-primary;
+    &:after,
+    &:before {
+      background-color: $brand-color-primary;
+    }
+  }
+  &:active,
+  &:focus,
+  &:hover {
+    outline: none;
+  }
 }
 
-button.hamburger:active,
-button.hamburger:focus,
-button.hamburger:hover,
-.off-canvas #menu-main-menu li:active,
-.off-canvas #menu-main-menu li:focus,
-.off-canvas #menu-main-menu li:hover,
-.off-canvas #menu-main-menu li a:active,
-.off-canvas #menu-main-menu li a:focus,
-.off-canvas #menu-main-menu li a:hover {
-  outline: none;
-}
 .off-canvas {
-  background: #358fcd;
-  color: #fff;
+  #menu-main-menu {
+    li {
+      &:active,
+      &:focus,
+      &:hover {
+        outline: none;
+      }
+      a {
+        &:active,
+        &:focus,
+        &:hover {
+          outline: none;
+        }
+        display: block;
+        padding: 0.7rem 1rem;
+        line-height: 1;
+        color: $white;
+        font-weight: 600;
+        font-size: 0.85em;
+      }
+      display: block;
+      vertical-align: middle;
+    }
+    .submenu li {
+      border-bottom: 2px solid $accent-dark;
+    }
+    .is-accordion-submenu-parent > a:after {
+      border-color: $white transparent transparent;
+    }
+  }
+  background: $brand-color-primary;
+  color: $white;
   font-size: 1.5em;
-}
-.off-canvas #menu-main-menu {
-}
-.off-canvas #menu-main-menu li {
-  display: block;
-  vertical-align: middle;
-}
-.off-canvas #menu-main-menu li a {
-  display: block;
-  padding: 0.7rem 1rem;
-  line-height: 1;
-  color: #fff;
-  font-weight: 600;
-  font-size: 0.85em;
-}
-.off-canvas #menu-main-menu .submenu li {
-  border-bottom: 2px solid #656565;
-}
-
-.off-canvas #menu-main-menu .is-accordion-submenu-parent > a:after {
-  border-color: #fff transparent transparent;
 }
 
 .js-off-canvas-overlay.is-overlay-fixed {
@@ -70,15 +77,12 @@ button.hamburger:hover,
   }
   #banner {
     margin-top: 0px;
-  }
-  /*Page*/
-  #banner {
     height: 30vh;
   }
+  /*Page*/
   .single-ctc_person #banner {
     height: 50vh;
   }
-
   /*Staff*/
   #staff li img {
   }
@@ -109,7 +113,6 @@ button.hamburger:hover,
   h3 {
     font-size: 1.5rem;
   }
-
   h1.site-title {
     height: auto;
     font-size: 1.5em;
@@ -117,7 +120,6 @@ button.hamburger:hover,
   #staff li {
     width: 24.5%;
   }
-
   .footer-top p {
     font-size: 0.9em;
   }
@@ -131,14 +133,16 @@ button.hamburger:hover,
 
 @media screen and (max-height: 720px) {
   /*Staff*/
-  .single-ctc_person #banner .banner-text .page-title {
-    font-size: 2.5em;
-    line-height: 1em;
-  }
-  .single-ctc_person #banner .banner-text .page-byline {
-    font-size: 1.5em;
-    margin: 0;
-    line-height: 1em;
+  .single-ctc_person #banner .banner-text {
+    .page-title {
+      font-size: 2.5em;
+      line-height: 1em;
+    }
+    .page-byline {
+      font-size: 1.5em;
+      margin: 0;
+      line-height: 1em;
+    }
   }
   .person-thumb {
     width: 10vw;
@@ -148,9 +152,11 @@ button.hamburger:hover,
 
 @media screen and (max-height: 500px) {
   /*Staff*/
-  .single-ctc_person #banner .banner-text .page-title,
-  .single-ctc_person #banner .banner-text .page-byline {
-    display: none;
+  .single-ctc_person #banner .banner-text {
+    .page-title,
+    .page-byline {
+      display: none;
+    }
   }
   .person-thumb {
     width: 22vw;
@@ -166,15 +172,13 @@ button.hamburger:hover,
   .thumbnail {
     border: none;
   }
-
   /*Home*/
   .home #banner {
     height: 40vh;
+    .button-group li a.button {
+      font-size: 1rem;
+    }
   }
-  .home #banner .button-group li a.button {
-    font-size: 1rem;
-  }
-
   /*Banner*/
   #banner .banner-text .page-title,
   .content-banner .banner-text .page-title {
@@ -183,24 +187,21 @@ button.hamburger:hover,
   #banner .banner-text .page-byline {
     font-size: 1.33rem;
   }
-
   #purpose {
     margin-top: 0;
     margin-bottom: 1em;
     padding-left: 1em;
     padding-right: 1em;
+    .statement {
+      font-size: 1.5em;
+    }
   }
-  #purpose .statement {
-    font-size: 1.5em;
-  }
-
   #sermon-latest .text-container {
     width: 90%;
+    h3 {
+      font-size: 1.5em;
+    }
   }
-  #sermon-latest .text-container h3 {
-    font-size: 1.5em;
-  }
-
   /*Staff*/
   #staff li {
     width: 48.75%;
@@ -208,19 +209,19 @@ button.hamburger:hover,
   .single-ctc_person #banner {
     height: 30vh;
   }
-
   /*Sermons*/
   .ctc_sermon .entry-content {
     font-size: 1em;
   }
-
   /*Footer*/
-  .footer-top,
-  .footer-top .social {
+  .footer-top {
     text-align: center;
-  }
-  .footer-top .button {
-    margin: 15px 0px;
+    .social {
+      text-align: center;
+    }
+    .button {
+      margin: 15px 0px;
+    }
   }
 }
 
@@ -228,10 +229,7 @@ button.hamburger:hover,
   #logo-primary {
     width: 180px;
   }
-  h1.site-title {
-    font-size: 1em;
-  }
-
+  h1.site-title,
   #bottom-footer p {
     font-size: 1em;
   }
@@ -241,8 +239,10 @@ button.hamburger:hover,
   /*Phone Landsacape*/
   #banner {
     height: 80vh;
+    .banner-text .page-title {
+      font-size: 1.75rem;
+    }
   }
-  #banner .banner-text .page-title,
   .content-banner .banner-text .page-title {
     font-size: 1.75rem;
   }
@@ -256,36 +256,36 @@ button.hamburger:hover,
 
 @media screen and (max-width: 320px) {
   /*Home*/
-  .home #banner .banner-text .page-title {
-    font-size: 1.25em;
+  .home #banner .banner-text {
+    .page-title {
+      font-size: 1.25em;
+    }
+    .page-byline {
+      font-size: 1em;
+    }
   }
-  .home #banner .banner-text .page-byline {
-    font-size: 1em;
-  }
-
   #purpose {
     padding-top: 1em;
     padding-bottom: 1em;
+    .statement {
+      font-size: 1.25em;
+    }
   }
-  #purpose .statement {
-    font-size: 1.25em;
-  }
-
   /*Staff*/
   #staff li {
     width: 100%;
   }
-
   /*Sermons*/
   #listing article .card .meta.sermon {
     font-size: 0.8em;
   }
-  .tabs-sermon .tabs-title a,
-  .tabs-sermon .link-title a {
-    padding-left: 1rem;
-    padding-right: 1rem;
+  .tabs-sermon {
+    .tabs-title a,
+    .link-title a {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
   }
-
   #bottom-footer p {
     font-size: 0.9em;
   }

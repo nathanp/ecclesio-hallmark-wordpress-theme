@@ -33,17 +33,11 @@ function ecclesio_google_fonts_url() {
 function site_scripts() {
   global $wp_styles; // Call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
     
-    // Adding Foundation scripts file in the footer
+    // Adding Bootstrap scripts file in the footer
     wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/dependencies/bootstrap/js/bootstrap.bundle.min.js', array( 'jquery' ), '4.1.3', true );
     
     // Adding scripts file in the footer
     wp_enqueue_script( 'site-js', get_template_directory_uri() . '/assets/js/scripts.js', array( 'jquery' ), '', true );
-	
-	  // Select which grid system you want to use (Foundation Grid by default)
-    wp_enqueue_style( 'boostrap-css', get_template_directory_uri() . '/dependencies/bootstrap/css/bootstrap.min.css', array(), '', 'all' );
-
-    // Custom Bootstrap Helpers
-    wp_enqueue_style( 'ecclesio-boostrap-css', get_template_directory_uri() . '/assets/css/frontend/ecclesio-hallmark-bootstrap.css', array(), '', 'all' );
 
     // Register main stylesheet
     wp_enqueue_style( 'site-css', get_template_directory_uri() . '/assets/css/style.css', array(), '', 'all' );
@@ -62,12 +56,6 @@ function ecclesio_scripts() {
   // Add custom fonts, used in the main stylesheet.
   wp_enqueue_style( 'ecclesio-fonts', ecclesio_google_fonts_url(), array(), null );
 
-  // Primary CSS
-  wp_enqueue_style( 'ecclesio-primary', get_template_directory_uri() . '/style.css', array(), '1.0' );
-  // Responsive
-  wp_enqueue_style( 'ecclesio-responsive', get_template_directory_uri() . '/assets/css/responsive.css', array(), '1.0' );
-  // Hamburgers Navigation
-  wp_enqueue_style( 'ecclesio-hamburgers', get_template_directory_uri() . '/assets/css/hamburgers.min.css', array(), '1.0' );
   // Font Awesome
   wp_enqueue_style('ecclesio-font-awesome', '//use.fontawesome.com/releases/v5.3.1/css/all.css');
 
@@ -124,8 +112,11 @@ function ecclesio_remove_query_strings_2( $src ){
  */
 function ecclesio_remove_scripts() {
   if (!is_admin()) {
-    wp_dequeue_style('font-awesome');
+    
+    wp_dequeue_style('wpdm-font-awesome');
+    wp_dequeue_style('wpdm-front');
     wp_dequeue_style('wpdm-bootstrap');
+    wp_dequeue_style('bodhi-svgs-attachment');
     wp_dequeue_style('duplicate-post');
 
     wp_dequeue_script( 'wpdm-bootstrap' );

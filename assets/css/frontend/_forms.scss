@@ -1,0 +1,36 @@
+#gform_wrapper_1,
+#gforms_confirmation_message_1 {
+  clear: both;
+}
+
+.gform_wrapper
+  input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]),
+.gform_wrapper textarea {
+  border: 1px solid $black;
+}
+.gform_wrapper
+  input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):focus,
+.gform_wrapper
+  input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):active,
+.gform_wrapper textarea:active,
+.gform_wrapper textarea:focus {
+  border-color: $brand-color-primary;
+  outline: none;
+}
+
+input[type="submit"] {
+  border: none;
+  background: $brand-color-primary;
+  color: $white;
+  padding: 0.75em 2em;
+  -webkit-transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  transition: background-color 0.25s ease-out, color 0.25s ease-out;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+input[type="submit"]:active,
+input[type="submit"]:focus,
+input[type="submit"]:hover {
+  background: $brand-color-secondary;
+}

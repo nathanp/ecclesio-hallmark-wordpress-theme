@@ -1,0 +1,67 @@
+.filter-taxonomy {
+  margin-bottom: 10px;
+}
+.beautiful-taxonomy-filters-select-wrap {
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-content: flex-start;
+  -ms-flex-line-pack: start;
+  align-content: flex-start;
+  -webkit-align-items: flex-start;
+  -ms-flex-align: start;
+  align-items: flex-start;
+}
+.beautiful-taxonomy-filters-select-wrap > div {
+  -webkit-order: 0;
+  -ms-flex-order: 0;
+  order: 0;
+  -webkit-flex: 1 1 auto;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
+  -webkit-align-self: auto;
+  -ms-flex-item-align: auto;
+  align-self: auto;
+  padding: 0px 5px;
+}
+.beautiful-taxonomy-filters-select-wrap > div:first-child {
+  padding-left: 0px;
+}
+.beautiful-taxonomy-filters-select-wrap > div:last-child {
+  padding-right: 0px;
+}
+
+.beautiful-taxonomy-filters label {
+  display: block;
+  text-align: center;
+  margin: 0px 0px 3px 0px;
+}
+.beautiful-taxonomy-filters .select2-container {
+  width: 100% !important;
+}
+.beautiful-taxonomy-filters
+  .select2-container--default
+  .select2-selection--single {
+  border-radius: 0px;
+}
+.beautiful-taxonomy-filters button {
+  margin: 10px auto 0px;
+  display: block;
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  cursor: pointer;
+  font-size: 0.9em;
+  padding: 3px 8px;
+}
+.beautiful-taxonomy-filters button:hover {
+  background-color: rgba(0, 0, 0, 0.15);
+}

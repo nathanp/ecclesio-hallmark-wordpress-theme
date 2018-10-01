@@ -1,0 +1,99 @@
+.single-ctc_sermon #banner {
+  height: auto;
+  iframe {
+    width: 100%;
+  }
+}
+
+#banner {
+  .flex-video,
+  .responsive-embed {
+    padding-bottom: 80vh;
+    background: $black;
+  }
+}
+
+.tab-content.sermon {
+  background: $black;
+  .embed-responsive {
+    max-height: 80vh;
+  }
+  #listen.tab-pane {
+    padding: 20vh 2em;
+    background: $black;
+  }
+}
+
+.tabs-sermon {
+  display: block;
+  text-align: center;
+  border: none;
+  .link-title {
+    margin-right: 5px;
+    display: inline-block;
+    .nav-link {
+      color: $black;
+      border: 1px solid;
+      display: block;
+      padding: 1.25rem 1.5rem;
+      font-size: 0.75rem;
+      line-height: 1;
+      border-radius: 0px;
+      &.active {
+        background: $white;
+        color: $brand-color-primary;
+      }
+    }
+  }
+}
+
+.single-ctc_sermon .ctc_sermon {
+  p.series {
+    text-align: center;
+    margin: 30px 0px 10px;
+  }
+  .article-header {
+    margin: 0px;
+  }
+}
+
+.ctc_sermon {
+  .article-header .entry-title {
+    font-weight: 600;
+    margin-bottom: 0;
+  }
+  .entry-content {
+    font-size: 1.5em;
+  }
+  .article-footer.sermon {
+    height: 83%;
+  }
+}
+
+#listing.series {
+  margin-top: 30px;
+  border-top: 2px solid $brand-color-secondary;
+  padding: 30px 0px 0px 0px;
+  h2 {
+    margin: 0px 0px 30px 0px;
+  }
+}
+
+.series .card h3 {
+  font-size: 1.5em;
+  font-weight: 600;
+  line-height: 1.25em;
+  margin: 0;
+  padding: 10px 0px 0px 0px;
+}
+
+.sermons .card .subtitle {
+  font-size: 1.25em;
+  margin: 0px 0px 8px 0px;
+  line-height: 1.15em;
+}
+
+#listing.sermons article .card .date {
+  font-size: 0.9em;
+  margin: 0;
+}

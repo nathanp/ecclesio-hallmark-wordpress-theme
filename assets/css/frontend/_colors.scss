@@ -1,0 +1,15 @@
+/**
+ * This is not where variables are stored. See _variables.scss
+ *
+ * 
+ */
+
+/* Bootstrap variable overrides */
+$primary: $brand-color-primary;
+
+body {
+  color: $black;
+}
+a {
+  color: $brand-color-primary;
+}
