@@ -13,10 +13,10 @@ if( have_rows('advanced_content') ) {
         	$text_col_3 = get_sub_field('text_column_3');
 
         		if($columns == "2") {
-        			$columns_classes = "col-md-6 col-sm-12";
+        			$columns_classes = "col-sm-12 col-md-6";
         		}
         		elseif($columns == "3") {
-        			$columns_classes = "col-md-4 col-sm-12";	
+        			$columns_classes = "col-sm-12 col-md-6 col-lg-4";	
         		}
         		else {
         			$columns_classes = "col-sm-12";	

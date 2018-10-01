@@ -19,17 +19,19 @@ Template Name: Homepage
 			</div><!-- .row -->
 
 			<?php }
-	    	// Event Category Option
-	    	if( function_exists('get_field') && get_field( 'event_category' ) ) {
-	    		$event_category_ids = get_field( 'event_category' );
-				$args = array( 'category' => $event_category_ids, 'limit' => 3 );
+			 // Event Category Option
+			 
+	    	if( function_exists('get_field') && get_field('event_category') || get_field('event_count') ) {
+				$event_category_ids = get_field( 'event_category' );
+				$event_count = get_field('event_count');
+				$args = array( 'category' => $event_category_ids, 'limit' => $event_count );
 			} else {
 				$args = array( 'limit' => 3 );
 			}
 	    	$events_array = ctfw_get_events($args);
 	    		$events_array_count = count($events_array);
 	    	?>
-	    	<div id="listing" class="row events">
+	    	<div id="listing" class="row justify-content-center events">
 				<?php
 			    	if($events_array) {
 			    	foreach($events_array as $post) {

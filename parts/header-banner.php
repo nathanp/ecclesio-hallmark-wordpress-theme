@@ -41,7 +41,7 @@
 				echo "<h1 class='page-title'>$banner_heading</h1>";	
 			}
 			if($banner_byline) {
-				echo "<h3 class='page-byline'>$banner_byline</h3>";	
+				echo "<p class='page-byline'>$banner_byline</p>";	
 			}
 
 			if( have_rows('header_buttons') ):

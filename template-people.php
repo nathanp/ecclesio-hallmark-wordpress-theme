@@ -14,12 +14,21 @@ Template Name: People
 	    }
 	    else {
 	    	$people_per_row = 3;
-	    }
+		 }
+		 
 		//change column sizes based on how many staff per row
-		if( $people_per_row < 4 ) {
-			$columns_classes = 'col-lg-8 col-md-10 col-sm-12 small-centered';
-		} else {
+		if( $people_per_row == 1 ) {
 			$columns_classes = 'col-sm-12';
+		} elseif( $people_per_row == 2 ) {
+			$columns_classes = 'col-sm-12 col-md-6';
+		} elseif( $people_per_row == 3 ) {
+			$columns_classes = 'col-sm-12 col-md-4';
+		} elseif( $people_per_row == 4 ) {
+			$columns_classes = 'col-sm-12 col-md-4 col-lg-3';
+		} elseif( $people_per_row == 5 ) {
+			$columns_classes = 'col-2dot4';
+		} else {
+			$columns_classes = 'col-sm-12 col-md-3 col-lg-2';
 		}
 	?>
 
@@ -27,7 +36,7 @@ Template Name: People
 	
 		<div id="inner-content" class="container">
 			<div class="row">
-				<main id="main" class="<?php echo $columns_classes; ?>" role="main">
+				<main id="main" class="col-sm-12" role="main">
 					
 					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
@@ -67,7 +76,7 @@ Template Name: People
 
 							//query count below is to add the "end" class to the last item to remove the float:right from Foundation
 						?>
-						<div class="person col-2dot4 <?php if (($the_query->current_post +1) == ($the_query->post_count)) { echo ' end'; } ?>" data-equalizer-watch>
+						<div class="person <?php echo $columns_classes; ?> <?php if (($the_query->current_post +1) == ($the_query->post_count)) { echo ' end'; } ?>" data-equalizer-watch>
 							<?php
 								//Only link to the person if they have filled out their content
 								if(trim($post->post_content) != "") { echo '<a href="' . get_permalink( $post->ID ) . '">'; }
@@ -82,7 +91,7 @@ Template Name: People
 										echo get_the_title();
 									if(trim($post->post_content) != "") { echo '</a>'; } 
 								echo '</h3>';
-								if($person_position) { echo "<h4>$person_position</h4>"; }
+								if($person_position) { echo "<p>$person_position</p>"; }
 							?>
 						</div>
 						<?php endwhile; ?>

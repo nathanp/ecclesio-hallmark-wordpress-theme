@@ -32,7 +32,7 @@ If you need to see all potential data, use something like print_r(ctfw_person_da
 		<h1 class="page-title"><?php the_title(); ?></h1>
 		<?php 
 			if($person_position != "") {
-				echo "<h3 class='page-byline'>$person_position</h3>";	
+				echo "<p class='page-byline'>$person_position</p>";	
 			}
 		?>
 	</div><!-- .banner-text -->

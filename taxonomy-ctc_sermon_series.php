@@ -1,7 +1,7 @@
 <?php
 /*
-Sermons by Book template.
-Based on the Church Theme Framework and  custom post type.
+Sermons by Series template.
+Based on the Church Theme Framework and custom post type.
 If you need to see all potential data, use something like print_r(ctfw_sermon_data());
 */
 ?>

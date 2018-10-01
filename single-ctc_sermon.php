@@ -10,11 +10,11 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 
 <?php
 	//print_r(ctfw_sermon_data());
-	$sermon_video_url	= ctfw_sermon_data()['video'];
-	$sermon_video_embed = ctfw_sermon_data()['video_player'];
-	$sermon_audio_embed = ctfw_sermon_data()['audio_player'];
-	$sermon_audio_dl 	= ctfw_sermon_data()['audio_download_url'];
-	$sermon_pdf 		= ctfw_sermon_data()['pdf'];
+	$sermon_video_url		= ctfw_sermon_data()['video'];
+	$sermon_video_embed 	= ctfw_sermon_data()['video_player'];
+	$sermon_audio_embed 	= ctfw_sermon_data()['audio_player'];
+	$sermon_audio_dl 		= ctfw_sermon_data()['audio_download_url'];
+	$sermon_pdf 			= ctfw_sermon_data()['pdf'];
 ?>
 
 <div id="banner">
@@ -34,14 +34,12 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 </div><!-- #banner -->
 			
 <div id="content">
-
 	<div id="inner-content" class="container">
+
 		<main id="main" class="row justify-content-md-center" role="main">
 		
-		    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-		
+		   <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 		    	<article id="post-<?php the_ID(); ?>" <?php post_class('col-lg-8 col-md-10 col-sm-12'); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
-					
 					<ul class="nav nav-tabs tabs-sermon" role="tablist">
 						<?php
 							if($sermon_video_embed) { ?>
@@ -58,15 +56,15 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 							  	</a>
 							  </li>
 							  <?php if(strpos($sermon_audio_dl, '.mp3') !== false) { ?>
-								  <li class="link-title">
-								  	<a href="<?php echo $sermon_audio_dl; ?>" target="_blank">
+								  <li class="nav-item link-title">
+								  	<a class="nav-link" href="<?php echo $sermon_audio_dl; ?>" target="_blank">
 									  <i class="fas fa-cloud-download-alt"></i> Download Audio
 								  	</a>
 								  </li>
 						<?php } } 
 							if($sermon_pdf) { ?>
-							  <li class="link-title">
-							  	<a href="<?php echo $sermon_pdf; ?>" target="_blank">
+							  <li class="nav-item link-title">
+							  	<a class="nav-link" href="<?php echo $sermon_pdf; ?>" target="_blank">
 								  <i class="far fa-file-pdf"></i> Download PDF
 							  	</a>
 							  </li>
@@ -87,7 +85,6 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 					<header class="article-header text-center">	
 						<h1 class="entry-title single-title" itemprop="headline"><?php the_title(); ?></h1>
 						<?php if(get_field('subtitle')) { echo '<h2 class="subtitle">'.get_field('subtitle').'</h2>'; } ?>
-						
 				    </header> <!-- end article header -->
 									
 				    <section class="entry-content text-center" itemprop="articleBody">
@@ -98,11 +95,10 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 									$speaker_names[] = "<a href='".get_term_link($speaker)."'>$speaker->name</a>";
 								}
 								echo implode(', ', $speaker_names);
-								echo " |";
+								echo " | ";
 							}
-				    	?> <?php echo get_the_date(); ?>
-				    	
-				    	<?php
+							echo get_the_date();
+						
 				    		$sermon_books = get_the_terms( $post, 'ctc_sermon_book');
 				    		if($sermon_books) {
 				    			echo '<br>Book: ';
@@ -111,39 +107,144 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 								}
 								echo implode(', ', $book_names);
 							}
-				    	?>
-				    	
-				    	<?php
+				    
 				    		$sermon_topics = get_the_terms( $post, 'ctc_sermon_topic');
 				    		if($sermon_topics) {
-				    			echo '<br>Topic: ';
+				    			echo '<br>';
 					    		foreach($sermon_topics as $sermon_topic) {
-					    			$topic_names[] = "<a href='".get_term_link($sermon_topic)."'>$sermon_topic->name</a>";
+					    			$topic_names[] = "<a href='".get_term_link($sermon_topic)."'>#".$sermon_topic->name."</a>";
 								}
-								echo implode(', ', $topic_names);
+								echo implode(' ', $topic_names);
 							}
-				    	?>
 				    	
-						<?php the_content(); ?>
+							the_content();
+						?>
 					</section> <!-- end article section -->
-										
-					<footer class="article-footer">
-						<?php wp_link_pages( array( 'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'jointswp' ), 'after'  => '</div>' ) ); ?>
-						<p class="tags"><?php the_tags('<span class="tags-title">' . __( 'Tags:', 'jointswp' ) . '</span> ', ', ', ''); ?></p>	
-					</footer> <!-- end article footer -->
 																	
 				</article> <!-- end article -->
 		    					
-		    <?php endwhile; else : ?>
-		
-		   		<?php get_template_part( 'parts/content', 'missing' ); ?>
-
-		    <?php endif; ?>
+		   <?php endwhile; else :
+		   	get_template_part( 'parts/content', 'missing' );
+		   endif; ?>
 
 		</main> <!-- end #main -->
 
-	</div> <!-- end #inner-content -->
+		<?php
+		// Other sermons in the same series
+		if($sermon_series) {  ?>
+			<div id="listing" class="row sermons series">
+				<div class="col-sm-12">
+					<h2>
+						More from 
+						<?php
+							foreach($sermon_series as $series) {
+								echo '<a href="'.get_term_link($series).'"><em>'.$series->name,'</em></a>';
+							}
+						?>
+					</h2>
+				</div><!-- .col-sm-12 -->
+				<?php  					
+					$custom_taxterms = wp_get_object_terms( $post->ID, 'ctc_sermon_series', array('fields' => 'ids') );
+					// arguments
+					$args = array(
+					'post_type' => 'ctc_sermon',
+					'post_status' => 'publish',
+					'posts_per_page' => -1,
+					'tax_query' => array(
+						array(
+							'taxonomy' => 'ctc_sermon_series',
+							'field' => 'id',
+							'terms' => $custom_taxterms
+						)
+					),
+					'post__not_in' => array ($post->ID),
+					);
+					$related_items = new WP_Query( $args );
+					// loop over query
+					if ($related_items->have_posts()) : while ( $related_items->have_posts() ) : $related_items->the_post();
+					$sermon_video_url		= ctfw_sermon_data()['video'];
+					$sermon_audio_embed 	= ctfw_sermon_data()['audio_player'];
+					$sermon_audio_dl 		= ctfw_sermon_data()['audio_download_url'];
+					// Verbs
+					if($sermon_video_url) {
+						$verb = "Watch";
+					} elseif($sermon_audio_embed || $sermon_audio_dl) {
+						$verb = "Listen to";
+					} else {
+						$verb = "View";
+					}
+				?>
+				<article <?php post_class('col-sm-12 col-md-6 col-lg-4'); ?> role="article">
+					<div class="thumb">
+						<a href="<?php the_permalink() ?>">
+							<span class="overlay">
+								<span class="text"><?php echo $verb; ?> Sermon</span>
+							</span>
+							<?php
+								if(has_post_thumbnail()) {
+									the_post_thumbnail('full');
+								}
+								elseif($sermon_video_url) {
+									echo '<img src="'.get_video_thumbnail($sermon_video_url).'" alt="" />';
+								}
+								else {
+									echo '<img src="http://via.placeholder.com/640x360/000000/ffffff?text='.get_the_title().'" alt="" />';	
+								}
+							?>
+						</a>
+					</div><!-- .thumb -->
+					<div class="card">
+						<div class="card-body">
+							<h3><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h3>
+							<?php if(get_field('subtitle')) echo '<p class="subtitle">'.get_field('subtitle').'</p>'; ?>
+							<a href="<?php the_permalink() ?>" class="btn"><?php echo $verb; ?> Sermon</a>
+						</div><!-- .card-body -->
 
+						<div class="card-footer">
+							<?php
+								// Sermon Speakers
+								$speakers = get_the_terms( $post, 'ctc_sermon_speaker');
+								if (class_exists('WPSEO_Primary_Term') && $speakers) { //YoastSEO
+									$primary_speaker = new WPSEO_Primary_Term('ctc_sermon_speaker', $post->ID);
+									$primary_speaker = $primary_speaker->get_primary_term();
+									$term = get_term( $primary_speaker );
+										$primary_speaker_name = $term->name;
+								}
+									elseif( !empty($speakers) ) {
+											$primary_speaker = $speakers[0]->term_id;
+											$primary_speaker_name = $speakers[0]->name;
+									}
+								if($speakers) {
+									echo '<span><i class="fas fa-user"></i> Speaker: <a href="'.get_term_link($primary_speaker).'">'.$primary_speaker_name.'</a></span>';
+								}
+
+								// Sermon Books
+								$sermon_books = get_the_terms( $post, 'ctc_sermon_book');
+								if (class_exists('WPSEO_Primary_Term') && $sermon_books) { //YoastSEO
+									$primary_book = new WPSEO_Primary_Term('ctc_sermon_book', $post->ID);
+									$primary_book = $primary_book->get_primary_term();
+									$term = get_term( $primary_book );
+										$primary_book_name = $term->name;
+								}
+									elseif( !empty($sermon_books) ) {
+										$primary_book = $sermon_books[0]->term_id;
+										$primary_book_name = $sermon_books[0]->name;
+									}
+								if($primary_book) {
+									$primary_book = get_term($primary_book);
+									echo '<span><i class="fas fa-bible"></i> Book: <a href="'.get_term_link($primary_book).'">'.$primary_book_name.'</a></span>';
+								}
+							?>
+						</div><!-- .card--footer -->
+
+					</div><!-- .card -->	    						
+				</article> <!-- end article -->
+						
+				<?php endwhile; endif; wp_reset_postdata(); ?>
+			</div><!-- #listing -->
+		<?php } //endif ?>
+
+	</div> <!-- end #inner-content -->
 </div> <!-- end #content -->
 
 <script>

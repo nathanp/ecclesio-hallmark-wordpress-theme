@@ -33,10 +33,11 @@
 				</a>
 			</div><!-- .thumb -->
 			<div class="card">
-				<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
 				
 				<div class="card-body">
-					<?php echo '<div class="date">'.get_the_date().'</div>'; ?>
+				<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
+				<?php if(get_field('subtitle')) echo '<p class="subtitle">'.get_field('subtitle').'</p>'; ?>
+					<?php echo '<p class="date">'.get_the_date().'</p>'; ?>
 
 					<a href="<?php the_permalink() ?>" class="btn"><?php echo $verb; ?> Sermon</a>
 				</div><!-- .card-body -->
