@@ -127,4 +127,13 @@ function ecclesio_remove_scripts() {
 }
 add_action( 'wp_enqueue_scripts', 'ecclesio_remove_scripts', 1000); //1000 places these after the defaults loaded by the parent theme
 
+
+/**
+ * Keeps bloat/un-used scripts and styles from plugins from loading on the admin.
+ */
+function ecclesio_remove_scripts_admin() {
+   
+}
+add_action( 'admin_enqueue_scripts', 'ecclesio_remove_scripts_admin', 1000); //1000 places these after the defaults loaded by the parent theme
+
   ?>
