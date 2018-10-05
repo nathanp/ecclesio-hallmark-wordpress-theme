@@ -53,15 +53,22 @@
   .select2-selection--single {
   border-radius: 0px;
 }
-.beautiful-taxonomy-filters button {
-  margin: 10px auto 0px;
-  display: block;
-  background: rgba(0, 0, 0, 0.03);
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  cursor: pointer;
-  font-size: 0.9em;
-  padding: 3px 8px;
-}
-.beautiful-taxonomy-filters button:hover {
-  background-color: rgba(0, 0, 0, 0.15);
+.beautiful-taxonomy-filters {
+  button {
+    margin: 10px auto 0px;
+    display: block;
+    background: rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    cursor: pointer;
+    font-size: 0.9em;
+    padding: 3px 8px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  select {
+    width: 100%;
+  }
 }

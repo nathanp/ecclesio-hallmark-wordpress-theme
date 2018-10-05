@@ -23,6 +23,9 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 			if($sermon_video_embed) { ?>
 				<div class="tab-pane fade show active" id="watch" role="tabpanel" aria-labelledby="watch-tab">
 					<?php echo $sermon_video_embed; ?>
+					<noscript>
+						<h3 class="noscript">JavaScript needs to be enabled in order to watch videos.</h3>
+					</noscript>
 				</div><!-- .tabs-panel -->
 		<?php }
 			if($sermon_audio_embed) { ?>

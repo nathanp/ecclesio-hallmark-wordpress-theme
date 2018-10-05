@@ -120,34 +120,37 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 		<?php if($event_has_coord == 1) { ?>
 			<div id="event-map"></div>
 			<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo ctfw_google_maps_api_key(); ?>"></script>
-		    <script>
-		    	//Get Latitude and Longitude
-		    	var myLatLng = {lat: <?php echo $event_lat; ?>, lng: <?php echo $event_lng; ?>};
-		    	//Generate Map
-		    	var map = new google.maps.Map(document.getElementById('event-map'), {
-		        	center: myLatLng,
-		        	zoom: 10
-		      	});
-		    	//Generate content for map infowindow
-		    	var contentString = 
-		            '<h4 class="mapHeading"><?php echo $event_venue; ?></h4>';
-		        //Generate infowindow
-		        var infowindow = new google.maps.InfoWindow({
-		          content: contentString
-		        });
-		        //Custom image marker
-		      	var image = '<?php echo get_stylesheet_directory_uri()."/images/logo_icon.png"; ?>';
-		      	//Generate marker
-		      	var marker = new google.maps.Marker({
+			<script>
+				//Get Latitude and Longitude
+				var myLatLng = {lat: <?php echo $event_lat; ?>, lng: <?php echo $event_lng; ?>};
+				//Generate Map
+				var map = new google.maps.Map(document.getElementById('event-map'), {
+					center: myLatLng,
+					zoom: 10
+					});
+				//Generate content for map infowindow
+				var contentString = 
+						'<h4 class="mapHeading"><?php echo $event_venue; ?></h4>';
+					//Generate infowindow
+					var infowindow = new google.maps.InfoWindow({
+						content: contentString
+					});
+					//Custom image marker
+					var image = '<?php echo get_stylesheet_directory_uri()."/images/logo_icon.png"; ?>';
+					//Generate marker
+					var marker = new google.maps.Marker({
 					position: myLatLng,
 					map: map,
 					title: '<?php echo $event_venue; ?>'
-		        });
-		        //Open infowindow when a user clicks the marker
-		        marker.addListener('click', function() {
-		          infowindow.open(map, marker);
-		        });
-		    </script>
+					});
+					//Open infowindow when a user clicks the marker
+					marker.addListener('click', function() {
+						infowindow.open(map, marker);
+					});
+			</script>
+			<noscript>
+				<h3 class="noscript">JavaScript needs to be enabled in order to see the map.</h3>
+			</noscript>
 		<?php } ?>
 	</section><!-- .map -->
 

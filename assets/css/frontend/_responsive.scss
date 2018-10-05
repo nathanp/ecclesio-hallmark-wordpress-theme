@@ -70,6 +70,21 @@ button.hamburger {
 .js-off-canvas-overlay.is-overlay-fixed {
 }
 
+/*Off-Canvas Menu*/
+.off-canvas-content {
+  -webkit-transition: -webkit-transform 0.5s ease;
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.position-right.is-open ~ .off-canvas-content {
+  -webkit-transform: translateX(-250px);
+  transform: translateX(-250px);
+}
+
 @media screen and (max-width: 1024px) {
   /*Header*/
   header.header {

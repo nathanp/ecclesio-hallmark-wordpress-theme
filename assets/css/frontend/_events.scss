@@ -47,6 +47,18 @@
   }
 }
 
+.map {
+  position: relative;
+  .noscript {
+    color: $black;
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    left: 0;
+    right: 0;
+  }
+}
+
 #event-map {
   display: block;
   width: 100%;
