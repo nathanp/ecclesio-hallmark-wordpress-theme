@@ -993,7 +993,6 @@ add_action( 'wp_head', 'ecclesio_customizer_empty_style' );
  * Print Empty Color CSS
  */
 function ecclesio_customizer_empty_style(){
- 
     /* Add in Customizer Only (style tag placeholder for link color). */
     global $wp_customize;
     if ( isset( $wp_customize ) ){
@@ -1010,7 +1009,7 @@ function ecclesio_iris_palette() {
 	/* Add in Customizer Only */
 	global $wp_customize;
 	if ( isset( $wp_customize ) ){
-		wp_enqueue_script( 'ecclesio-customizer-iris-palette', get_template_directory_uri() . '/js/ecclesio-customizer-iris-palette.js');
+		wp_enqueue_script( 'ecclesio-customizer-iris-palette', get_template_directory_uri() . '/js/admin/ecclesio-customizer-iris-palette.js');
 	}
 }
 
@@ -1019,7 +1018,6 @@ function ecclesio_iris_palette() {
  * https://wordpress.stackexchange.com/questions/181905/remove-the-widgets-tab-from-theme-customizer
  */
 function ecclesio_edit_customizer_sections( $wp_customize ) {
-	
 	$wp_customize->remove_section( 'static_front_page' );
 	$wp_customize->remove_section( 'themes' );
 	$wp_customize->remove_section( 'colors' );

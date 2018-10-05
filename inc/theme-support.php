@@ -17,11 +17,11 @@ function ecclesio_theme_support() {
 	
 	// Add HTML5 Support
 	add_theme_support( 'html5', 
-	         array( 
-	         	'comment-list', 
-	         	'comment-form', 
-	         	'search-form', 
-	         ) 
+		array( 
+			'comment-list', 
+			'comment-form', 
+			'search-form', 
+		) 
 	);
 	
 	// Adding post format support

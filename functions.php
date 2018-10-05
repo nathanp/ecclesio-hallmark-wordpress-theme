@@ -15,7 +15,7 @@ require_once (get_template_directory() . '/church-theme-framework/framework.php'
 require_once(get_template_directory().'/inc/church-theme-content.php');
 
 // Theme support options
-require_once(get_template_directory().'/assets/functions/theme-support.php'); 
+require_once(get_template_directory().'/inc/theme-support.php'); 
 
 /**
  * Include our Customizer settings.
@@ -24,14 +24,14 @@ require get_template_directory() . '/inc/customizer/class-ecclesio-hallmark-cust
 new Ecclesio_Hallmark_Customizer();
 
 // WP Head and other cleanup functions
-require_once(get_template_directory().'/assets/functions/cleanup.php');
+require_once(get_template_directory().'/inc/cleanup.php');
 
 // Advanced Custom Fields
 require_once(get_template_directory().'/inc/acf.php');
 
 
 // Register custom menus and menu walkers
-require_once(get_template_directory().'/assets/functions/menu.php');
+require_once(get_template_directory().'/inc/menu.php');
 /**
  * Register Menus
  * http://codex.wordpress.org/Function_Reference/register_nav_menus#Examples
@@ -59,30 +59,30 @@ function ecclesio_ultimatefonts_setup() {
 }
 
 // Register scripts and stylesheets
-require_once(get_template_directory().'/assets/functions/enqueue-scripts.php'); 
+require_once(get_template_directory().'/inc/enqueue-scripts.php'); 
 
 // Sermon Functions
 require_once(get_template_directory().'/inc/sermons.php'); 
 
 // Register sidebars/widget areas
-require_once(get_template_directory().'/assets/functions/sidebar.php'); 
+require_once(get_template_directory().'/inc/sidebar.php'); 
 
 // Makes WordPress comments suck less
-require_once(get_template_directory().'/assets/functions/comments.php'); 
+require_once(get_template_directory().'/inc/comments.php'); 
 
 // Replace 'older/newer' post links with numbered navigation
-require_once(get_template_directory().'/assets/functions/page-navi.php'); 
+require_once(get_template_directory().'/inc/page-navi.php'); 
 
 // Adds support for multiple languages
 //require_once(get_template_directory().'/assets/translation/translation.php'); 
 
 // Remove 4.2 Emoji Support
-// require_once(get_template_directory().'/assets/functions/disable-emoji.php'); 
+// require_once(get_template_directory().'/inc/disable-emoji.php'); 
 
 // Adds site styles to the WordPress editor
-//require_once(get_template_directory().'/assets/functions/editor-styles.php'); 
+//require_once(get_template_directory().'/inc/editor-styles.php'); 
 
 // Related post function - no need to rely on plugins
-// require_once(get_template_directory().'/assets/functions/related-posts.php'); 
+// require_once(get_template_directory().'/inc/related-posts.php'); 
 
 ?>

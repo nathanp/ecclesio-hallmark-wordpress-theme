@@ -46,8 +46,8 @@ jQuery(function() {
   });
 
   /*
-     * Style header on scroll
-     */
+  * Style header on scroll
+  */
   var $window = jQuery(window);
   var nav = jQuery(".header");
   $window.scroll(function() {
@@ -121,4 +121,19 @@ jQuery(function() {
   })(jQuery);
 
   //jQuery(".timeline-container").timeline();
+});
+
+jQuery(document).ready(function() {
+  // Adds Flex Video to YouTube and Vimeo Embeds
+  jQuery('iframe[src*="youtube.com"], iframe[src*="vimeo.com"]').each(
+    function() {
+      if (jQuery(this).innerWidth() / jQuery(this).innerHeight() > 1.5) {
+        jQuery(this).wrap(
+          "<div class='embed-responsive embed-responsive-16by9'/>"
+        );
+      } else {
+        jQuery(this).wrap("<div class='embed-responsive'/>");
+      }
+    }
+  );
 });

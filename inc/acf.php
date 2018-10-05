@@ -62,13 +62,5 @@
 		    }//if
 		}//if
 	}//ecclesio_sync_acf_fields
-
-	//ACF - Don't load date or timepickers - Fixes conflict with Church Theme Content plugin
-	function ecclesio_acf_init() {
-		// need this to only run on the Church Theme Content screens
-		acf_update_setting('enqueue_datepicker', false);
-		acf_update_setting('enqueue_datetimepicker', false);
-	}
 	
-	add_action('acf/init', 'ecclesio_acf_init');
 ?>
