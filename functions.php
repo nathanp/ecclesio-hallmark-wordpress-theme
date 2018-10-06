@@ -29,7 +29,6 @@ require_once(get_template_directory().'/inc/cleanup.php');
 // Advanced Custom Fields
 require_once(get_template_directory().'/inc/acf.php');
 
-
 // Register custom menus and menu walkers
 require_once(get_template_directory().'/inc/menu.php');
 /**
@@ -39,20 +38,20 @@ require_once(get_template_directory().'/inc/menu.php');
 
 /* Google Fonts for the Customizer
  * For now, rely on Ultimate Fonts plugin - https://wordpress.org/plugins/ultimate-fonts
- * See https://wpultimatefonts.com/docs/integrate-ultimatefonts-into-your-wordpress-theme/
+ * See https://wpultimatefonts.com/docs/integration/
  */
 add_action( 'after_setup_theme', 'ecclesio_ultimatefonts_setup' );
 function ecclesio_ultimatefonts_setup() {
     add_theme_support( 'ultimate-fonts', array(
-        'no_settings'      => false, // Disable the plugin settings page
+        'no_settings'      => true, // Disable the plugin settings page
         'default_elements' => array(
             array(
                 'label'    => esc_html__( 'Heading Font', 'ecclesio' ),
-                'selector' => 'h1, h2, h3, h4, h5, h6, button, .button, #menu-main-menu-1 li, #menu-main-menu.vertical, #breadcrumbs,#sermon-latest .text-container .meta,.tabs-sermon .tabs-title,.tabs-sermon .link-title,#listing article .thumb .overlay,.event-meta,.footer-top'
+                'selector' => '.btn',
             ),
             array(
                 'label'    => esc_html__( 'Body Font', 'ecclesio' ),
-                'selector' => 'body,p,#purpose, #purpose .statement,#staff li h4'
+                'selector' => 'body,p,#purpose, #purpose .statement,#staff li h4',
             ),
         ),
     ) );

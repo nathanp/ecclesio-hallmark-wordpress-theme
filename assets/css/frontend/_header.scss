@@ -26,11 +26,13 @@ header.header {
 
 /* Text Logo */
 h1.site-title {
-  font-size: 2em;
-  margin: 0;
+  font-size: 1.25em;
   font-weight: 600;
-  height: 84px;
-  line-height: 2.5em;
+  text-transform: uppercase;
+  line-height: 1.5em;
+  height: auto;
+  margin: 19px 0px;
+
   -webkit-transition: all 400ms ease-in-out;
   -moz-transition: all 400ms ease-in-out;
   -ms-transition: all 400ms ease-in-out;
@@ -46,9 +48,7 @@ header.header.scroll {
     width: 180px;
   }
   h1.site-title {
-    font-size: 1.5em;
-    line-height: 2em;
-    height: auto;
+    font-size: 1em;
   }
 }
 

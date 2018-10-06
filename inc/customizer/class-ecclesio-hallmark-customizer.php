@@ -965,14 +965,25 @@ function ecclesio_customizer_css() {
 	$color_footer = get_theme_mod( 'ecclesio_color_footer', '#4a4a4a' );
 
 	// Generate CSS
-	//Main Color
-	$css .= '#menu-main-menu-1 .submenu li a:hover, .footer-top, .off-canvas, button.hamburger .hamburger-inner, button.hamburger .hamburger-inner:after, button.hamburger .hamburger-inner:before, .pagination .current, .button { background-color: ' . $color_main . '; }';
-	$css .= 'a, #menu-main-menu-1 > li.active > a, #menu-main-menu-1 li a:hover, #listing article .card .button:active, #listing article .card .button:focus, #listing article .card .button:hover, .button.outline-white:hover, .button.outline-white:active, .button.outline-white:focus, .tabs-sermon .tabs-title.is-active a { color: ' . $color_main . '; }';
-	$css .= '.dropdown.menu.medium-horizontal>li.is-dropdown-submenu-parent>a:after { border-color: ' . $color_main . ' transparent transparent; }';
-	//Accent Color
-	$css .= 'a:focus, a:hover { color: ' . $color_accent . '; }';
-	$css .= '#purpose, #sermon-latest .text-container .button { border-color: ' . $color_accent . '; }';
+
+	// BRAND COLOR - PRIMARY
+	// Background color
+	$css .= '.footer-top, input[type="submit"], button.hamburger .hamburger-inner, button.hamburger .hamburger-inner:after, button.hamburger .hamburger-inner:before, button.hamburger .hamburger-inner:hover .hamburger-inner, button.hamburger .hamburger-inner:hover .hamburger-inner:after, button.hamburger .hamburger-inner:hover .hamburger-inner:before, .off-canvas #menu-main-menu, .timeline__content-title { background-color: ' . $color_main . '; }';
+	// Text color
+	$css .= 'a, #listing article .card .btn:active, #listing article .card .btn:focus, #listing article .card .btn:hover, #top-bar-menu .desktop .nav li a:hover, #top-bar-menu .desktop .nav > li.active > a, .tabs-sermon .link-title .nav-link.active { color: ' . $color_main . '; }';
+	// Border color
+	$css .= '.gform_wrapper input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):focus, .gform_wrapper input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):active, .gform_wrapper textarea:active, .gform_wrapper textarea:focus, .timeline-item:before, .timeline-item:nth-child(even):before { border-color: ' . $color_main . ' transparent transparent; }';
+	// Dropdown arrow
+	$css .= '#top-bar-menu .desktop .nav li .dropdown-toggle::after { border-top-color: ' . $color_main . '; }';
+
+	// BRAND COLOR - SECONDARY
+	// Background color
 	$css .= '.home #banner .button-group li a.button:hover, .home #banner .button-group li a.button:focus, .home #banner .button-group li a.button:active, #sermon-latest .text-container h5, #sermon-latest .text-container .button:hover, #sermon-latest .text-container .button:active, #sermon-latest .text-container .button:focus, button.hamburger:hover .hamburger-inner, button.hamburger:hover .hamburger-inner:after, button.hamburger:hover .hamburger-inner:before { background-color: ' . $color_accent . '; }';
+	// Text color
+	$css .= 'a:focus, a:hover { color: ' . $color_accent . '; }';
+	// Border color
+	$css .= '#purpose, #sermon-latest .text-container .button { border-color: ' . $color_accent . '; }';
+	
 	//Banner Color
 	$css .= '#banner .overlay { background: rgba('.$r.', '.$g.', '.$b.', 0.75); }';
 	//Foter Color
