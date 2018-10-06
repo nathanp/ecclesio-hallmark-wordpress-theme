@@ -2,26 +2,22 @@
 			
 <div id="content">
 
-	<div id="inner-content" class="row">
-
-		<main id="main" class="large-8 medium-8 columns" role="main">
+	<div id="inner-content" class="container">
+		<div class="row justify-content-md-center">
+			<main id="main" class="col-md-8 col-sm-12" role="main">
 		
-		    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-		
-		    	<?php get_template_part( 'parts/loop', 'single' ); ?>
-		    	
-		    <?php endwhile; else : ?>
-		
-		   		<?php get_template_part( 'parts/content', 'missing' ); ?>
+				<?php if (have_posts()) : while (have_posts()) : the_post();
+					get_template_part( 'parts/loop', 'single' );
+				endwhile; else :
+					get_template_part( 'parts/content', 'missing' );
+				endif; ?>
 
-		    <?php endif; ?>
+			</main> <!-- end #main -->
 
-		</main> <!-- end #main -->
+			<?php get_sidebar(); ?>
 
-		<?php get_sidebar(); ?>
-
-	</div> <!-- end #inner-content -->
-
-</div> <!-- end #content -->
+		</div><!-- .row -->
+	</div> <!-- #inner-content -->
+</div> <!-- #content -->
 
 <?php get_footer(); ?>
