@@ -44,7 +44,7 @@ function ecclesio_scripts() {
   wp_enqueue_style('ecclesio-font-awesome', '//use.fontawesome.com/releases/v5.3.1/css/all.css');
 
   // Live preview CSS changes
-  wp_add_inline_style( 'ecclesio-responsive', ecclesio_customizer_css() ); //class-ecclesio-hallmark-customizer.php
+  wp_add_inline_style( 'ecclesio-css', ecclesio_customizer_css() ); //class-ecclesio-hallmark-customizer.php
 
   // Adding Bootstrap scripts file in the footer
   wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/dependencies/bootstrap/js/bootstrap.bundle.min.js', array( 'jquery' ), '4.1.3', true );

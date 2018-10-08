@@ -968,17 +968,17 @@ function ecclesio_customizer_css() {
 
 	// BRAND COLOR - PRIMARY
 	// Background color
-	$css .= '.footer-top, input[type="submit"], button.hamburger .hamburger-inner, button.hamburger .hamburger-inner:after, button.hamburger .hamburger-inner:before, button.hamburger .hamburger-inner:hover .hamburger-inner, button.hamburger .hamburger-inner:hover .hamburger-inner:after, button.hamburger .hamburger-inner:hover .hamburger-inner:before, .off-canvas #menu-main-menu, .timeline__content-title { background-color: ' . $color_main . '; }';
+	$css .= '.off-canvas, .footer-top, input[type="submit"], button.hamburger .hamburger-inner, button.hamburger .hamburger-inner:after, button.hamburger .hamburger-inner:before, button.hamburger .hamburger-inner:hover .hamburger-inner, button.hamburger .hamburger-inner:hover .hamburger-inner:after, button.hamburger .hamburger-inner:hover .hamburger-inner:before, .off-canvas #menu-main-menu, .timeline__content-title, .nav-pills .nav-link.active, .nav-pills .show>.nav-link, .page-item.active .page-link, .btn-primary { background-color: ' . $color_main . '; }';
 	// Text color
-	$css .= 'a, #listing article .card .btn:active, #listing article .card .btn:focus, #listing article .card .btn:hover, #top-bar-menu .desktop .nav li a:hover, #top-bar-menu .desktop .nav > li.active > a, .tabs-sermon .link-title .nav-link.active { color: ' . $color_main . '; }';
+	$css .= 'a, #listing article .card .btn:active, .btn-outline-light:active, .btn-outline-light:focus, .btn-outline-light:hover, #listing article .card .btn:focus, #listing article .card .btn:hover, #top-bar-menu .desktop .nav li a:hover, #top-bar-menu .desktop .nav > li.active > a, .tabs-sermon .link-title .nav-link.active, .page-link, .page-link:hover { color: ' . $color_main . '; }';
 	// Border color
-	$css .= '.gform_wrapper input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):focus, .gform_wrapper input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):active, .gform_wrapper textarea:active, .gform_wrapper textarea:focus, .timeline-item:before, .timeline-item:nth-child(even):before { border-color: ' . $color_main . ' transparent transparent; }';
+	$css .= '.gform_wrapper input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):focus, .gform_wrapper input:not([type="radio"]):not([type="checkbox"]):not([type="submit"]):not([type="button"]):not([type="image"]):not([type="file"]):active, .gform_wrapper textarea:active, .gform_wrapper textarea:focus, .timeline-item:before, .timeline-item:nth-child(even):before, .page-item.active .page-link, .btn-primary { border-color: ' . $color_main . ' transparent transparent; }';
 	// Dropdown arrow
 	$css .= '#top-bar-menu .desktop .nav li .dropdown-toggle::after { border-top-color: ' . $color_main . '; }';
 
 	// BRAND COLOR - SECONDARY
 	// Background color
-	$css .= '.home #banner .button-group li a.button:hover, .home #banner .button-group li a.button:focus, .home #banner .button-group li a.button:active, #sermon-latest .text-container h5, #sermon-latest .text-container .button:hover, #sermon-latest .text-container .button:active, #sermon-latest .text-container .button:focus, button.hamburger:hover .hamburger-inner, button.hamburger:hover .hamburger-inner:after, button.hamburger:hover .hamburger-inner:before { background-color: ' . $color_accent . '; }';
+	$css .= '.home #banner .button-group li a.button:hover, .home #banner .button-group li a.button:focus, .home #banner .button-group li a.button:active, #sermon-latest .text-container h5, #sermon-latest .text-container .button:hover, #sermon-latest .text-container .button:active, #sermon-latest .text-container .button:focus, button.hamburger:hover .hamburger-inner, button.hamburger:hover .hamburger-inner:after, button.hamburger:hover .hamburger-inner:before, #sermon-latest .text-container .btn:active, #sermon-latest .text-container .btn:focus, #sermon-latest .text-container .btn:hover, .page-template-template-home #banner .btn-group a.btn:active, .page-template-template-home #banner .btn-group a.btn:focus, .page-template-template-home #banner .btn-group a.btn:hover { background-color: ' . $color_accent . '; }';
 	// Text color
 	$css .= 'a:focus, a:hover { color: ' . $color_accent . '; }';
 	// Border color
@@ -987,10 +987,11 @@ function ecclesio_customizer_css() {
 	//Banner Color
 	$css .= '#banner .overlay { background: rgba('.$r.', '.$g.', '.$b.', 0.75); }';
 	//Foter Color
-	$css .= 'footer.footer { background-color: '. $color_footer .'; }';
+	$css .= 'footer.footer, .off-canvas .navbar-nav .dropdown-menu { background-color: '. $color_footer .'; }';
 	$css .= '.footer-top .social a:hover { color: '. $color_footer .'; }';
 	// Return CSS
 	return $css;
+	print_r('elo');
 }
 
 /* 
