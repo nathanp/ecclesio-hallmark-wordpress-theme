@@ -96,9 +96,27 @@
   wp.customize("ecclesio_color_banner", function(value) {
     value.bind(function(to) {
       var color_banner =
-        "#banner .overlay { background: " + hexToRGB(to, 0.75) + "; }";
+        "#banner .overlay { background: " +
+        hexToRGB(
+          to,
+          wp.customize.instance("ecclesio_color_banner_opacity").get()
+        ) +
+        "; }";
       //Put in the preview-only CSS
       $("#ecclesio-customizer-preview").append(color_banner);
+    });
+  }); //wp.customize
+
+  // BANNER OPACITY
+  // Selective refresh the site's banner opacity
+  wp.customize("ecclesio_color_banner_opacity", function(value) {
+    value.bind(function(to) {
+      var color_banner_opacity =
+        "#banner .overlay { background: " +
+        hexToRGB(wp.customize.instance("ecclesio_color_banner").get(), to) +
+        "; }";
+      //Put in the preview-only CSS
+      $("#ecclesio-customizer-preview").append(color_banner_opacity);
     });
   }); //wp.customize
 

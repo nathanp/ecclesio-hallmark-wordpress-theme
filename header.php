@@ -9,9 +9,9 @@
 		<!-- Mobile Meta -->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta class="foundation-mq">
-
+		<?php $color_main = get_theme_mod( 'ecclesio_color_main', '#358fcd' ); ?>
 		<!-- Chrome, Firefox OS and Opera -->
-		<meta name="theme-color" content="#4285f4">
+		<meta name="theme-color" content="<?php echo $color_main; ?>">
 
 		<!-- If Site Icon isn't set in customizer -->
 		<?php if ( ! function_exists( 'has_site_icon' ) || ! has_site_icon() ) { ?>
@@ -21,7 +21,7 @@
 			<!--[if IE]>
 				<link rel="shortcut icon" href="<?php echo get_template_directory_uri(); ?>/favicon.ico">
 			<![endif]-->
-			<meta name="msapplication-TileColor" content="#4285f4">
+			<meta name="msapplication-TileColor" content="<?php echo $color_main; ?>">
 			<meta name="msapplication-TileImage" content="<?php echo get_template_directory_uri(); ?>/assets/images/win8-tile-icon.png">
 	    	
 	    <?php } ?>
@@ -31,13 +31,9 @@
 		<?php wp_head(); ?>
 	</head>
 	<body <?php body_class(); ?>>
-
 		<div class="off-canvas-wrapper">
-							
 			<?php get_template_part( 'parts/content', 'offcanvas' ); ?>
-			
 			<div class="off-canvas-content" data-off-canvas-content>
-				
 				<header class="header" role="banner">
 					 <?php get_template_part( 'parts/nav', 'offcanvas-topbar' ); ?>
 				</header> <!-- end .header -->

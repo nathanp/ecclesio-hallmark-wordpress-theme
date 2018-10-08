@@ -47,7 +47,7 @@ function ecclesio_ultimatefonts_setup() {
         'default_elements' => array(
             array(
                 'label'    => esc_html__( 'Heading Font', 'ecclesio' ),
-                'selector' => '.btn',
+                'selector' => 'h1,h2,h3,h4,h5,h6,button,.button,.btn,#menu-main-menu-1 li,#menu-main-menu,#breadcrumbs,.tabs-sermon .tabs-title,.tabs-sermon .link-title,.beautiful-taxonomy-filters label,#listing article .thumb .overlay,.thumbnail .overlay,.event-meta,.timeline-item:before,.footer-top,.gform_wrapper label.gfield_label',
             ),
             array(
                 'label'    => esc_html__( 'Body Font', 'ecclesio' ),

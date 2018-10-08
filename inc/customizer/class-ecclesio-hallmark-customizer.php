@@ -516,6 +516,25 @@ class Ecclesio_Hallmark_Customizer {
 				'settings' => $setting,
 				'priority' => 10
 			) ) );
+		/* Banner Opacity */
+		$setting = 'ecclesio_color_banner_opacity';
+		$wp_customize->add_setting( $setting, array(
+			'type' 				=> 'theme_mod',
+			'transport'			=> 'postMessage',
+			'default'           => '0.75'
+		) );
+			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
+				'label'    => esc_html__( 'Banner Color Opacity', 'ecclesio-hallmark-theme' ),
+				'section'  => $section,
+				'settings' => $setting,
+				'priority' => 10,
+				'type'		=> 'number',
+				'input_attrs' => array(
+					'min' => '0.01',
+					'max' => '1.00',
+					'step' => '0.01'
+				  )
+			) ) );
 		/* Footer Color */
 		$setting = 'ecclesio_color_footer';
 		$wp_customize->add_setting( $setting, array(
@@ -833,6 +852,15 @@ class Ecclesio_Hallmark_Customizer {
 		return ( $input === true ) ? true : false;
 	}
 
+
+	/**
+	 * Sanitize Float
+	 * 
+	 */
+	public function sanitize_float( $input ) {
+		return filter_var($input, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+	}
+
 } //Ecclesio_Hallmark_Customizer
 
 /*
@@ -962,6 +990,7 @@ function ecclesio_customizer_css() {
 	$color_accent = get_theme_mod( 'ecclesio_color_accent', '#f8981d' );
 	$color_banner = get_theme_mod( 'ecclesio_color_banner', '#016CC5' );
 		list($r, $g, $b) = sscanf($color_banner, "#%02x%02x%02x");
+	$color_banner_opacity = get_theme_mod( 'ecclesio_color_banner_opacity', '0.75' );
 	$color_footer = get_theme_mod( 'ecclesio_color_footer', '#4a4a4a' );
 
 	// Generate CSS
@@ -985,13 +1014,13 @@ function ecclesio_customizer_css() {
 	$css .= '#purpose, #sermon-latest .text-container .button { border-color: ' . $color_accent . '; }';
 	
 	//Banner Color
-	$css .= '#banner .overlay { background: rgba('.$r.', '.$g.', '.$b.', 0.75); }';
+	$css .= '#banner .overlay { background: rgba('.$r.', '.$g.', '.$b.', '.$color_banner_opacity.'); }';
+	
 	//Foter Color
 	$css .= 'footer.footer, .off-canvas .navbar-nav .dropdown-menu { background-color: '. $color_footer .'; }';
 	$css .= '.footer-top .social a:hover { color: '. $color_footer .'; }';
 	// Return CSS
 	return $css;
-	print_r('elo');
 }
 
 /* 
@@ -1119,4 +1148,4 @@ function ecclesio_fonts( $fonts_array ) {
  
     return $fonts_array;
 }
-add_filter('ultimate_fonts_fonts', 'ecclesio_fonts');
+//add_filter('ultimate_fonts_fonts', 'ecclesio_fonts');
