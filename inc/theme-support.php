@@ -43,24 +43,24 @@ function ecclesio_theme_support() {
 	 $header_info = array(
 	    'width'         => 1920,
 	    'height'        => 720,
-	    'default-image' => get_template_directory_uri() . '/images/demo_banner_worship.jpg',
+	    'default-image' => get_template_directory_uri() . '/assets/images/demo_banner_worship.jpg',
 	);
 	add_theme_support( 'custom-header', $header_info );
 	 
 	$header_images = array(
 	    'worship' => array(
-	            'url'           => get_template_directory_uri() . '/images/demo_banner_worship.jpg',
-	            'thumbnail_url' => get_template_directory_uri() . '/images/demo_banner_worship.jpg',
+	            'url'           => get_template_directory_uri() . '/assets/images/demo_banner_worship.jpg',
+	            'thumbnail_url' => get_template_directory_uri() . '/assets/images/demo_banner_worship.jpg',
 	            'description'   => 'Worship',
 	    ),
 	    'bible' => array(
-	            'url'           => get_template_directory_uri() . '/images/demo_banner_bible.jpg',
-	            'thumbnail_url' => get_template_directory_uri() . '/images/demo_banner_bible.jpg',
+	            'url'           => get_template_directory_uri() . '/assets/images/demo_banner_bible.jpg',
+	            'thumbnail_url' => get_template_directory_uri() . '/assets/images/demo_banner_bible.jpg',
 	            'description'   => 'Bible',
 	    ),
 	    'laughing' => array(
-	            'url'           => get_template_directory_uri() . '/images/demo_banner_laughing.jpg',
-	            'thumbnail_url' => get_template_directory_uri() . '/images/demo_banner_laughing.jpg',
+	            'url'           => get_template_directory_uri() . '/assets/images/demo_banner_laughing.jpg',
+	            'thumbnail_url' => get_template_directory_uri() . '/assets/images/demo_banner_laughing.jpg',
 	            'description'   => 'Laughing',
 	    ),
 	);

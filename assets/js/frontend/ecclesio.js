@@ -63,13 +63,17 @@ jQuery(function() {
   **/
   var $hamburger = jQuery(".hamburger");
   var $offCanvasMenu = jQuery("#off-canvas");
+  var $offCanvasOverlay = jQuery(".js-off-canvas-overlay");
 
   $hamburger.on("click", function(e) {
     $hamburger.toggleClass("is-active");
     $offCanvasMenu.toggleClass("is-open");
+    $offCanvasOverlay.toggleClass("active");
   });
-  jQuery(".js-off-canvas-overlay").on("click", function(e) {
+  $offCanvasOverlay.on("click", function(e) {
     $hamburger.toggleClass("is-active");
+    $offCanvasMenu.toggleClass("is-open");
+    $offCanvasOverlay.toggleClass("active");
   });
 
   /*

@@ -103,5 +103,6 @@
 			</div>  <!-- end .main-content -->
 		</div> <!-- end .off-canvas-wrapper -->
 		<?php wp_footer(); ?>
+		<div class="js-off-canvas-overlay"></div>
 	</body>
 </html> <!-- end page -->
