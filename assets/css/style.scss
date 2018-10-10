@@ -8,6 +8,8 @@
 @import "frontend/_ecclesio-hallmark-bootstrap";
 /* WordPress specific styling*/
 @import "frontend/_wordpress";
+/* WordPress Gutenberg specific styling*/
+@import "frontend/_gutenberg";
 /* Fonts */
 @import "frontend/_fonts";
 /* Forms */
@@ -100,6 +102,7 @@ blockquote p {
 
 #content {
   #inner-content {
-    padding: 1rem 0;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
   }
 }

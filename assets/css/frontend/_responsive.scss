@@ -137,6 +137,24 @@ button.hamburger {
 }
 
 @media screen and (max-width: 768px) {
+  /*Gutenberg*/
+  .wp-block-columns {
+    &.has-3-columns {
+      flex-direction: column;
+      .wp-block-column {
+        flex: 1 0 auto;
+        align-self: stretch;
+      }
+    }
+    &.has-4-columns {
+      flex-direction: row;
+      flex-wrap: wrap;
+      .wp-block-column {
+        flex-direction: column;
+        flex-basis: 50%;
+      }
+    }
+  }
   /*Headings*/
   h1 {
     font-size: 2rem;
@@ -148,11 +166,27 @@ button.hamburger {
     height: auto;
     font-size: 1.5em;
   }
+  /*Staff*/
   #staff li {
     width: 24.5%;
   }
+  /*Footer*/
   .footer-top p {
     font-size: 0.9em;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  /*Gutenberg*/
+  .wp-block-columns {
+    flex-direction: column;
+    &.has-4-columns {
+      flex-direction: column;
+    }
+    .wp-block-column {
+      flex: 1 0 auto;
+      align-self: stretch;
+    }
   }
 }
 
@@ -193,9 +227,6 @@ button.hamburger {
     width: 22vw;
     height: 22vw;
   }
-}
-
-@media screen and (max-width: 640px) {
 }
 
 @media screen and (max-width: 420px) {

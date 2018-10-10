@@ -77,12 +77,7 @@
 							$primary_book = $primary_book->get_primary_term();
 							$term = get_term( $primary_book );
 								$primary_book_name = $term->name;
-						}
-							elseif( !empty($sermon_books) ) {
-								$primary_book = $sermon_books[0]->term_id;
-								$primary_book_name = $sermon_books[0]->name;
-							}
-						if($primary_book) {
+
 							$primary_book = get_term($primary_book);
 							echo '<span><i class="fas fa-bible"></i> Book: <a href="'.get_term_link($primary_book).'">'.$primary_book_name.'</a></span>';
 						}
