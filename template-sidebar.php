@@ -10,22 +10,22 @@ Template Name: Sidebar
 
 	<div id="content">
 	
-		<div id="inner-content" class="row">
-			
-		    <main id="main" class="large-8 medium-8 small-12 columns" role="main">
+		<div id="inner-content" class="container">
+			<div class="row">
+		   	<main id="main" class="col-md-8 col-sm-12" role="main">
 				
-				<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
+					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
-			    	<?php get_template_part( 'parts/loop', 'page' ); ?>
+			    		<?php get_template_part( 'parts/loop', 'page' ); ?>
 			    
-			    <?php endwhile; endif; ?>							
+			    	<?php endwhile; endif; ?>							
 			    					
-			</main> <!-- end #main -->
+				</main> <!-- end #main -->
 
-			<?php get_sidebar(); ?>
-		    
-		</div> <!-- end #inner-content -->
-
-	</div> <!-- end #content -->
+				<?php get_sidebar(); ?>
+				
+			</div><!-- .row -->
+		</div> <!-- #inner-content -->
+	</div> <!-- #content -->
 
 <?php get_footer(); ?>

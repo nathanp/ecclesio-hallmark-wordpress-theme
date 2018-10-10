@@ -24,6 +24,16 @@
 				$banner_heading = "Search Results";
 				$banner_byline = '"'.get_search_query().'"';
 			}
+			elseif ( is_archive() ) {
+				$banner_heading = get_the_archive_title();
+				$banner_byline = get_the_archive_description();
+			}
+			elseif ( is_home() ) {
+				$post = $wp_query->get_queried_object();  
+    			$pagename = $post->post_name;  
+				$banner_heading = $pagename;
+				$banner_byline = null;
+			}
 			elseif( function_exists('get_field') ) {
 				if(get_field('header_primary_text')) {
 					$banner_heading = get_field('header_primary_text');	

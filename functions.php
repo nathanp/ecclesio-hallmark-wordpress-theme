@@ -3,7 +3,7 @@
 // Check for theme updates
 require(get_template_directory().'/inc/theme_update_check.php');
 $MyUpdateChecker = new ThemeUpdateChecker(
-    'ecclesio-hallmark-theme',
+    'ecclesio',
     'https://kernl.us/api/v1/theme-updates/590352595c8dfe786f92b50d/'
 );
 // $MyUpdateChecker->purchaseCode = "somePurchaseCode";  <---- Optional!

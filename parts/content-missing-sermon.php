@@ -21,11 +21,11 @@
 	<?php else: ?>
 	
 		<header class="article-header">
-			<h1><?php _e( 'No sermons found.', 'jointswp' ); ?></h1>
+			<h1><?php _e( 'No sermons found.', 'ecclesio' ); ?></h1>
 		</header>
 		
 		<section class="entry-content">
-			<p><?php _e( 'Uh Oh. Something is missing. Try double checking things or clearing some of your filters.', 'jointswp' ); ?></p>
+			<p><?php _e( 'Uh Oh. Something is missing. Try double checking things or clearing some of your filters.', 'ecclesio' ); ?></p>
 		</section>
 			
 	<?php endif; ?>

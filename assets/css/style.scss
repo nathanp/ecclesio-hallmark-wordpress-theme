@@ -6,6 +6,8 @@
 @import "../../dependencies/bootstrap/scss/bootstrap";
 /* Bootstrap Overrides and Customizations */
 @import "frontend/_ecclesio-hallmark-bootstrap";
+/* WordPress specific styling*/
+@import "frontend/_wordpress";
 /* Fonts */
 @import "frontend/_fonts";
 /* Forms */
@@ -36,9 +38,22 @@
 @import "frontend/_responsive";
 
 /* General */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  -ms-word-wrap: break-word;
+  word-wrap: break-word;
+}
+
+img {
+  max-width: 100%;
+}
 p,
 #inner-content ul {
-  font-size: 1.15em;
+  font-size: 1.15rem;
 }
 
 .flex-center {

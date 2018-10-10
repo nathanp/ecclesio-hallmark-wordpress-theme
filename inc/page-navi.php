@@ -40,11 +40,11 @@ function joints_page_navi($before = '', $after = '') {
 	}
 	echo $before.'<nav aria-label="Page navigation" class="pagination-container"><ul class="pagination justify-content-center">'."";
 	if ($start_page >= 2 && $pages_to_show < $max_page) {
-		$first_page_text = __( 'First', 'jointswp' );
+		$first_page_text = __( 'First', 'ecclesio' );
 		echo '<li class="page-item"><a class="page-link" href="'.get_pagenum_link().'" title="'.$first_page_text.'">'.$first_page_text.'</a></li>';
 	}
 	echo '<li class="page-item">';
-	previous_posts_link( __('Previous', 'jointswp') );
+	previous_posts_link( __('Previous', 'ecclesio') );
 	echo '</li>';
 	for($i = $start_page; $i  <= $end_page; $i++) {
 		if($i == $paged) {
@@ -54,10 +54,10 @@ function joints_page_navi($before = '', $after = '') {
 		}
 	}
 	echo '<li class="page-item">';
-	next_posts_link( __('Next', 'jointswp'), 0 );
+	next_posts_link( __('Next', 'ecclesio'), 0 );
 	echo '</li>';
 	if ($end_page < $max_page) {
-		$last_page_text = __( 'Last', 'jointswp' );
+		$last_page_text = __( 'Last', 'ecclesio' );
 		echo '<li class="page-item"><a class="page-link" href="'.get_pagenum_link($max_page).'" title="'.$last_page_text.'">'.$last_page_text.'</a></li>';
 	}
 	echo '</ul></nav>'.$after."";

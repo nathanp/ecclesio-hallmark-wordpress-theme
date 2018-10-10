@@ -5,7 +5,7 @@
  *
  * Add custom sections and settings to the Customizer.
  *
- * @package   ecclesio-hallmark-theme
+ * @package   ecclesio
  * @copyright Copyright (c) 2017, Eccles.io
  * @license   GPL2+
  */
@@ -41,7 +41,7 @@ class Ecclesio_Hallmark_Customizer {
 
 		// Yoast SEO
 		$wp_customize->add_section( 'wpseo_breadcrumbs_customizer_section' , array(
-			'title'		=> __('Breadcrumbs','ecclesio-hallmark-theme'),
+			'title'		=> __('Breadcrumbs','ecclesio'),
 			'priority'	=> 120,
 		));
 
@@ -51,34 +51,34 @@ class Ecclesio_Hallmark_Customizer {
 
 		// New section for "Church Information".
 		$wp_customize->add_section( 'ecclesio_church_info', array(
-			'title'    => __( 'Church Info', 'ecclesio-hallmark-theme' ),
+			'title'    => __( 'Church Info', 'ecclesio' ),
 			'priority' => 101
 		) );
 		// New section for "Church Information".
 		$wp_customize->add_section( 'ecclesio_church_social', array(
-			'title'    => __( 'Social Media', 'ecclesio-hallmark-theme' ),
+			'title'    => __( 'Social Media', 'ecclesio' ),
 			'priority' => 102
 		) );
 		// New section for "Colors".
 		$wp_customize->add_section( 'ecclesio_theme_colors', array(
-			'title'    => __( 'Theme Colors', 'ecclesio-hallmark-theme' ),
+			'title'    => __( 'Theme Colors', 'ecclesio' ),
 			'priority' => 20
 		) );
 		// New section for "Sermon Archive Options".
 		$wp_customize->add_section( 'ecclesio_church_sermons', array(
-			'title'    => __( 'Sermon Archive', 'ecclesio-hallmark-theme' ),
+			'title'    => __( 'Sermon Archive', 'ecclesio' ),
 			'active_callback' => 'is_archive_sermons',
 			'priority' => 19 //place above "Site Identity"
 		) );
 		// New section for "Event Archive Options".
 		$wp_customize->add_section( 'ecclesio_church_events', array(
-			'title'    => __( 'Event Archive', 'ecclesio-hallmark-theme' ),
+			'title'    => __( 'Event Archive', 'ecclesio' ),
 			'active_callback' => 'is_archive_events',
 			'priority' => 19 //place above "Site Identity"
 		) );
 		// New section for "Footer".
 		$wp_customize->add_section( 'ecclesio_church_footer', array(
-			'title'    => __( 'Footer Options', 'ecclesio-hallmark-theme' ),
+			'title'    => __( 'Footer Options', 'ecclesio' ),
 			'priority' => 190 //place above "Additional CSS"
 		) );
 
@@ -112,8 +112,8 @@ class Ecclesio_Hallmark_Customizer {
 			
 		) );
 			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
-		    	'label'    => __( 'Site Logo', 'ecclesio-hallmark-theme' ),
-		    	'description' => __( 'Recommended format: transparent PNG or SVG. <br />Recommended dimensions: <strong>240x80px</strong>', 'ecclesio-hallmark-theme' ),
+		    	'label'    => __( 'Site Logo', 'ecclesio' ),
+		    	'description' => __( 'Recommended format: transparent PNG or SVG. <br />Recommended dimensions: <strong>240x80px</strong>', 'ecclesio' ),
 				'section'  => $section,
 				'settings' => $setting,
 			) ) );
@@ -141,11 +141,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'ecclesio_church_phone', array(
-				'label'       => esc_html__( 'Church Phone Number', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Church Phone Number', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => '(XXX) XXX-XXXX'
 			    ),
-				'description' => esc_html__( 'Type the main contact number for your church.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Type the main contact number for your church.', 'ecclesio' ),
 				'section'     => 'ecclesio_church_info',
 				'settings'    => 'ecclesio_church_phone',
 				'type'        => 'text',
@@ -170,11 +170,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, 'ecclesio_church_address', array(
-				'label'       => esc_html__( 'Church Address', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Church Address', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'Street, City, State, ZIP'
 			    ),
-				'description' => esc_html__( 'Type the full address for your church.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Type the full address for your church.', 'ecclesio' ),
 				'section'     => 'ecclesio_church_info',
 				'settings'    => 'ecclesio_church_address',
 				'type'        => 'text',
@@ -199,11 +199,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Service Times Heading', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Service Times Heading', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'Sunday Service Times'
 			    ),
-				'description' => esc_html__( 'This will go in the colored bar in your footer.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'This will go in the colored bar in your footer.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -228,11 +228,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Service Times', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Service Times', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => ''
 			    ),
-				'description' => esc_html__( 'This will go in the colored bar in your footer.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'This will go in the colored bar in your footer.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -273,11 +273,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Facebook URL', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Facebook URL', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'https://www.facebook.com/hallmarkbc/'
 			    ),
-				'description' => esc_html__( 'Enter the full URL for your Facebook page.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Enter the full URL for your Facebook page.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -295,11 +295,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Instagram URL', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Instagram URL', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'https://www.instagram.com/hallmarkbaptist/'
 			    ),
-				'description' => esc_html__( 'Enter the full URL for your Instagram profile.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Enter the full URL for your Instagram profile.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -317,11 +317,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Twitter URL', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Twitter URL', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'https://twitter.com/hallmarkbc'
 			    ),
-				'description' => esc_html__( 'Enter the full URL for your Twitter profile.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Enter the full URL for your Twitter profile.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -339,11 +339,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Google+ URL', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Google+ URL', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'https://plus.google.com/+HallmarkBaptistChurchFortWorth'
 			    ),
-				'description' => esc_html__( 'Enter the full URL for your Google+ profile.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Enter the full URL for your Google+ profile.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -361,11 +361,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'iTunes Podcast URL', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'iTunes Podcast URL', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'https://itunes.apple.com/us/podcast/hallmark-baptist-church/id988947559?mt=2'
 			    ),
-				'description' => esc_html__( 'Enter the full URL for your iTunes podcast', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Enter the full URL for your iTunes podcast', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -383,11 +383,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Snapchat URL', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Snapchat URL', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'https://www.snapchat.com/add/username'
 			    ),
-				'description' => esc_html__( 'Enter the full URL for your Snapchat profile.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Enter the full URL for your Snapchat profile.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -405,11 +405,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Spotify URL', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Spotify URL', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'http://open.spotify.com/user/yourusername'
 			    ),
-				'description' => esc_html__( 'Enter the full URL for your Spotify profile.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Enter the full URL for your Spotify profile.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -427,11 +427,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Vimeo URL', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Vimeo URL', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'https://vimeo.com/username'
 			    ),
-				'description' => esc_html__( 'Enter the full URL for your Vimeo profile.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Enter the full URL for your Vimeo profile.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -449,11 +449,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'YouTube URL', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'YouTube URL', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'https://www.youtube.com/user/username/'
 			    ),
-				'description' => esc_html__( 'Enter the full URL for your YouTube profile.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Enter the full URL for your YouTube profile.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -483,7 +483,7 @@ class Ecclesio_Hallmark_Customizer {
 			'sanitize_callback' => 'sanitize_hex_color'
 		) );
 			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $setting, array(
-				'label'    => esc_html__( 'Main Color', 'ecclesio-hallmark-theme' ),
+				'label'    => esc_html__( 'Main Color', 'ecclesio' ),
 				'section'  => $section,
 				'settings' => $setting,
 				'priority' => 10
@@ -497,7 +497,7 @@ class Ecclesio_Hallmark_Customizer {
 			'sanitize_callback' => 'sanitize_hex_color'
 		) );
 			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $setting, array(
-				'label'    => esc_html__( 'Accent Color', 'ecclesio-hallmark-theme' ),
+				'label'    => esc_html__( 'Accent Color', 'ecclesio' ),
 				'section'  => $section,
 				'settings' => $setting,
 				'priority' => 10
@@ -511,7 +511,7 @@ class Ecclesio_Hallmark_Customizer {
 			'sanitize_callback' => 'sanitize_hex_color'
 		) );
 			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $setting, array(
-				'label'    => esc_html__( 'Banner Color', 'ecclesio-hallmark-theme' ),
+				'label'    => esc_html__( 'Banner Color', 'ecclesio' ),
 				'section'  => $section,
 				'settings' => $setting,
 				'priority' => 10
@@ -524,7 +524,7 @@ class Ecclesio_Hallmark_Customizer {
 			'default'           => '0.75'
 		) );
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'    => esc_html__( 'Banner Color Opacity', 'ecclesio-hallmark-theme' ),
+				'label'    => esc_html__( 'Banner Color Opacity', 'ecclesio' ),
 				'section'  => $section,
 				'settings' => $setting,
 				'priority' => 10,
@@ -544,7 +544,7 @@ class Ecclesio_Hallmark_Customizer {
 			'sanitize_callback' => 'sanitize_hex_color'
 		) );
 			$wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, $setting, array(
-				'label'    => esc_html__( 'Footer Color', 'ecclesio-hallmark-theme' ),
+				'label'    => esc_html__( 'Footer Color', 'ecclesio' ),
 				'section'  => $section,
 				'settings' => $setting,
 				'priority' => 10
@@ -570,8 +570,8 @@ class Ecclesio_Hallmark_Customizer {
 			'default' => get_template_directory_uri() . '/images/home_sermon_latest.jpg',
 		) );
 			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
-		    	'label'    => __( 'Banner Image', 'ecclesio-hallmark-theme' ),
-		    	'description' => __( 'Recommended format: JPG.', 'ecclesio-hallmark-theme' ),
+		    	'label'    => __( 'Banner Image', 'ecclesio' ),
+		    	'description' => __( 'Recommended format: JPG.', 'ecclesio' ),
 				'section'  => $section,
 				'settings' => $setting,
 			) ) );
@@ -586,11 +586,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Banner Heading', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Banner Heading', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'Sermons'
 			    ),
-				'description' => esc_html__( 'Banner heading for Sermons archive.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Banner heading for Sermons archive.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -615,11 +615,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Banner Byline', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Banner Byline', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => ''
 			    ),
-				'description' => esc_html__( 'Banner byline for Sermons archive.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Banner byline for Sermons archive.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -654,8 +654,8 @@ class Ecclesio_Hallmark_Customizer {
 			'default' => get_template_directory_uri() . '/images/ft-worth.jpg',
 		) );
 			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
-		    	'label'    => __( 'Banner Image', 'ecclesio-hallmark-theme' ),
-		    	'description' => __( 'Recommended format: JPG.', 'ecclesio-hallmark-theme' ),
+		    	'label'    => __( 'Banner Image', 'ecclesio' ),
+		    	'description' => __( 'Recommended format: JPG.', 'ecclesio' ),
 				'section'  => $section,
 				'settings' => $setting,
 			) ) );
@@ -670,11 +670,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Banner Heading', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Banner Heading', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => 'Events'
 			    ),
-				'description' => esc_html__( 'Banner heading for Events archive.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Banner heading for Events archive.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -699,11 +699,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Banner Byline', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Banner Byline', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => ''
 			    ),
-				'description' => esc_html__( 'Banner byline for Events archive.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Banner byline for Events archive.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -728,11 +728,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Banner Button', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Banner Button', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => ''
 			    ),
-				'description' => esc_html__( 'Banner button for Events archive.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Banner button for Events archive.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -757,11 +757,11 @@ class Ecclesio_Hallmark_Customizer {
 		) );
 			// Add Control
 			$wp_customize->add_control( new WP_Customize_Control( $wp_customize, $setting, array(
-				'label'       => esc_html__( 'Banner Button Link', 'ecclesio-hallmark-theme' ),
+				'label'       => esc_html__( 'Banner Button Link', 'ecclesio' ),
 				'input_attrs' => array(
 			        'placeholder' => ''
 			    ),
-				'description' => esc_html__( 'Banner button link for Events archive.', 'ecclesio-hallmark-theme' ),
+				'description' => esc_html__( 'Banner button link for Events archive.', 'ecclesio' ),
 				'section'     => $section,
 				'settings'    => $setting,
 				'type'        => 'text',
@@ -789,7 +789,7 @@ class Ecclesio_Hallmark_Customizer {
 	 */
 	private function ecclesio_church_footer_section( $wp_customize ) {
 		$section = 'ecclesio_church_footer';
-		$text_domain = 'ecclesio-hallmark-theme';
+		$text_domain = 'ecclesio';
 	    /* Footer CTA Text */
 	    $setting = 'ecclesio_church_footer_cta_text';
 	    // Add Setting

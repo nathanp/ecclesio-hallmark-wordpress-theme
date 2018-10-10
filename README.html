@@ -1,0 +1,45 @@
+<html>
+      <head>
+        <meta charset="UTF-8">
+        <title>README.md</title>
+      </head>
+      <body>
+        <h1 id="developer-readme">Developer Readme</h1>
+<h5 id="if-you-are-looking-for-documentation-on-how-to-setup-and-use-the-theme-see-our-documentation-on-https-eccles-io">If you are looking for documentation on how to setup and use the theme, see our documentation on <a href="https://eccles.io">https://eccles.io</a></h5>
+<h2 id="philosophy">Philosophy</h2>
+<ul>
+<li><em>Presentation</em> - Themes are for presentation, not functionality.</li>
+<li><em>Functionality</em> - Something that adds functionality needs to be in our plugin, unless the functionality provides something unique to this theme.</li>
+<li><em>Speed</em> - Keep the theme as lightweight as possible.</li>
+<li><em>Options</em> - We don&#39;t provide endless, confusing option panels. This theme was developed with Churches in mind, so the options provided are relevant and simple.</li>
+<li><em>Customizer</em> - Universal options and styling options are in the Customizer as much as possible.</li>
+<li><em>Page Options</em> - Idividual page options are in the page edit screen as much as possible.</li>
+<li><em>Portability</em> - You can easily change your theme without losing your content.</li>
+<li><em>Extendability</em> - Want to customize this theme&#39;s code? Great! <strong>Don&#39;t edit this theme&#39;s files. Create a child theme instead.</strong> We have focused on using frameworks and tooling that are widely used and well documented, balancing the lastest/fastest features along with ease of understanding. We do not require knowledge of package managers or build tools. If that fits your style, you can incorporate that into your build, but we want this to be as accessible as possible.<ul>
+<li>Bootstrap 4</li>
+<li>HTML</li>
+<li>CSS</li>
+</ul>
+</li>
+<li><em>Editing</em> - We are incorporating compatibility with Gutenberg and Advanced Custom Fields to make content as easy to edit as possible.</li>
+</ul>
+<h1 id="needed-plugins">Needed Plugins</h1>
+<ul>
+<li>Theme won&#39;t break without these plugins, but key functionality will be gone.</li>
+<li>Advanced Custom Fields PRO <em>(page options)</em></li>
+<li>Church Theme Content <em>(Sermons, Events, Locations, People)</em></li>
+<li>Eccles.io Admin <em>(Our custom admin to make things easier for church staff/volunteers)</em></li>
+<li>Ultimate Fonts <em>(Google Fonts for the Customizer)</em></li>
+</ul>
+<h1 id="updates">Updates</h1>
+<p>Updates are managed via kernl.us</p>
+<ul>
+<li>Update style.css and kernl.version when updating versions</li>
+<li>ACF - Using ACF&#39;s local JSON feature to store field settings in the inc/acf-json folder. This allows everyon to receive ACF field updates automatically and puts it all in version control.</li>
+<li>Ready to distribute - ZIP folder, exclude the .git and node_modules folders. Exclude the .gitignore and README files.</li>
+<li>On Windows with 7zip installed, run <code>&quot;C:\Program Files\7-Zip\7z.exe&quot; a -tzip ecclesio-v1.x.x.zip ecclesio\ -mx9 -xr!.git -xr!.gitignore -xr!node_modules</code></li>
+<li><em>Want to set up Contiual Integration with BitBucket soon</em></li>
+</ul>
+
+      </body>
+    </html>
