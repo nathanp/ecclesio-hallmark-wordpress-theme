@@ -33,9 +33,10 @@ function ecclesio_google_fonts_url() {
 function ecclesio_scripts() {
 
   global $wp_styles; // Call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
-
+  $current_theme = wp_get_theme();
+  
   // Register main stylesheet
-  wp_enqueue_style( 'ecclesio-css', get_template_directory_uri() . '/assets/css/style.css', array(), '', 'all' );
+  wp_enqueue_style( 'ecclesio-css', get_template_directory_uri() . '/assets/css/style.css', array(), $current_theme->get( 'Version' ) );
 
   // Add custom fonts, used in the main stylesheet.
   wp_enqueue_style( 'ecclesio-fonts', ecclesio_google_fonts_url(), array(), null );
@@ -68,33 +69,6 @@ function ecclesio_customizer_preview() {
     );
 }
 add_action('customize_preview_init','ecclesio_customizer_preview');
-
-/**
- * Remove query strings from static resources.
- * Only does this for someone not an admin, so can more easily test development, etc.
- * https://atulhost.com/query-strings-remover
- */
-function ecclesio_remove_query_strings_1( $src ){ 
-  $rqs = explode( '?ver', $src );
-  return $rqs[0];
-}
-if ( is_admin() ) {
-  // Remove query strings from static resources disabled in admin
-} else {
-  add_filter( 'script_loader_src', 'ecclesio_remove_query_strings_1', 15, 1 );
-  add_filter( 'style_loader_src', 'ecclesio_remove_query_strings_1', 15, 1 );
-}
-
-function ecclesio_remove_query_strings_2( $src ){
-  $rqs = explode( '&ver', $src );
-    return $rqs[0];
-}
-if ( is_admin() ) {
-  // Remove query strings from static resources disabled in admin
-} else {
-  add_filter( 'script_loader_src', 'ecclesio_remove_query_strings_2', 15, 1 );
-  add_filter( 'style_loader_src', 'ecclesio_remove_query_strings_2', 15, 1 );
-}
 
 /**
  * Keeps bloat/un-used scripts and styles from plugins from loading on the front-end.
