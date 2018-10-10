@@ -33,10 +33,10 @@ function ecclesio_google_fonts_url() {
 function ecclesio_scripts() {
 
   global $wp_styles; // Call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
-  $current_theme = wp_get_theme();
+  $ctime = filemtime( get_template_directory() . '/assets/css/style.css' ); // Get last modified timestamp of primary CSS file
   
   // Register main stylesheet
-  wp_enqueue_style( 'ecclesio-css', get_template_directory_uri() . '/assets/css/style.css', array(), $current_theme->get( 'Version' ) );
+  wp_enqueue_style( 'ecclesio-css', get_template_directory_uri() . '/assets/css/style.css', array(), $ctime );
 
   // Add custom fonts, used in the main stylesheet.
   wp_enqueue_style( 'ecclesio-fonts', ecclesio_google_fonts_url(), array(), null );
