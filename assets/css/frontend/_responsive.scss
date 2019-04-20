@@ -110,9 +110,31 @@ button.hamburger {
     margin-top: 0px;
     height: 30vh;
   }
+  /*Sermon Video*/
+  .single-ctc_sermon {
+    #banner,
+    .embed-responsive,
+    .tab-content.sermon #listen.tab-pane {
+      padding-top: 0;
+      padding-bottom: 56.25%; /* 16:9 */
+      height: 0;
+    }
+
+    .mejs-container {
+      position: absolute;
+      top: 50%;
+      -ms-transform: translateY(-50%);
+      transform: translateY(-50%);
+      left: 2em;
+      right: 2em;
+      max-width: calc(100% - 4em);
+    }
+  }
   /*Page*/
-  .single-ctc_person #banner {
-    height: 50vh;
+  .single-ctc_person {
+    #banner {
+      height: 50vh;
+    }
   }
   /*Staff*/
   #staff li img {
@@ -177,6 +199,15 @@ button.hamburger {
 }
 
 @media screen and (max-width: 576px) {
+  /*Sermons*/
+  .tabs-sermon {
+    .link-title {
+      .nav-link {
+        padding: 0.75rem 0.75rem;
+      }
+    }
+  }
+
   /*Gutenberg*/
   .wp-block-columns {
     flex-direction: column;

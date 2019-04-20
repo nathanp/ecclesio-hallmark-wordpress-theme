@@ -15,6 +15,11 @@
 
 .tab-content.sermon {
   background: $black;
+
+  .active {
+    height: 100%;
+  }
+
   .embed-responsive {
     max-height: 80vh;
   }
@@ -61,7 +66,7 @@
     margin: 30px 0px 10px;
   }
   .article-header {
-    margin: 0px;
+    margin: 15px 0;
   }
 }
 
