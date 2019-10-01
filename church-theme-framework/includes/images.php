@@ -4,7 +4,7 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2018, ChurchThemes.com
+ * @copyright  Copyright (c) 2013 - 2019, ChurchThemes.com, LLC
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      0.9
@@ -48,6 +48,8 @@ function ctfw_image_size_dimensions( $size ) {
  * @return string Note to show.
  */
 function ctfw_featured_image_note() {
+
+	$note = '';
 
 	// Theme supports this?
 	$support = get_theme_support( 'ctfw-featured-image-notes' );

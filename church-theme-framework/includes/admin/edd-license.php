@@ -26,7 +26,7 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Admin
- * @copyright  Copyright (c) 2013 - 2018, ChurchThemes.com
+ * @copyright  Copyright (c) 2013 - 2019, ChurchThemes.com, LLC
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      0.9
@@ -827,6 +827,9 @@ function ctfw_edd_license_notice() {
 
 	// Get expiration data
 	$expiration_data = ctfw_edd_license_expiration_data();
+
+	// No notice.
+	$notice = '';
 
 	// Active But Expiring Soon
 	// Show a reminder notice 30 days before expiration

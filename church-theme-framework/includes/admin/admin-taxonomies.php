@@ -4,7 +4,7 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Admin
- * @copyright  Copyright (c) 2013, ChurchThemes.com
+ * @copyright  Copyright (c) 2013 - 2019, ChurchThemes.com, LLC
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      0.9
@@ -65,7 +65,7 @@ function ctfw_taxonomy_order_note( $taxonomy ) {
 		$taxonomy_plural = strtolower( $taxonomy_obj->labels->name );
 
 		// Show message
-		echo '<p class="description">';
+		echo '<p class="description" style="margin-top: 1.2em">';
 		printf(
 			__( '<b>Custom Ordering:</b> Try <a href="%s" target="_blank">this plugin</a> for custom ordering your %s.', 'church-theme-framework' ),
 			$url,

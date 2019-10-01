@@ -4,7 +4,7 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Admin
- * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
+ * @copyright  Copyright (c) 2013 - 2019, ChurchThemes.com, LLC
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      0.9
@@ -50,7 +50,8 @@ function ctfw_admin_widgets_js_data() {
  *
  * @since 1.0
  */
-function ctfw_widget_incompatible_message( $widget ) {
+//function ctfw_widget_incompatible_message( $widget ) { // framework widgets only
+function ctfw_widget_incompatible_message( $widget, $return, $instance ) { // all widgets, including core.
 
 	// Only if feature is supported
 	if ( ! current_theme_supports( 'ctfw-sidebar-widget-restrictions' ) ) {
@@ -66,7 +67,8 @@ function ctfw_widget_incompatible_message( $widget ) {
 
 }
 
-add_action( 'ctfw_widget_before_fields', 'ctfw_widget_incompatible_message' );
+//add_action( 'ctfw_widget_before_fields', 'ctfw_widget_incompatible_message' ); // framework widgets only
+add_filter( 'in_widget_form', 'ctfw_widget_incompatible_message', 10, 3 ); // all widgets, including core.
 
 /**
  * Show widget incompatibility messages
@@ -120,6 +122,9 @@ function ctfw_admin_restrict_widgets_css() {
 						// Elements for hiding form fields and save button
 						//$form_elements[] = "#$sidebar_id div[id*=_$widget_id-] .widget-content";
 						$form_elements[] = "#$sidebar_id > .widget[id*=$widget_id] .widget-content > *:not(.ctfw-widget-incompatible)";
+						$form_elements[] = "#$sidebar_id > .widget[id*=$widget_id] .media-widget-control > *:not(.ctfw-widget-incompatible)";
+						$form_elements[] = "#$sidebar_id > .widget[id*=$widget_id] .custom-html-widget-fields > *:not(.ctfw-widget-incompatible)";
+						$form_elements[] = "#$sidebar_id > .widget[id*=$widget_id] .text-widget-fields > *:not(.ctfw-widget-incompatible)";
 						$form_elements[] = "#$sidebar_id > .widget[id*=$widget_id] .widget-control-save";
 
 						// Element for showing message
@@ -132,6 +137,9 @@ function ctfw_admin_restrict_widgets_css() {
 
 						// Elements for hiding form fields
 						$form_elements[] = "#sub-accordion-section-sidebar-widgets-$sidebar_id .widget[id*=$widget_id] .widget-content > *:not(.ctfw-widget-incompatible)";
+						$form_elements[] = "#sub-accordion-section-sidebar-widgets-$sidebar_id .widget[id*=$widget_id] .media-widget-control > *:not(.ctfw-widget-incompatible)";
+						$form_elements[] = "#sub-accordion-section-sidebar-widgets-$sidebar_id .widget[id*=$widget_id] .custom-html-widget-fields > *:not(.ctfw-widget-incompatible)";
+						$form_elements[] = "#sub-accordion-section-sidebar-widgets-$sidebar_id .widget[id*=$widget_id] .text-widget-fields > *:not(.ctfw-widget-incompatible)";
 
 						// Element for showing message
 						$message_elements[] = "#sub-accordion-section-sidebar-widgets-$sidebar_id .widget[id*=$widget_id] .ctfw-widget-incompatible";

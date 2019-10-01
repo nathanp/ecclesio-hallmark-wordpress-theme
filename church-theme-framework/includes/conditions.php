@@ -4,7 +4,7 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
+ * @copyright  Copyright (c) 2013 - 2019, ChurchThemes.com, LLC
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      0.9
@@ -81,7 +81,7 @@ function ctfw_has_title() {
  * Has content
  *
  * It strips tags because sometimes content-less tags are left behind (breaks).
- * Thi is useful for not outputting content wrapping tags when there is no content.
+ * This is useful for not outputting content wrapping tags when there is no content.
  * Content tags like img and iframe are preserved so user can add image content
  * with no text content and still have this return true.
  *
@@ -92,7 +92,14 @@ function ctfw_has_content() {
 
 	$has_content = false;
 
-	if ( trim( strip_tags( get_the_content(), '<img><iframe><script><embed>' ) ) ) {
+	// Check for content and allow certain tags if no content.
+	// This way, for example, if has just an image tag, the content still renders.
+	if ( trim( strip_tags( get_the_content(), '<img><iframe><script><embed><audio><video>' ) ) ) {
+		$has_content = true;
+	}
+
+	// Check for page buiders like Elementor and Beaver Builder.
+	if ( ctfw_using_builder_plugin() ) {
 		$has_content = true;
 	}
 
@@ -258,6 +265,35 @@ function ctfw_is_page_template( $name ) {
 
 }
 
+/**
+ * Using page builder plugin?
+ *
+ * This is useful for assisting ctfw_has_content() so that the_content() can be run.
+ *
+ * @since 2.6.3
+ * @global object $post
+ * @return bool True if so
+ */
+function ctfw_using_builder_plugin() {
+
+  global $post;
+
+	$result = false;
+
+	// Elementor.
+	if ( did_action( 'elementor/loaded' ) && isset( $post->ID ) && \Elementor\Plugin::$instance->db->is_built_with_elementor( $post->ID ) ) {
+		$result = true;
+	}
+
+	// Beaver Builder.
+	elseif ( method_exists( 'FLBuilderModel', 'is_builder_enabled' ) && FLBuilderModel::is_builder_enabled() ) {
+		$result = true;
+	}
+
+	return apply_filters( 'ctfw_using_builder_plugin', $result );
+
+}
+
 /*******************************************
  * WIDGETS
  *******************************************/
@@ -265,7 +301,7 @@ function ctfw_is_page_template( $name ) {
 /**
  * Determine if inside a particular sidebar / widget area
  *
- * This uses global set by saved_set_current_sidebar_id() in sidebars.php.
+ * This uses global set by ctfw_set_current_sidebar_id() in sidebars.php.
  *
  * @since 2.0
  * @param string $sidebar_id Sidebar ID / widget area

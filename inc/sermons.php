@@ -1,20 +1,27 @@
-<?php 
+<?php
 	// Sermon Archive - Order by Publish Date
-	add_action( 'pre_get_posts', 'sermons_change_sort_order'); 
+	add_action( 'pre_get_posts', 'sermons_change_sort_order');
 	function sermons_change_sort_order($query){
 	    if( ! is_admin() && is_post_type_archive( 'ctc_sermon' ) || is_tax(array('ctc_sermon_book','ctc_sermon_series','ctc_sermon_speaker','ctc_sermon_topic')) ):
 	       //Set the number of posts to display
 	       $query->set( 'posts_per_page', 9 );
 
-	       //Set the order ASC or DESC
-	       $query->set( 'order', 'DESC' );
+		   //Set the order of Sermon Series pages to go from oldest to newest
+		   if($query->is_tax( 'ctc_sermon_series' )) {
+				$query->set( 'order', 'ASC' );
+		   }
+		   //Other sermon archive pages to go from newest to oldest
+		   else {
+				$query->set( 'order', 'DESC' );
+		   }
+
 	       //Set the orderby
 	       $query->set( 'orderby', 'post_date' );
-	       
+
 
 	       $query->set( 'suppress_filters', true );
-	       
-	    endif;    
+
+	    endif;
 	};
 
 	/**
@@ -37,8 +44,8 @@
 	 * Retrieves the thumbnail from a youtube or vimeo video
 	 * @param - $src: the url of the "player"
 	 * @return - string
-	 * @todo - do some real world testing. 
-	 * 
+	 * @todo - do some real world testing.
+	 *
 	**/
 	function get_video_thumbnail( $src, $res = null ) {
 		$url_pieces = explode('/', $src);

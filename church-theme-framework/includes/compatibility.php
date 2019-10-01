@@ -6,7 +6,7 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2018, ChurchThemes.com
+ * @copyright  Copyright (c) 2013 - 2019, ChurchThemes.com, LLC
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      0.9
@@ -119,27 +119,29 @@ function ctfw_old_wp_switch_theme_notice() {
 
 }
 
+/*****************************************************
+ * WORDPRESS FUNCTIONS
+ *****************************************************/
+
 /**
- * Prevent Customizer preview from showing theme while using old version of WordPress
+ * Make wp_body_open() work on all versions of WordPress.
  *
- * @since 0.9
+ * This makes the function available for versions of WordPress earlier than 5.2.
+ *
+ * https://make.wordpress.org/core/2019/04/24/miscellaneous-developer-updates-in-5-2/
+ *
+ * @since 2.6.2
  */
-function ctfw_old_wp_customizer_notice() {
+if ( ! function_exists( 'wp_body_open' ) ) {
 
-	// Is WordPress version too old for theme?
-	if ( ctfw_old_wp() ) {
-
-		// Show message
-		wp_die( ctfw_old_wp_message() . sprintf( ' <a href="javascript:history.go(-1);">%s</a>', __( 'Go back.', 'church-theme-framework' ) ) );
-
+	function wp_body_open() {
+		do_action( 'wp_body_open' );
 	}
 
 }
 
-add_action( 'load-customize.php', 'ctfw_old_wp_customizer_notice' );
-
 /*****************************************************
- * CHURCH THEME CONTENT
+ * CHURCH CONTENT PLUGIN
  *****************************************************/
 
 /**

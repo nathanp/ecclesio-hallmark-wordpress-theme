@@ -7,7 +7,7 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Classes
- * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
+ * @copyright  Copyright (c) 2013 - 2019, ChurchThemes.com, LLC
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      0.9
@@ -214,8 +214,9 @@ class CTFW_Widget extends WP_Widget {
 					// URL
 					case 'url':
 
-						// Input same as text
-						$input = '<input type="url" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
+						// Input same as text.
+						// Not using 'url' type so widget will still submit if uses relative URL.
+						$input = '<input type="text" ' . $data['common_atts'] . ' id="' . $data['esc_element_id'] . '" value="' . $data['esc_value'] . '" />';
 
 						// Append button if upload_* used
 						if ( ! empty( $data['field']['upload_button'] ) ) {
@@ -402,10 +403,16 @@ class CTFW_Widget extends WP_Widget {
 
 		// Loop valid fields to sanitize
 		$fields = $this->ctfw_prepared_fields();
+
 		foreach ( $fields as $id => $field ) {
 
-			// Get posted value
-			$input = isset( $instance[$id] ) ? $instance[$id] : '';
+			// Get posted value.
+			$input = '';
+			if ( isset( $instance[ $id ] ) ) {
+				$input = $instance[ $id ];
+			} elseif ( isset( $field['default'] ) ) { // set default value if instance not set
+				$input = $field['default'];
+			}
 
 			// General sanitization
 			$output = trim( stripslashes( $input ) );
@@ -469,6 +476,18 @@ class CTFW_Widget extends WP_Widget {
 
 				// URL
 				case 'url':
+
+					// Make relative URL absolute.
+					if ( $output && ! ctfw_is_url( $output ) ) {
+
+						$output = site_url( $output );
+
+						// Add trailing slash if no hash.
+						if ( ! preg_match( '/\#/', $output ) ) {
+							$output = trailingslashit( $output );
+						}
+
+					}
 
 					$output = esc_url_raw( $output ); // force valid URL or use nothing
 

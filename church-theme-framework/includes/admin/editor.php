@@ -4,7 +4,7 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Admin
- * @copyright  Copyright (c) 2015 - 2018, ChurchThemes.com
+ * @copyright  Copyright (c) 2015 - 2019, ChurchThemes.com, LLC
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      1.7.2
@@ -129,7 +129,6 @@ function ctfw_editor_styles() {
 		add_filter( 'tiny_mce_before_init', 'ctfw_add_editor_body_classes' );
 
 	   	// Add body classes for Block Editor (Gutenberg).
-	   	// Note: Ideal to check ctfw_is_block_editor() here; however, the check fails (too early?).
 		add_filter( 'admin_body_class', 'ctfw_add_block_editor_body_classes' );
 
 	}
@@ -269,7 +268,9 @@ function ctfw_add_editor_body_classes( $mce ) {
 function ctfw_add_block_editor_body_classes( $classes ) {
 
 	// Gutenberg editor in use.
-	if ( ctfw_is_block_editor() ) {
+	// Fix: ctfw_is_block_editor() returns false here (too early for get_current_screen()?)
+	// See this; might work in WP 5.2+: https://make.wordpress.org/core/2019/04/17/block-editor-detection-improvements-in-5-2/
+	//if ( ctfw_is_block_editor() ) {
 
 		// Get body classes.
 		$body_classes = ctfw_get_editor_body_classes();
@@ -282,7 +283,7 @@ function ctfw_add_block_editor_body_classes( $classes ) {
 
 		}
 
-	}
+	//}
 
 	return $classes;
 
@@ -347,22 +348,17 @@ function ctfw_output_editor_color_styles( $editor = false ) {
  */
 function ctfw_is_block_editor() {
 
-	global $post, $pagenow;
-
 	// Default false.
 	$is = false;
 
-	// Editing single post and Gutenberg is available.
-	// Using $pagenow instead of get_current_screen() since it's sometimes too early to be available.
-	if ( in_array( $pagenow, array( 'post.php', 'post-new.php' ) ) && function_exists( 'gutenberg_can_edit_post' ) ) {
+	// Get current screen.
+	$screen = get_current_screen();
+
+	// Adding or editing single post and Gutenberg is available.
+	if ( 'post' === $screen->base && ! empty( $screen->is_block_editor ) ) {
 
 		// Not using classic editor.
 		if ( isset( $_GET['classic-editor'] ) ) {
-			$is = false;
-		}
-
-		// Not able to edit with Gutenberg.
-		elseif ( ! gutenberg_can_edit_post( $post ) ) {
 			$is = false;
 		}
 

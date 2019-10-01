@@ -35,12 +35,12 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 		<?php } ?>
 	</div><!-- .tabs-content -->
 </div><!-- #banner -->
-			
+
 <div id="content">
 	<div id="inner-content" class="container">
 
 		<main id="main" class="row justify-content-md-center" role="main">
-		
+
 		   <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 		    	<article id="post-<?php the_ID(); ?>" <?php post_class('col-lg-8 col-md-10 col-sm-12'); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
 					<ul class="nav nav-tabs tabs-sermon" role="tablist">
@@ -64,7 +64,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 									  <i class="fas fa-cloud-download-alt"></i> Download Audio
 								  	</a>
 								  </li>
-						<?php } } 
+						<?php } }
 							if($sermon_pdf) { ?>
 							  <li class="nav-item link-title">
 							  	<a class="nav-link" href="<?php echo $sermon_pdf; ?>" target="_blank">
@@ -76,7 +76,8 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 
 					<?php
 						$sermon_series = get_the_terms( $post, 'ctc_sermon_series');
-						if($sermon_series) {
+						$sermon_series_count = $sermon_series[0]->count;
+						if($sermon_series && $sermon_series_count > 1) {
 							echo '<p class="series"><a href="'.get_post_type_archive_link( "ctc_sermon" ).'">Sermons</a> / Series: ';
 							foreach($sermon_series as $series) {
 								echo '<a href="'.get_term_link($series).'">'.$series->name,'</a>';
@@ -85,11 +86,11 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 						}
 					?>
 
-					<header class="article-header text-center">	
+					<header class="article-header text-center">
 						<h1 class="entry-title single-title" itemprop="headline"><?php the_title(); ?></h1>
 						<?php if(get_field('subtitle')) { echo '<h2 class="subtitle">'.get_field('subtitle').'</h2>'; } ?>
 				    </header> <!-- end article header -->
-									
+
 				    <section class="entry-content text-center" itemprop="articleBody">
 				    	<?php
 				    		$speakers = get_the_terms( $post, 'ctc_sermon_speaker');
@@ -101,7 +102,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 								echo " | ";
 							}
 							echo get_the_date();
-						
+
 				    		$sermon_books = get_the_terms( $post, 'ctc_sermon_book');
 				    		if($sermon_books) {
 				    			echo '<br>Book: ';
@@ -110,7 +111,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 								}
 								echo implode(', ', $book_names);
 							}
-				    
+
 				    		$sermon_topics = get_the_terms( $post, 'ctc_sermon_topic');
 				    		if($sermon_topics) {
 				    			echo '<br>';
@@ -119,13 +120,13 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 								}
 								echo implode(' ', $topic_names);
 							}
-				    	
+
 							the_content();
 						?>
 					</section> <!-- end article section -->
-																	
+
 				</article> <!-- end article -->
-		    					
+
 		   <?php endwhile; else :
 		   	get_template_part( 'parts/content', 'missing' );
 		   endif; ?>
@@ -134,11 +135,11 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 
 		<?php
 		// Other sermons in the same series
-		if($sermon_series) {  ?>
+		if($sermon_series && $sermon_series_count > 1) {  ?>
 			<div id="listing" class="row sermons series">
 				<div class="col-sm-12">
 					<h2>
-						More from 
+						More from
 						<?php
 							foreach($sermon_series as $series) {
 								echo '<a href="'.get_term_link($series).'"><em>'.$series->name,'</em></a>';
@@ -146,7 +147,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 						?>
 					</h2>
 				</div><!-- .col-sm-12 -->
-				<?php  					
+				<?php
 					$custom_taxterms = wp_get_object_terms( $post->ID, 'ctc_sermon_series', array('fields' => 'ids') );
 					// arguments
 					$args = array(
@@ -191,7 +192,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 									echo '<img src="'.get_video_thumbnail($sermon_video_url).'" alt="" />';
 								}
 								else {
-									echo '<img src="http://via.placeholder.com/640x360/000000/ffffff?text='.get_the_title().'" alt="" />';	
+									echo '<img src="http://via.placeholder.com/640x360/000000/ffffff?text='.get_the_title().'" alt="" />';
 								}
 							?>
 						</a>
@@ -240,9 +241,9 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 							?>
 						</div><!-- .card--footer -->
 
-					</div><!-- .card -->	    						
+					</div><!-- .card -->
 				</article> <!-- end article -->
-						
+
 				<?php endwhile; endif; wp_reset_postdata(); ?>
 			</div><!-- #listing -->
 		<?php } //endif ?>
@@ -290,7 +291,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 		function onYouTubeIframeAPIReady() {
 			player = new YT.Player(iframe, {});
 		}
-		
+
 		var pauseButton = document.getElementById("tab-listen");
 		pauseButton.addEventListener("click", function() {
 			if (player) {

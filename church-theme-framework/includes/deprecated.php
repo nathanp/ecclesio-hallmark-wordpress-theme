@@ -6,7 +6,7 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2018, ChurchThemes.com
+ * @copyright  Copyright (c) 2013 - 2019, ChurchThemes.com, LLC
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      0.9
@@ -15,6 +15,26 @@
 // No direct access
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
+}
+
+/**
+ * Convert download URL to one that forces "Save As" via headers
+ *
+ * With the forcing of downloads via headers removed in favor of download attribute,
+ * this now simply returns regular URL for file.
+ *
+ * @since 0.9
+ * @param string $url URL for file
+ * @return string URL
+ */
+function ctfw_force_download_url( $url ) {
+
+	_deprecated_function( __FUNCTION__, '2.6', 'ctfw_download_url()' );
+
+	$download_url = ctfw_download_url( $url );
+
+	return apply_filters( 'ctfw_force_download_url', $download_url, $url );
+
 }
 
 /**
@@ -44,6 +64,33 @@ function ctfw_theme_url( $file = '' ) {
 	}
 
 	return apply_filters( 'ctfw_theme_url', $url, $file );
+
+}
+
+/**
+ * Provide get_theme_file_uri() for sites using WordPress versions below 4.7.
+ *
+ * The framework and theme uses it throughout. This avoids some fatal errors before they update WordPress.
+ *
+ * See ctfw_theme_url() deprecation.
+ */
+if ( ! function_exists( 'get_theme_file_uri' ) ) {
+
+	function get_theme_file_uri( $file = '' ) {
+
+		$file = ltrim( $file, '/' );
+
+		if ( empty( $file ) ) {
+			$url = get_stylesheet_directory_uri();
+		} elseif ( file_exists( get_stylesheet_directory() . '/' . $file ) ) {
+			$url = get_stylesheet_directory_uri() . '/' . $file;
+		} else {
+			$url = get_template_directory_uri() . '/' . $file;
+		}
+
+		return $url;
+
+	}
 
 }
 

@@ -4,7 +4,7 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
+ * @copyright  Copyright (c) 2013 - 2019, ChurchThemes.com, LLC
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      0.9
@@ -110,6 +110,7 @@ function ctfw_restrict_sidebars_widgets( $sidebars_widgets ) {
 		if ( preg_match( '/^wp_/', $sidebar_id ) ) {
 			continue;
 		}
+
 		// Sidebar widget restrictions
 		// (used for checking limit)
 		$sidebar_widget_restrictions = ctfw_get_sidebar_widget_restrictions( 'sidebar_widget' );
@@ -173,7 +174,7 @@ add_filter( 'sidebars_widgets', 'ctfw_restrict_sidebars_widgets', 5 );
  * @param  string $index Sidebar ID
  */
 
-function saved_set_current_sidebar_id( $index ) {
+function ctfw_set_current_sidebar_id( $index ) {
 
 	global $ctfw_current_sidebar_id;
 
@@ -183,19 +184,19 @@ function saved_set_current_sidebar_id( $index ) {
 
 }
 
-add_action( 'dynamic_sidebar_before', 'saved_set_current_sidebar_id' );
+add_action( 'dynamic_sidebar_before', 'ctfw_set_current_sidebar_id' );
 
 /**
  * Unset current sidebar ID
  *
  * We unset so that this bool is not true even after leave the sidebar.
  *
- * See saved_set_current_sidebar_id() above for more.
+ * See ctfw_set_current_sidebar_id() above for more.
  *
  * @since 2.0
  * @param  string $index Sidebar ID
  */
-function saved_unset_current_sidebar_id() {
+function ctfw_unset_current_sidebar_id() {
 
 	global $ctfw_current_sidebar_id;
 
@@ -205,4 +206,4 @@ function saved_unset_current_sidebar_id() {
 
 }
 
-add_action( 'dynamic_sidebar_after', 'saved_unset_current_sidebar_id' );
+add_action( 'dynamic_sidebar_after', 'ctfw_unset_current_sidebar_id' );

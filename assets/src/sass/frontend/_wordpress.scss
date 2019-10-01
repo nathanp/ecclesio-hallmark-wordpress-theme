@@ -1,0 +1,266 @@
+/* =WordPress Core
+**  https://codex.wordpress.org/CSS#WordPress_Generated_Classes
+-------------------------------------------------------------- */
+.alignnone {
+  margin: 15px 0px 15px 0;
+}
+
+.aligncenter,
+div.aligncenter {
+  display: block;
+  margin: 5px auto 5px auto;
+}
+
+.alignright {
+  float: right;
+  margin: 5px 0 20px 20px;
+}
+
+.alignleft {
+  float: left;
+  margin: 5px 15px 10px 0;
+}
+
+a img.alignright {
+  float: right;
+  margin: 5px 0 20px 20px;
+}
+
+a img.alignnone {
+  margin: 5px 20px 20px 0;
+}
+
+a img.alignleft {
+  float: left;
+  margin: 5px 20px 20px 0;
+}
+
+a img.aligncenter {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.wp-caption {
+  max-width: 100%; /* Image does not overflow the content area */
+  text-align: center;
+
+  &.alignnone {
+    margin: 5px 20px 20px 0;
+  }
+
+  &.alignleft {
+    margin: 5px 20px 20px 0;
+  }
+
+  &.alignright {
+    margin: 5px 0 20px 20px;
+  }
+
+  p.wp-caption-text {
+    color: $accent-dark;
+    font-size: 0.9em;
+    line-height: 1em;
+    margin: 0;
+    padding: 5px 0px 5px;
+  }
+}
+
+/* =========================================================
+Comments
+ ========================================================= */
+
+ol.commentlist {
+  list-style: none;
+  margin: 0 0 1em;
+  padding: 0;
+  text-indent: 0;
+
+  li {
+  }
+  li.alt {
+  }
+  li.bypostauthor {
+  }
+  li.byuser {
+  }
+  li.comment-author-admin {
+  }
+
+  li.comment {
+    border-bottom: 1px solid #ddd;
+    padding: 1em;
+
+    .comment-author {
+    } // end .comment-author
+
+    div.media-object-section {
+      font-weight: 14px;
+
+      cite.fn {
+        a.url {
+        }
+      } // end cite.fn
+
+      img.avatar {
+        float: right;
+        margin: 0 0 20px 20px;
+      } // end .avatar
+
+      img.avatar-32 {
+      } // end .avatar-32
+      img.photo {
+      } // end .photo
+      span.says {
+      } // ebd .says
+    } // end .vcard
+
+    div.commentmetadata {
+    } // end .commentmetadata
+    div.comment-meta {
+      font-size: 11px;
+
+      a {
+        color: #ccc;
+      } // end a
+    } // end div.comment-meta
+
+    p {
+      font-size: 1em;
+    } // end p
+
+    ul {
+      font-size: 12px;
+      list-style: none;
+      margin: 0 0 0 20px;
+    } // end ul
+
+    div.reply {
+      font-size: 11px;
+
+      a {
+        font-weight: bold;
+      } // end a
+    } // end reply
+
+    ul.children {
+      list-style: none;
+      margin: 12px;
+      text-indent: 0;
+
+      li {
+      } // end li
+
+      li.alt {
+      }
+      li.bypostauthor {
+      }
+      li.byuser {
+      }
+      li.comment {
+      }
+      li.comment-author-admin {
+      }
+
+      li.depth-2 {
+        border-left: 5px solid #ccc;
+        margin: 0 0 10px 10px;
+      }
+      li.depth-3 {
+        border-left: 5px solid #bbb;
+        margin: 0 0 10px 10px;
+      }
+      li.depth-4 {
+        border-left: 5px solid #aaa;
+        margin: 0 0 10px 10px;
+      }
+      li.depth-5 {
+      } // you get the idea
+
+      li.odd {
+      } // end .odd
+    } // end ul.children
+  } // end li.comment
+
+  li.even {
+    background: #fff;
+  }
+  li.odd {
+    background: #f6f6f6;
+  }
+  li.parent {
+    border-left: 5px solid #ddd;
+  }
+  li.thread-alt {
+  }
+  li.thread-even {
+  }
+  li.thread-odd {
+  }
+} // end commentlist
+
+.comment-form {
+  label {
+    display: block;
+  }
+  textarea,
+  input[type="text"],
+  input[type="email"],
+  input[type="url"] {
+    width: 100%;
+    max-width: 640px;
+  }
+}
+
+/* Text meant only for screen readers. */
+.screen-reader-text {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute !important;
+  width: 1px;
+  word-wrap: normal !important; /* Many screen reader and browser combinations announce broken words as they would appear visually. */
+}
+
+.screen-reader-text:focus {
+  background-color: #eee;
+  clip: auto !important;
+  clip-path: none;
+  color: #444;
+  display: block;
+  font-size: 1em;
+  height: auto;
+  left: 5px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 5px;
+  width: auto;
+  z-index: 100000;
+  /* Above WP toolbar. */
+}
+
+
+
+/* =========================================================
+WordPress Media Elements
+ ========================================================= */
+.wp-embed-aspect-16-9 {
+  padding-bottom: 56.25%;
+  height: 0;
+  position: relative;
+
+  .wp-block-embed__wrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+
+    .embed-responsive {
+      height: 100%;
+    }
+  }
+}

@@ -15,7 +15,7 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 		}
 		elseif ( get_header_image() ) {
 			$banner_img_src = get_header_image();
-		}       
+		}
 		else {
 			$banner_img_src = get_stylesheet_directory_uri().'/images/demo_banner_bible.jpg';
 		}
@@ -30,32 +30,32 @@ If you need to see all potential data, use something like print_r(ctfw_sermon_da
 				$banner_heading = 'Sermons';
 			}
 			echo '<h1 class="page-title">'. $banner_heading .'</h1>';
-			
+
 			if( function_exists('get_customize_partial_sermons_byline') && get_customize_partial_sermons_byline() != "") {
 				$banner_byline = get_customize_partial_sermons_byline();
-				echo '<h3 class="page-byline">'. $banner_byline .'</h3>';
+				echo '<p class="page-byline">'. $banner_byline .'</p>';
 			}
 		?>
 	</div><!-- .banner-text -->
 
 	<?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?>
 </div><!-- #banner -->
-			
+
 	<div id="content">
 		<div id="inner-content" class="container">
 
 			<?php if(has_action('show_beautiful_filters')) { ?>
 				<div class="row filter-taxonomy">
 					<div class="col-sm-12">
-						<?php do_action('show_beautiful_filters'); ?>  
+						<?php do_action('show_beautiful_filters'); ?>
 					</div>
 				</div><!-- .filter-taxonomy -->
 			<?php } ?>
 
 			<main id="listing" class="row sermons" role="main">
-				
+
 		    <?php get_template_part( 'parts/loop', 'archive-sermons' ); ?>
-		    
+
 		</div> <!-- end #inner-content -->
 
 	</div> <!-- end #content -->

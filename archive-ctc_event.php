@@ -16,7 +16,7 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 		}
 		elseif ( get_header_image() ) {
 			$banner_img_src = get_header_image();
-		}       
+		}
 		else {
 			$banner_img_src = get_stylesheet_directory_uri().'/images/demo_banner.jpg';
 		}
@@ -31,10 +31,10 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 				$banner_heading = 'Events';
 			}
 			echo '<h1 class="page-title">'. $banner_heading .'</h1>';
-		
+
 			if( function_exists('get_customize_partial_events_byline') && get_customize_partial_events_byline() != "") {
 				$banner_byline = get_customize_partial_events_byline();
-				echo '<h3 class="page-byline">'. $banner_byline .'</h3>';
+				echo '<p class="page-byline">'. $banner_byline .'</p>';
 			}
 
 			if( function_exists('get_customize_partial_events_button') && get_customize_partial_events_button() != "") {
@@ -47,7 +47,7 @@ Also uses the ctfw_get_events() function to properly query the events in order, 
 
 	<?php if ( function_exists('yoast_breadcrumb') ) { yoast_breadcrumb('<p id="breadcrumbs">','</p>'); } ?>
 </div><!-- #banner -->
-			
+
 	<div id="content">
 		<div id="inner-content" class="container">
 			<main id="listing" class="row events" role="main">

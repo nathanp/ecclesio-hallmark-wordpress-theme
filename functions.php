@@ -15,7 +15,7 @@ require_once (get_template_directory() . '/church-theme-framework/framework.php'
 require_once(get_template_directory().'/inc/church-theme-content.php');
 
 // Theme support options
-require_once(get_template_directory().'/inc/theme-support.php'); 
+require_once(get_template_directory().'/inc/theme-support.php');
 
 /**
  * Include our Customizer settings.
@@ -58,30 +58,30 @@ function ecclesio_ultimatefonts_setup() {
 }
 
 // Register scripts and stylesheets
-require_once(get_template_directory().'/inc/enqueue-scripts.php'); 
+require_once(get_template_directory().'/inc/enqueue-scripts.php');
 
 // Sermon Functions
-require_once(get_template_directory().'/inc/sermons.php'); 
+require_once(get_template_directory().'/inc/sermons.php');
 
 // Register sidebars/widget areas
-require_once(get_template_directory().'/inc/sidebar.php'); 
+require_once(get_template_directory().'/inc/sidebar.php');
 
 // Makes WordPress comments suck less
-require_once(get_template_directory().'/inc/comments.php'); 
+require_once(get_template_directory().'/inc/comments.php');
 
 // Replace 'older/newer' post links with numbered navigation
-require_once(get_template_directory().'/inc/page-navi.php'); 
+require_once(get_template_directory().'/inc/page-navi.php');
 
 // Adds support for multiple languages
-//require_once(get_template_directory().'/assets/translation/translation.php'); 
+//require_once(get_template_directory().'/assets/translation/translation.php');
 
 // Remove 4.2 Emoji Support
-// require_once(get_template_directory().'/inc/disable-emoji.php'); 
+// require_once(get_template_directory().'/inc/disable-emoji.php');
 
 // Adds site styles to the WordPress editor
-//require_once(get_template_directory().'/inc/editor-styles.php'); 
+//require_once(get_template_directory().'/inc/editor-styles.php');
 
 // Related post function - no need to rely on plugins
-// require_once(get_template_directory().'/inc/related-posts.php'); 
+// require_once(get_template_directory().'/inc/related-posts.php');
 
 ?>

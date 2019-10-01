@@ -32,6 +32,8 @@ ctfw_embed_fitvids_selectors = [
 	"iframe[src*='livestream.com']",
 	"iframe[src*='soundfaith.com']",
 	"iframe[src*='ustream.tv']",
+	"iframe[src*='sermon.net']",
+	"iframe[src*='read.amazon.com']",
 
 ];
 ctfw_embed_fitvids_selectors_list = ctfw_embed_fitvids_selectors.join( ', ' );
@@ -48,12 +50,27 @@ jQuery( 'head' ).prepend( '<style type="text/css" id="ctfw-hide-responsive-embed
 // Resize videos to 100% width
 jQuery( document ).ready( function( $ ) {
 
-	// Remove <object> element from Blip.tv ( use iframe only ) - creates a gap w/FitVid
+	// Ignore those already being made responsive with WordPress.
+	if ( ctfw_responsive_embeds.wp_responsive_embeds ) {
+
+		// Loop selectors
+		jQuery.each( ctfw_embed_fitvids_selectors, function( i, selector ) {
+
+			// Ignore FitVids if WP already making responsive.
+			if ( jQuery( selector ).parents('.wp-has-aspect-ratio').length ) {
+				jQuery( selector ).addClass( 'fitvidsignore' );
+			}
+
+		} );
+
+	}
+
+	// Remove <object> element from Blip.tv (use iframe only) - creates a gap w/FitVid
 	$( "embed[src*='blip.tv']" ).remove();
 
 	// FitVids.js for most embeds
 	$( 'body' ).fitVids( {
-		customSelector: ctfw_embed_fitvids_selectors
+		customSelector: ctfw_embed_fitvids_selectors,
 	} );
 
 	// Other embeds (MediaElement.js)
@@ -61,5 +78,6 @@ jQuery( document ).ready( function( $ ) {
 
 	// Show embeds after resize
 	$( '#ctfw-hide-responsive-embeds' ).remove();
+
 
 } );

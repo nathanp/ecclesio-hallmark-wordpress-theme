@@ -14,7 +14,7 @@ Based on the Church Theme Framework and  custom post type.
 		}
 		elseif ( get_header_image() ) {
 			$banner_img_src = get_header_image();
-		}       
+		}
 		else {
 			$banner_img_src = get_stylesheet_directory_uri().'/images/demo_banner.jpg';
 		}
@@ -29,10 +29,10 @@ Based on the Church Theme Framework and  custom post type.
 				$banner_heading = 'Staff';
 			}
 			echo '<h1 class="page-title">'. $banner_heading .'</h1>';
-			
+
 			if( function_exists('get_customize_partial_staff_byline') && get_customize_partial_staff_byline() != "") {
 				$banner_byline = get_customize_partial_staff_byline();
-				echo '<h3 class="page-byline">'. $banner_byline .'</h3>';
+				echo '<p class="page-byline">'. $banner_byline .'</p>';
 			}
 		?>
 	</div><!-- .banner-text -->
@@ -47,13 +47,13 @@ Based on the Church Theme Framework and  custom post type.
 	} else {
 		$columns_classes = 'small-12';
 	}
-?>			
+?>
 <div id="content">
-	
+
 		<div id="inner-content" class="row">
-			
+
 		    <main id="main" class="<?php echo $columns_classes; ?> columns" role="main">
-				
+
 				<div id="staff" class="row large-up-<?php echo get_theme_mod('ecclesio_staff_count'); ?> medium-up-3 small-up-2" data-equalizer>
 				    <?php
 				    $the_query = new WP_Query( array(
@@ -82,21 +82,21 @@ Based on the Church Theme Framework and  custom post type.
 									echo $person_thumb;
 									if(trim($post->post_content) != "") { echo '<span class="overlay"><span class="text">Meet<br />'.$person_fname.'</span></span>'; }
 								echo '</span>';
-							if(trim($post->post_content) != "") { echo '</a>'; } 
-							
+							if(trim($post->post_content) != "") { echo '</a>'; }
+
 							echo '<h3>';
 								if(trim($post->post_content) != "") { echo '<a href="' . get_permalink( $post->ID ) . '">'; }
 									echo get_the_title();
-								if(trim($post->post_content) != "") { echo '</a>'; } 
+								if(trim($post->post_content) != "") { echo '</a>'; }
 							echo '</h3>';
 							if($person_position) { echo "<h4>$person_position</h4>"; }
 						?>
 					</div>
 					<?php endwhile; ?>
-				</div><!-- #staff -->				
-			    					
+				</div><!-- #staff -->
+
 			</main> <!-- end #main -->
-		    
+
 		</div> <!-- end #inner-content -->
 
 	</div> <!-- end #content -->

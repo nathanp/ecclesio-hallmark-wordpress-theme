@@ -4,7 +4,7 @@
  *
  * @package    Church_Theme_Framework
  * @subpackage Functions
- * @copyright  Copyright (c) 2013 - 2017, ChurchThemes.com
+ * @copyright  Copyright (c) 2013 - 2019, ChurchThemes.com, LLC
  * @link       https://github.com/churchthemes/church-theme-framework
  * @license    GPLv2 or later
  * @since      0.9
@@ -124,12 +124,23 @@ function ctfw_sermon_data( $post_id = null ) {
 	$upload_dir_url = $upload_dir['baseurl'];
 
 	// Get meta values
-	$data = ctfw_get_meta_data( array( // without _ctc_sermon_ prefix
-		'video',		// URL to uploaded file, external file, external site with oEmbed support, or manual embed code (HTML or shortcode)
-		'audio',		// URL to uploaded file, external file, external site with oEmbed support, or manual embed code (HTML or shortcode)
-		'pdf',			// URL to uploaded file or external file
+	$data = ctfw_get_meta_data( array( // without _ctc_sermon_ prefix.
+		'video',		// URL to uploaded file, external file, external site with oEmbed support, or manual embed code (HTML or shortcode).
+		'audio',		// URL to uploaded file, external file, external site with oEmbed support, or manual embed code (HTML or shortcode).
+		'pdf',			// URL to uploaded file or external file.
 		'has_full_text'
 	), $post_id );
+
+	// WP Offload Media plugin support.
+	// See https://deliciousbrains.com/wp-offload-media/doc/filtering-urls-in-custom-content/
+	foreach ( $data as $k => $value ) {
+
+		// Convert local URL to externally hosted URL.
+		if ( in_array( $k, array( 'video', 'audio', 'pdf' ) ) ) {
+			$data[ $k ] = apply_filters( 'as3cf_filter_post_local_to_provider', $value );
+		}
+
+	}
 
 	// Get media player code
 	// Embed code generated from uploaded file, URL for file on other site, page on oEmbed-supported site, or manual embed code (HTML or shortcode)
@@ -180,7 +191,6 @@ function ctfw_sermon_data( $post_id = null ) {
 	// Get download URL's
 	// URL is returned if is local or external and has an extension.
 	// Those without an extension (YouTube, SoundCloud, etc. page URL) return empty (nothing to download).
-	// If locally hosted, URL is changed to force "Save As" via headers.
 	// Use <a href="" download="download"> to attempt Save As via limited browser support for externally hosted files.
 	$data['video_download_url'] = ctfw_download_url( $data['video'] );
 	$data['audio_download_url'] = ctfw_download_url( $data['audio'] );

@@ -11,10 +11,11 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 <?php
 	//print_r(ctfw_event_data());
 	$event_date 			= ctfw_event_data()['date'];
-	$event_time_range 	= ctfw_event_data()['time_range_and_description'];
+	$event_time_range 		= ctfw_event_data()['time_range_and_description'];
 	$event_venue 			= esc_html(ctfw_event_data()['venue']);
-	$event_address 		= ctfw_event_data()['address'];
-	$event_directions 	= ctfw_event_data()['directions_url'];
+	$event_address 			= ctfw_event_data()['address'];
+	$event_directions 		= ctfw_event_data()['directions_url'];
+	$event_directions_show	= ctfw_event_data()['show_directions_link'];
 	$event_has_coord 		= ctfw_event_data()['map_has_coordinates'];
 	$event_lat 				= ctfw_event_data()['map_lat'];
 	$event_lng 				= ctfw_event_data()['map_lng'];
@@ -48,16 +49,16 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 		}
 	?>
 </div><!-- #banner -->
-			
+
 <div id="content">
 	<div id="inner-content" class="container">
 
 		<main id="main" class="row justify-content-md-center events" role="main">
-		
+
 		    <?php if (have_posts()) : while (have_posts()) : the_post(); ?>
-		
+
 		    	<article <?php post_class('col-lg-8 col-md-10 col-sm-12'); ?> role="article" itemscope itemtype="http://schema.org/BlogPosting">
-									
+
 				    <section class="entry-content" itemprop="articleBody">
 				    	<ul class="event-meta">
 				    		<?php
@@ -98,16 +99,16 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 								if($event_registration) {
 									echo '<a href="'.$event_registration.'" target="_blank" class="btn btn-primary">Register</a>';
 								}
-								if($event_has_coord == 1) {
+								if($event_has_coord == 1 && $event_directions_show == 1) {
 									echo '<a href="'.$event_directions.'" target="_blank" class="btn btn-primary">Get Directions</a>';
 							} ?>
 						</p>
 					</div><!-- .button-group -->
 
 				</article> <!-- end article -->
-		    					
+
 		    <?php endwhile; else : ?>
-		
+
 		   		<?php get_template_part( 'parts/content', 'missing' ); ?>
 
 		    <?php endif; ?>
@@ -129,7 +130,7 @@ If you need to see all potential data, use something like print_r(ctfw_event_dat
 					zoom: 10
 					});
 				//Generate content for map infowindow
-				var contentString = 
+				var contentString =
 						'<h4 class="mapHeading"><?php echo $event_venue; ?></h4>';
 					//Generate infowindow
 					var infowindow = new google.maps.InfoWindow({

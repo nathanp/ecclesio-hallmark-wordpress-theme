@@ -33,25 +33,25 @@ function ecclesio_google_fonts_url() {
 function ecclesio_scripts() {
 
   global $wp_styles; // Call global $wp_styles variable to add conditional wrapper around ie stylesheet the WordPress way
-  $ctime = filemtime( get_template_directory() . '/assets/css/style.css' ); // Get last modified timestamp of primary CSS file
-  
+  $ctime = filemtime( get_template_directory() . '/assets/dist/css/hallmark.css' ); // Get last modified timestamp of primary CSS file
+
   // Register main stylesheet
-  wp_enqueue_style( 'ecclesio-css', get_template_directory_uri() . '/assets/css/style.css', array(), $ctime );
+  wp_enqueue_style( 'ecclesio-hallmark-css', get_template_directory_uri() . '/assets/dist/css/hallmark.css', array(), $ctime );
 
   // Add custom fonts, used in the main stylesheet.
   wp_enqueue_style( 'ecclesio-fonts', ecclesio_google_fonts_url(), array(), null );
 
   // Font Awesome
-  wp_enqueue_style('ecclesio-font-awesome', '//use.fontawesome.com/releases/v5.3.1/css/all.css');
+  wp_enqueue_style('ecclesio-font-awesome', '//use.fontawesome.com/releases/v5.9.0/css/all.css');
 
   // Live preview CSS changes
   wp_add_inline_style( 'ecclesio-css', ecclesio_customizer_css() ); //class-ecclesio-hallmark-customizer.php
 
   // Adding Bootstrap scripts file in the footer
-  wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/dependencies/bootstrap/js/bootstrap.bundle.min.js', array( 'jquery' ), '4.1.3', true );
+  wp_enqueue_script( 'bootstrap-js', get_template_directory_uri() . '/assets/src/bootstrap/js/bootstrap.bundle.min.js', array( 'jquery' ), '4.1.3', true );
 
   // Hallmark - Custom JS
-  wp_enqueue_script( 'ecclesio-app-js', get_template_directory_uri() . '/assets/js/frontend/ecclesio.js', array( 'jquery' ), '6.0', true );
+  wp_enqueue_script( 'ecclesio-app-js', get_template_directory_uri() . '/assets/dist/js/hallmark.js', array( 'jquery' ), '6.0', true );
 
   // Comment reply script for threaded comments
   if ( is_singular() AND comments_open() AND (get_option('thread_comments') == 1)) {
@@ -62,9 +62,9 @@ function ecclesio_scripts() {
 add_action( 'wp_enqueue_scripts', 'ecclesio_scripts', 1000); //1000 places these after the defaults loaded by the parent theme
 
 function ecclesio_customizer_preview() {
-    wp_enqueue_script( 
+    wp_enqueue_script(
           'ecclesio-customizer',
-          get_template_directory_uri().'/assets/js/admin/ecclesio-customizer.js',
+          get_template_directory_uri().'/assets/src/js/admin/ecclesio-customizer.js',
           array( 'jquery','customize-preview' )
     );
 }
@@ -93,13 +93,13 @@ add_action( 'wp_enqueue_scripts', 'ecclesio_remove_scripts', 1000); //1000 place
  * Keeps bloat/un-used scripts and styles from plugins from loading on the admin.
  */
 function ecclesio_remove_scripts_admin() {
-  
+
 	//ACF - Don't load date/timepickers IF Church Theme Content has already loaded them. Fixes conflict issues.
 	if ( wp_script_is( 'air-datepicker', 'enqueued' ) || wp_script_is( 'jquery-timepicker', 'enqueued' ) ) { //ct-meta-box.php
     wp_dequeue_script( 'jquery-ui-datepicker' ); //class-acf-field-date_picker.php
     wp_dequeue_script( 'acf-timepicker' ); //class-acf-field-date_time_picker.php
   }
-  
+
 }
 add_action( 'admin_enqueue_scripts', 'ecclesio_remove_scripts_admin', 1000); //1000 places these after the defaults loaded by the parent theme
 
