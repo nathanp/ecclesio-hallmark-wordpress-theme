@@ -1,18 +1,20 @@
-<?php $posts_array = ctfw_get_events(); if($posts_array) {
+<?php
+$posts_array = ctfw_get_events();
+if($posts_array) {
 foreach($posts_array as $post) {
 	//print_r(ctfw_event_data());
-	$event_title 				= get_the_title();
-	$event_date 				= ctfw_event_data()['date'];
+	$event_title 			= get_the_title();
+	$event_date 			= ctfw_event_data()['date'];
 	$event_time_range 		= ctfw_event_data()['time_range'];
 	$event_hide_time_range 	= ctfw_event_data()['hide_time_range'];
-	$event_time_desc 			= ctfw_event_data()['time'];
-	$event_venue 				= esc_html(ctfw_event_data()['venue']);
+	$event_time_desc 		= ctfw_event_data()['time'];
+	$event_venue 			= esc_html(ctfw_event_data()['venue']);
 	$event_address 			= ctfw_event_data()['address'];
 	$event_directions 		= ctfw_event_data()['directions_url'];
-	$event_has_coord 			= ctfw_event_data()['map_has_coordinates'];
-	$event_lat 					= ctfw_event_data()['map_lat'];
-	$event_lng 					= ctfw_event_data()['map_lng'];
-	$event_registration 		= ctfw_event_data()['registration_url'];
+	$event_has_coord 		= ctfw_event_data()['map_has_coordinates'];
+	$event_lat 				= ctfw_event_data()['map_lat'];
+	$event_lng 				= ctfw_event_data()['map_lng'];
+	$event_registration 	= ctfw_event_data()['registration_url'];
 ?>
 	<article <?php post_class('col-sm-12 col-md-6 col-lg-4'); ?> role="article">
 		<div class="thumb">
@@ -31,9 +33,9 @@ foreach($posts_array as $post) {
 			</a>
 		</div><!-- .thumb -->
 		<div class="card">
-			
+
 			<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute(); ?>"><?php the_title(); ?></a></h2>
-			
+
 			<div class="card-body">
 				<?php
 					if($event_date) { echo '<span class="date">'.$event_date.'</span>'; }
@@ -45,17 +47,17 @@ foreach($posts_array as $post) {
 				?>
 			</div><!-- .card-body -->
 			<div class="card-footer">
-				<?php 
+				<?php
 					if($event_time_desc) { echo '<span class="time"><i class="far fa-clock"></i> '.$event_time_desc.'</span>'; }
 					elseif($event_time_range && !$event_hide_time_range) { echo '<span class="time"><i class="far fa-clock"></i> '.$event_time_range.'</span>'; }
-				
+
 					if($event_venue) { echo '<span class="venue"><i class="fas fa-map-marker-alt"></i> '.$event_venue.'</span>'; }
 				?>
 			</div> <!-- .card-footer -->
 
 		</div><!-- .card -->
 	</article> <!-- end article -->
-	
+
 <?php } //endfor
 	//joints_page_navi();
 } //endif

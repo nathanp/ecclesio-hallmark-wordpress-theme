@@ -10,7 +10,7 @@
  * @license   GPL2+
  */
 class Ecclesio_Hallmark_Customizer {
-	
+
 	/**
 	 * Customizer constructor.
 	 *
@@ -109,7 +109,7 @@ class Ecclesio_Hallmark_Customizer {
 		$setting = 'ecclesio_site_logo';
 		$wp_customize->add_setting( $setting, array(
 			'type' => 'option',
-			
+
 		) );
 			$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, $setting, array(
 		    	'label'    => __( 'Site Logo', 'ecclesio' ),
@@ -246,7 +246,7 @@ class Ecclesio_Hallmark_Customizer {
 			    'render_callback' => 'get_customize_partial_church_service_times',
 			    'fallback_refresh' => false,
 			) );
-				
+
 
 	} // ecclesio_church_info_section
 
@@ -549,7 +549,7 @@ class Ecclesio_Hallmark_Customizer {
 				'settings' => $setting,
 				'priority' => 10
 			) ) );
-		
+
 	} //ecclesio_theme_colors
 
 	/**
@@ -833,13 +833,13 @@ class Ecclesio_Hallmark_Customizer {
 				'settings'    => $setting,
 				'type'        => 'text',
 				'priority'    => 10
-			) ) );				
+			) ) );
 
 	} // ecclesio_church_footer_section
 
 	/**
 	 * Sanitize Checkbox
-	 * 
+	 *
 	 * Accepts only "true" or "false" as possible values.
 	 *
 	 * @param $input
@@ -855,7 +855,7 @@ class Ecclesio_Hallmark_Customizer {
 
 	/**
 	 * Sanitize Float
-	 * 
+	 *
 	 */
 	public function sanitize_float( $input ) {
 		return filter_var($input, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
@@ -986,12 +986,12 @@ function ecclesio_customizer_css() {
 	// Variables
 	$css = '';
 
-	$color_main = get_theme_mod( 'ecclesio_color_main', '#358fcd' );
-	$color_accent = get_theme_mod( 'ecclesio_color_accent', '#f8981d' );
-	$color_banner = get_theme_mod( 'ecclesio_color_banner', '#016CC5' );
-		list($r, $g, $b) = sscanf($color_banner, "#%02x%02x%02x");
-	$color_banner_opacity = get_theme_mod( 'ecclesio_color_banner_opacity', '0.75' );
-	$color_footer = get_theme_mod( 'ecclesio_color_footer', '#4a4a4a' );
+	$color_main				= get_theme_mod( 'ecclesio_color_main', '#358fcd' );
+	$color_accent 			= get_theme_mod( 'ecclesio_color_accent', '#f8981d' );
+	$color_banner 			= get_theme_mod( 'ecclesio_color_banner', '#016CC5' );
+	list($r, $g, $b) 		= sscanf($color_banner, "#%02x%02x%02x");
+	$color_banner_opacity 	= get_theme_mod( 'ecclesio_color_banner_opacity', '0.75' );
+	$color_footer 			= get_theme_mod( 'ecclesio_color_footer', '#4a4a4a' );
 
 	// Generate CSS
 
@@ -1012,10 +1012,10 @@ function ecclesio_customizer_css() {
 	$css .= 'a:focus, a:hover { color: ' . $color_accent . '; }';
 	// Border color
 	$css .= '#purpose, #sermon-latest .text-container .button { border-color: ' . $color_accent . '; }';
-	
+
 	//Banner Color
 	$css .= '#banner .overlay { background: rgba('.$r.', '.$g.', '.$b.', '.$color_banner_opacity.'); }';
-	
+
 	//Foter Color
 	$css .= 'footer.footer, .off-canvas .navbar-nav .dropdown-menu { background-color: '. $color_footer .'; }';
 	$css .= '.footer-top .social a:hover { color: '. $color_footer .'; }';
@@ -1023,13 +1023,13 @@ function ecclesio_customizer_css() {
 	return $css;
 }
 
-/* 
+/*
  * Preview CSS changes without refreshs
  * Also see ecclesio-customizer.js
  * Also see functions.php
  */
 add_action( 'wp_head', 'ecclesio_customizer_empty_style' );
- 
+
 /**
  * Print Empty Color CSS
  */
@@ -1041,7 +1041,7 @@ function ecclesio_customizer_empty_style(){
     }
 }
 
-/* 
+/*
  * Custom palette for color pickder
  * https://wordpress.org/support/topic/universally-change-iris-palette/
  */
@@ -1054,7 +1054,7 @@ function ecclesio_iris_palette() {
 	}
 }
 
-/* 
+/*
  * Remove sections from the Customizer
  * https://wordpress.stackexchange.com/questions/181905/remove-the-widgets-tab-from-theme-customizer
  */
@@ -1071,7 +1071,7 @@ add_action( 'customize_register', 'ecclesio_edit_customizer_sections' );
  * Utilizes Ultimate Fonts plugin
  */
 function ecclesio_fonts( $fonts_array ) {
- 
+
  	$fonts_array = array(
 		'system' => array(
 			'label' => esc_html__( 'System Fonts', 'ultimate-fonts' ),
@@ -1144,8 +1144,8 @@ function ecclesio_fonts( $fonts_array ) {
 				'Work Sans'                => '100,200,300,400,500,600,700,800,900|sans-serif|latin,latin-ext',
 			),
 		),
-	);   
- 
+	);
+
     return $fonts_array;
 }
 //add_filter('ultimate_fonts_fonts', 'ecclesio_fonts');
