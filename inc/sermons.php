@@ -76,6 +76,10 @@
 			preg_match("/^(?:http(?:s)?:\/\/)?(?:www\.)?(?:m\.)?(?:youtu\.be\/|youtube\.com\/(?:(?:watch)?\?(?:.*&)?v(?:i)?=|(?:embed|v|vi|user)\/))([^\?&\"'>]+)/", $src, $matches);
 	    	$id = $matches[1];
 			$thumbnail = 'https://img.youtube.com/vi/' . $id . '/mqdefault.jpg';
+		} elseif ( $url_pieces[2] == 'www.facebook.com' ) { // If Facebook
+			preg_match("~/videos/(?:t\.\d+/)?(\d+)~i", $src, $matches);
+	    	$id = $matches[1];
+			//$thumbnail = 'https://img.youtube.com/vi/' . $id . '/mqdefault.jpg';
 		}
 		return $thumbnail;
 	}

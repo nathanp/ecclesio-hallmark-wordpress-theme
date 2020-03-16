@@ -1,7 +1,23 @@
 .single-ctc_sermon #banner {
   height: auto;
-  iframe {
+  iframe,
+  .fb-video {
     width: 100%;
+  }
+  .fb-video {
+    max-height: 80vh;
+    span {
+      width: 100% !important;
+      max-width: 1200px;
+      max-height: 80vh;
+      margin: 0px auto;
+      display: block;
+
+      iframe {
+        width: 100% !important;
+        max-height: 80vh;
+      }
+    }
   }
 }
 
