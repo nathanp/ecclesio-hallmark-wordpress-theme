@@ -5,7 +5,7 @@
  */
 function ecclesio_google_fonts_url() {
   $fonts_url = '';
-  $fonts     = array();
+  $fonts     = array('');
   $subsets   = 'latin,latin-ext';
 
   /* translators: If there are characters in your language that are not supported by Catamaran, translate this to 'off'. Do not translate into your own language. */
