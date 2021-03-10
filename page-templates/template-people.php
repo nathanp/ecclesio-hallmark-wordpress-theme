@@ -5,7 +5,7 @@ Template Name: People
 ?>
 
 <?php get_header(); ?>
-	
+
 	<?php get_template_part( 'parts/header', 'banner' ); ?>
 
 	<?php
@@ -15,7 +15,7 @@ Template Name: People
 	    else {
 	    	$people_per_row = 3;
 		 }
-		 
+
 		//change column sizes based on how many staff per row
 		if( $people_per_row == 1 ) {
 			$columns_classes = 'col-sm-12';
@@ -33,17 +33,17 @@ Template Name: People
 	?>
 
 	<div id="content">
-	
+
 		<div id="inner-content" class="container">
 			<div class="row">
 				<main id="main" class="col-sm-12" role="main">
-					
+
 					<?php if (have_posts()) : while (have_posts()) : the_post(); ?>
 
 						<?php get_template_part( 'parts/loop', 'page' ); ?>
-					
+
 					<?php endwhile; endif; ?>
-					
+
 					<div id="staff" class="row" data-equalizer>
 						<?php
 						if( function_exists('get_field') ) {
@@ -54,6 +54,7 @@ Template Name: People
 						}
 						$the_query = new WP_Query( array(
 							'post_type' => 'ctc_person',
+							'posts_per_page' => -1,
 							'tax_query' => array(
 								array (
 									'taxonomy' => 'ctc_person_group',
@@ -84,19 +85,19 @@ Template Name: People
 										echo $person_thumb;
 										if(trim($post->post_content) != "") { echo '<span class="overlay"><span class="text">Meet<br />'.$person_fname.'</span></span>'; }
 									echo '</span>';
-								if(trim($post->post_content) != "") { echo '</a>'; } 
-								
+								if(trim($post->post_content) != "") { echo '</a>'; }
+
 								echo '<h3>';
 									if(trim($post->post_content) != "") { echo '<a href="' . get_permalink( $post->ID ) . '">'; }
 										echo get_the_title();
-									if(trim($post->post_content) != "") { echo '</a>'; } 
+									if(trim($post->post_content) != "") { echo '</a>'; }
 								echo '</h3>';
 								if($person_position) { echo "<p>$person_position</p>"; }
 							?>
 						</div>
 						<?php endwhile; ?>
-					</div><!-- #staff -->				
-										
+					</div><!-- #staff -->
+
 				</main> <!-- end #main -->
 			</div><!-- end .row -->
 		</div> <!-- end #inner-content -->

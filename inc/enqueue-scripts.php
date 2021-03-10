@@ -10,17 +10,17 @@ function ecclesio_google_fonts_url() {
 
   /* translators: If there are characters in your language that are not supported by Catamaran, translate this to 'off'. Do not translate into your own language. */
   if ( 'off' !== _x( 'on', 'Montserrat font: on or off', 'ecclesio' ) ) {
-    $fonts[] = 'Montserrat:300,400,700';
+    $fonts[] = 'Montserrat:wght@300;400;700';
   }
   if ( 'off' !== _x( 'on', 'Lora font: on or off', 'ecclesio' ) ) {
-    $fonts[] = 'Lora:400,700';
+    $fonts[] = '&family=Lora:wght@400;700';
   }
 
   if ( $fonts ) {
     $fonts_url = add_query_arg( array(
-      'family' => urlencode( implode( '|', $fonts ) ),
-      'subset' => urlencode( $subsets ),
-    ), 'https://fonts.googleapis.com/css' );
+      'family' => implode( '', $fonts ),
+      'subset' => $subsets,
+    ), 'https://fonts.googleapis.com/css2' );
 
   }
   $fonts_url = str_replace("%2B", "+", $fonts_url); //keep plus signs

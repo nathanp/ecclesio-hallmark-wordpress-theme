@@ -57,7 +57,9 @@ Based on the Church Theme Framework and  custom post type.
 				<div id="staff" class="row large-up-<?php echo get_theme_mod('ecclesio_staff_count'); ?> medium-up-3 small-up-2" data-equalizer>
 				    <?php
 				    $the_query = new WP_Query( array(
-					    'post_type' => 'ctc_person'
+						'post_type' => 'ctc_person',
+						'posts_per_page' => -1,
+						'nopaging' => false,
 					) );
 
 					while ( $the_query->have_posts() ) : $the_query->the_post();
@@ -92,7 +94,10 @@ Based on the Church Theme Framework and  custom post type.
 							if($person_position) { echo "<h4>$person_position</h4>"; }
 						?>
 					</div>
-					<?php endwhile; ?>
+					<?php
+					endwhile;
+					wp_reset_postdata();
+					?>
 				</div><!-- #staff -->
 
 			</main> <!-- end #main -->
